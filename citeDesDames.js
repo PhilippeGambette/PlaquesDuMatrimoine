@@ -18,6 +18,11 @@
 */
     
 $(document).ready(function(){
+    
+    //Create leaflet map
+    $("#map").hide()
+
+
   $(".ville").hide();
   $(".btn").hide();
   
@@ -28,6 +33,8 @@ $(document).ready(function(){
   var themeNumber;
   var foundNames = [];
   var nameNb = 0;
+  var zoomOk = false;
+  var map;
   
   // Autocomplete departments
   var depts = ["Ain","Aisne","Allier","Alpes-de-Haute-Provence","Hautes-Alpes","Alpes-Maritimes","Ardèche","Ardennes","Ariège","Aube","Aude","Aveyron","Bouches-du-Rhône","Calvados","Cantal","Charente","Charente-Maritime","Cher","Corrèze","Corse-du-Sud","Haute-Corse","Côte-d’Or","Côtes-d'Armor","Creuse","Dordogne","Doubs","Drôme","Eure","Eure-et-Loir","Finistère","Gard","Haute-Garonne","Gers","Gironde","Hérault","Ille-et-Vilaine","Indre","Indre-et-Loire","Isère","Jura","Landes","Loir-et-Cher","Loire","Haute-Loire","Loire-Atlantique","Loiret","Lot","Lot-et-Garonne","Lozère","Maine-et-Loire","Manche","Marne","Haute-Marne","Mayenne","Meurthe-et-Moselle","Meuse","Morbihan","Moselle","Nièvre","Nord","Oise","Orne","Pas-de-Calais","Puy-de-Dôme","Pyrénées-Atlantiques","Hautes-Pyrénées","Pyrénées-Orientales","Bas-Rhin","Haut-Rhin","Rhône","Haute-Saône","Saône-et-Loire","Sarthe","Savoie","Haute-Savoie","Paris","Seine-Maritime","Seine-et-Marne","Yvelines","Deux-Sèvres","Somme","Tarn","Tarn-et-Garonne","Var","Vaucluse","Vendée","Vienne","Haute-Vienne","Vosges","Yonne","Territoire de Belfort","Essonne","Hauts-de-Seine","Seine-Saint-Denis","Val-de-Marne","Val-d’Oise"];
@@ -61,7 +68,7 @@ $(document).ready(function(){
     data = $.getJSON("./data/OSM-communes-codeInseeOsm.json-"+$("#department").val().slice(0,2)+".json",function(data){
       listeVilles = Object.keys(data.communes);
       communes = data.communes;
-      $('#ville').unbind("autoComplete");
+      $('#ville').off("autoComplete");
       $('#ville').autocomplete({
          source : listeVilles
       });
@@ -86,24 +93,35 @@ $(document).ready(function(){
      var patternStart = ["POLYGON ((","POINT ("];
      var patternStop = [",",")"];
      var i = 0
+     var patternFound = false;
      patternStart.forEach(function(p){
         if(str.slice(0,p.length) == p){
            var posStop = str.search(patternStop[i]);
            result = str.slice(p.length,posStop);
-           i++
+           i++;
+           patternFound++;
         }
      })
+     if(!patternFound){
+       result = str;
+     }
      return result;
   }
   
-  function analyzeName(str){
+  function analyzeName(str,type){
      var result = "";
      str2 = str.toLowerCase();
      var allPrefixes = {
      "sports":["Boule lyonnaise ","Boulodrome ","Boulodrome couvert ","Centre nautique ","Centre Sportif ","City Stade ","Complexe ","Complexe sportif ","Dojo ","École De Danse ","Espace ","Halle ","Halle sportive ","Gymnase ","Gymnase scolaire ","Jeu de boules ","Le centre ","Mini Football ","Palais des Sports ","Piscine ","Piscine municipale ","Piste d'athlétisme ","Piste d'athletisme ","Plateau Sportif ","Plateaux sportifs ","Salle ","Salle de boxe ","Salle de sport ","Salle de sports ","Salle omnisports ","Skate-Park ","Square ","Stade ","Stade municipal ","Tennis Club ","Tennis Club municipal ","Terrain ","Terrain de football ","Terrain de proximité ","Vélodrome ",".*Vélodrome "],
-     "education":["Crèche Municipale","Collège( | public| privé)* ","École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*","Groupe scolaire ","Institut ","Institution ","Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique)*( | public| privé|.*restauration)* "]
+     "education":["Crèche Municipale","Collège( | public| privé)* ","École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*","Groupe scolaire ","Institut ","Institution ","Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique)*( | public| privé|.*restauration)* "],
+     "address":["All[ée]e ","Avenue ","Boulevard ","Chemin ","Cours ","Impasse ","Place ","Rue ","Sente ","Sentier ","Square "]
      };
-     var prefixes = allPrefixes[themes[themeNumber]];
+     var prefixes ;
+     if(type == "address"){
+       prefixes = allPrefixes["address"];
+     } else {
+       prefixes = allPrefixes[themes[themeNumber]];
+     }
      var i = 0;
      while(i<prefixes.length){
         var tryRegexp = str.replace(new RegExp("^"+prefixes[i], "ig"), "")
@@ -135,12 +153,28 @@ $(document).ready(function(){
   function wikidataNameResults(data){
     if(data.results.bindings.length>0){
 		  $( '.foundName'+nameNb ).each(function(){
-		    $(this).append('<td><a href="'+data.results.bindings[0].person.value+'">'+foundNames[nameNb]+' ('+data.results.bindings[0].personDescription.value+')</a></td><td>'+data.results.bindings[0].genderLabel.value+'</td><td></td>');
+		    var description = ""
+		    if(data.results.bindings[0].personDescription != undefined){
+		      description = " ("+data.results.bindings[0].personDescription.value+")";
+		    }
+		    var genderLabel = ""
+		    if(data.results.bindings[0].genderLabel != undefined){
+		      genderLabel = data.results.bindings[0].genderLabel.value;
+		    }
+		    $(this).append('<td><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+foundNames[nameNb]+description+'</a></td><td>'+genderLabel+'</td><td></td>');
+		    if(genderLabel == "féminin" || genderLabel == "femme transgenre"){
+		       var coordinates = $(this).find(".coord").html();
+		       if(!zoomOk){
+		          map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 8);
+		          zoomOk = true;
+		          console.log("Zoom sur :"+coordinates);
+		       }
+		       L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+foundNames[nameNb]+description+"</a>");
+		    }
 		  });
   	}else{
 	  	console.log("Not found: "+foundNames[nameNb]);
-	  	console.log(endpointUrl);
-	  	
+	  	//console.log(data);
   	}
 	  nameNb++;
     setTimeout(getNextWikidata,1000);
@@ -165,6 +199,45 @@ $(document).ready(function(){
    }
  }
 
+  function analyzeBanData(data){
+    var csv = Papa.parse(data).data;
+    console.log(csv);  
+    var i = 0;
+    var nomCommune = communes[$("#ville").val()][0]+"";
+    for(element in Object.keys(csv)){
+      if(i > 0){
+        if(csv[i].length>1){
+          if(csv[i][3]==nomCommune){
+            console.log(csv[i]);
+            addTableRow("Voie",csv[i][2],csv[i][4]+" "+csv[i][5],"address");
+          }
+        }
+      }
+      i++;
+    }
+  }
+  
+  function addTableRow(topic,name,coord,topicCode){
+            if(name != ""){
+              var coordinates = analyzeCoord(coord);
+              var analyzedName = analyzeName(name,topicCode);
+              if(analyzedName.slice(0,3)=="de "||analyzedName.slice(0,3)=="du "||analyzedName.slice(0,4)=="des "||analyzedName.slice(0,2)=="d'"||analyzedName.slice(0,2)=="d’"){
+                analyzedName = "";
+              }
+              if(analyzedName != ""){
+                var lineNb = foundNames.length;
+                if(!(foundNames.includes(analyzedName))){
+                  foundNames[lineNb] = analyzedName;
+                } else {
+                  lineNb = foundNames.indexOf(analyzedName);
+                }
+                
+                $("table").append('<tr class="foundName'+lineNb+'"><td>'+topic+'</td><td class="placeName">'+name+"</td><td>"+analyzedName+'</td><td class="coord">'+coordinates+"</td></tr>");
+              } else {
+                $("table").append('<tr><td>'+topic+"</td><td>"+name+"</td><td>"+analyzedName+"</td><td>"+coordinates+"</td></tr>");
+              }
+            }
+  }
   
   function analyzeGeoData(data){
     // For each topic, store where to find the following information: name / latitude / longitude
@@ -180,25 +253,9 @@ $(document).ready(function(){
             if(findData[themes[themeNumber]][2] > -1){
               console.log(findData[themes[themeNumber]][2])
               // if longitude is already included in latitude do nothing
-              coord += ","+csv.data[i][findData[themes[themeNumber]][2]];
+              coord += ","+csvData[findData[themes[themeNumber]][2]];
             }
-            if(name != ""){
-              var analyzedName = analyzeName(name);
-              if(analyzedName.slice(0,3)=="de "||analyzedName.slice(0,3)=="du "||analyzedName.slice(0,4)=="des "||analyzedName.slice(0,2)=="d'"||analyzedName.slice(0,2)=="d’"){
-                analyzedName = "";
-              }
-              if(analyzedName != ""){
-                var lineNb = foundNames.length;
-                if(!(foundNames.includes(analyzedName))){
-                  foundNames[lineNb] = analyzedName;
-                } else {
-                  lineNb = foundNames.indexOf(analyzedName);
-                }
-                $("table").append('<tr class="foundName'+lineNb+'"><td>'+themeLabels[themes[themeNumber]]+"</td><td>"+name+"</td><td>"+analyzedName+"</td><td>"+analyzeCoord(coord)+"</td></tr>");
-              } else {
-                $("table").append('<tr><td>'+themeLabels[themes[themeNumber]]+"</td><td>"+name+"</td><td>"+analyzedName+"</td><td>"+analyzeCoord(coord)+"</td></tr>");
-              }
-            }
+            addTableRow(themeLabels[themes[themeNumber]],name,coord,themes[themeNumber])
          }
       }
       i++
@@ -218,6 +275,23 @@ $(document).ready(function(){
     $("#results").html('<p>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ? Copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</p>');
     $("#results").append("<table><tr><th>Type</th><th>Nom</th><th>Analyse du nom</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
     
+    // Show Leaflet map
+    $("#map").show();
+    map = L.map('map').setView([0,0], 5);
+    L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+      attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+      minZoom: 1,
+      maxZoom: 20
+    }).addTo(map);    
+    $.get("./data/BAN"+(""+communes[$("#ville").val()][0]).slice(0,2)+".csv")
+    .done(analyzeBanData)
+    .fail(function( jqxhr, textStatus, error ) {
+      var err = textStatus + ", " + error;
+      console.log( "Request Failed: " + err );
+    });
+
+    
+    //
     themes = ["sports","education"];
     themeLabels = {"sports":"équipement sportif","education":"lieu d’enseignement"}
     themeNumber = 0;

@@ -5,7 +5,12 @@
   <link rel="icon" href="favicon.ico" />
   <meta name="Description" content="sankeyCompare">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+  <!-- Chargement de la feuille de style de jQueryUI -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <!-- Chargement de la feuille de style de Leaflet -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
   <style>
   ul li:nth-child(4){background-color:lime}
   body{font-family:Calibri}
@@ -14,8 +19,12 @@
 <SCRIPT TYPE="text/javascript" SRC="https://cdn.plot.ly/plotly-1.2.0.min.js"></SCRIPT>
 <SCRIPT TYPE="text/javascript" SRC="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></SCRIPT>
 <SCRIPT TYPE="text/javascript" SRC="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></SCRIPT>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+ integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
 <SCRIPT TYPE="text/javascript" SRC="./PapaParse-5.0.2/papaparse.js"></SCRIPT>
 <SCRIPT TYPE="text/javascript" SRC="./citeDesDames.js"></SCRIPT>
+
 </head>
 <body>
 <div class="container">
@@ -50,11 +59,18 @@
         <input class="ville" type="ville" placeholder="ville choisie" id="ville" name="ville" data-validation-required-message="Choisissez une ville en écrivant quelques lettres de son nom…" value="">
         <p class="help-block text-danger"></p>
         
-        <button type="submit" id="analyse" class="btn btn-light btn-lg btn-block">Lancer l'analyse des odonymes et toponymes de la ville...</button>
+        <button type="submit" id="analyse" class="btn btn-light btn-lg btn-block">Chercher les lieux nommés d'après des femmes dans cette ville...</button>
       </div>										
       </div>
     </div>
     <div class="row">
+      <div class="col-sm">
+        <div id="map" class="map map-home" style="margin:0px;padding:0px;width:100%;height:300px"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      
       <div class="col-sm" id="results">
       
       </div>
