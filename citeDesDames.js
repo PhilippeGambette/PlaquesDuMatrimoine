@@ -35,6 +35,7 @@ $(document).ready(function(){
   var nameNb = 0;
   var zoomOk = false;
   var map;
+  var previousQuery = "";
   
   // Autocomplete departments
   var depts = ["Ain","Aisne","Allier","Alpes-de-Haute-Provence","Hautes-Alpes","Alpes-Maritimes","Ardèche","Ardennes","Ariège","Aube","Aude","Aveyron","Bouches-du-Rhône","Calvados","Cantal","Charente","Charente-Maritime","Cher","Corrèze","Corse-du-Sud","Haute-Corse","Côte-d’Or","Côtes-d'Armor","Creuse","Dordogne","Doubs","Drôme","Eure","Eure-et-Loir","Finistère","Gard","Haute-Garonne","Gers","Gironde","Hérault","Ille-et-Vilaine","Indre","Indre-et-Loire","Isère","Jura","Landes","Loir-et-Cher","Loire","Haute-Loire","Loire-Atlantique","Loiret","Lot","Lot-et-Garonne","Lozère","Maine-et-Loire","Manche","Marne","Haute-Marne","Mayenne","Meurthe-et-Moselle","Meuse","Morbihan","Moselle","Nièvre","Nord","Oise","Orne","Pas-de-Calais","Puy-de-Dôme","Pyrénées-Atlantiques","Hautes-Pyrénées","Pyrénées-Orientales","Bas-Rhin","Haut-Rhin","Rhône","Haute-Saône","Saône-et-Loire","Sarthe","Savoie","Haute-Savoie","Paris","Seine-Maritime","Seine-et-Marne","Yvelines","Deux-Sèvres","Somme","Tarn","Tarn-et-Garonne","Var","Vaucluse","Vendée","Vienne","Haute-Vienne","Vosges","Yonne","Territoire de Belfort","Essonne","Hauts-de-Seine","Seine-Saint-Denis","Val-de-Marne","Val-d’Oise"];
@@ -113,7 +114,8 @@ $(document).ready(function(){
      str2 = str.toLowerCase();
      var allPrefixes = {
      "sports":["Boule lyonnaise ","Boulodrome ","Boulodrome couvert ","Centre nautique ","Centre Sportif ","City Stade ","Complexe ","Complexe sportif ","Dojo ","École De Danse ","Espace ","Halle ","Halle sportive ","Gymnase ","Gymnase scolaire ","Jeu de boules ","Le centre ","Mini Football ","Palais des Sports ","Piscine ","Piscine municipale ","Piste d'athlétisme ","Piste d'athletisme ","Plateau Sportif ","Plateaux sportifs ","Salle ","Salle de boxe ","Salle de sport ","Salle de sports ","Salle omnisports ","Skate-Park ","Square ","Stade ","Stade municipal ","Tennis Club ","Tennis Club municipal ","Terrain ","Terrain de football ","Terrain de proximité ","Vélodrome ",".*Vélodrome "],
-     "education":["Crèche Municipale","Collège( | public| privé)* ","École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*","Groupe scolaire ","Institut ","Institution ","Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique)*( | public| privé|.*restauration)* "],
+     "education":["Crèche Municipale","Collège( | public| privé)* ","École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*","Espace ","Groupe scolaire ","Institut ","Institution ","Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique)*( | public| privé|.*restauration)* "],
+     "library":["Bibliothèque ","Médiathèque "],
      "address":["All[ée]e ","Avenue ","Boulevard ","Chemin ","Cours ","Impasse ","Place ","Rue ","Sente ","Sentier ","Square "]
      };
      var prefixes ;
@@ -152,40 +154,75 @@ $(document).ready(function(){
 
   function wikidataNameResults(data){
     if(data.results.bindings.length>0){
+		  var person = foundNames[nameNb];
+		  if(data.results.bindings[0].personLabel != undefined){
+		    person = data.results.bindings[0].personLabel.value;
+		  }
+		  var description = ""
+		  if(data.results.bindings[0].personDescription != undefined){
+		    description = " ("+data.results.bindings[0].personDescription.value+")";
+		  }
+		  var genderLabel = "";
+		  if(data.results.bindings[0].genderLabel != undefined){
+		    genderLabel = data.results.bindings[0].genderLabel.value;
+		  }
 		  $( '.foundName'+nameNb ).each(function(){
-		    var description = ""
-		    if(data.results.bindings[0].personDescription != undefined){
-		      description = " ("+data.results.bindings[0].personDescription.value+")";
-		    }
-		    var genderLabel = ""
-		    if(data.results.bindings[0].genderLabel != undefined){
-		      genderLabel = data.results.bindings[0].genderLabel.value;
-		    }
-		    $(this).append('<td><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+foundNames[nameNb]+description+'</a></td><td>'+genderLabel+'</td><td></td>');
+		    $(this).append('<td><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+person+description+'</a></td><td>'+genderLabel+'</td><td></td>');
 		    if(genderLabel == "féminin" || genderLabel == "femme transgenre"){
 		       var coordinates = $(this).find(".coord").html();
 		       if(!zoomOk){
-		          map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 8);
+		          map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
 		          zoomOk = true;
-		          console.log("Zoom sur :"+coordinates);
+		          //console.log("Zoom sur :"+coordinates);
 		       }
-		       L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+foundNames[nameNb]+description+"</a>");
+		       L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+person+description+"</a>");
 		    }
 		  });
+		  // Look for the next name on Wikidata
+	    nameNb++;
+      previousQuery = "name";
+      setTimeout(getNextWikidata,1000);
   	}else{
-	  	console.log("Not found: "+foundNames[nameNb]);
-	  	//console.log(data);
+  	  if (previousQuery == "name"){
+	  	   // Look again as an alias
+	  	   previousQuery = "alias";
+	  	   setTimeout(getNextWikidataAlias,1000);
+	  	} else {
+		     // Alias not found, look for the next name on Wikidata
+	       nameNb++;
+         previousQuery = "name";
+         setTimeout(getNextWikidata,1000);	  	
+	  	}
   	}
-	  nameNb++;
-    setTimeout(getNextWikidata,1000);
 	}
+
+  function getNextWikidataAlias(){
+   if(nameNb < foundNames.length){
+     var nom = foundNames[nameNb];
+     //console.log("Alias ?"+nom);
+     // Retrieve some information from Wikidata:
+     var endpointUrl = 'https://query.wikidata.org/sparql',
+   	       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n'+
+//'  ?person wdt:P742 "'+nom+'".\n'+
+'  {?person skos:altLabel "'+nom+'"@fr} UNION {?person skos:altLabel "'+nom+'"@en}.\n'+
+'  ?person wdt:P31 wd:Q5.\n'+
+'  ?person wdt:P21 ?gender.\n'+
+'  ?person wikibase:sitelinks ?sitelinks.\n'+
+'  SERVICE wikibase:label {\n'+
+'     bd:serviceParam wikibase:language "fr" .\n'+
+'   }\n'+
+'} order by desc(?sitelinks)';
+     makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
+   }
+ }
+
 
   function getNextWikidata(){
    if(nameNb < foundNames.length){
      var nom = foundNames[nameNb];
-     // Retrieve the bnf id from Wikidata:
+     // Retrieve some information from Wikidata:
      var endpointUrl = 'https://query.wikidata.org/sparql',
-   	       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription where {\n'+
+   	       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n'+
 '  ?person rdfs:label "'+nom+'"@fr.\n'+
 '  ?person wdt:P31 wd:Q5.\n'+
 '  ?person wdt:P21 ?gender.\n'+
@@ -199,16 +236,17 @@ $(document).ready(function(){
    }
  }
 
+
   function analyzeBanData(data){
     var csv = Papa.parse(data).data;
-    console.log(csv);  
+    //console.log(csv);  
     var i = 0;
     var nomCommune = communes[$("#ville").val()][0]+"";
     for(element in Object.keys(csv)){
       if(i > 0){
         if(csv[i].length>1){
           if(csv[i][3]==nomCommune){
-            console.log(csv[i]);
+            //console.log(csv[i]);
             addTableRow("Voie",csv[i][2],csv[i][4]+" "+csv[i][5],"address");
           }
         }
@@ -241,7 +279,7 @@ $(document).ready(function(){
   
   function analyzeGeoData(data){
     // For each topic, store where to find the following information: name / latitude / longitude
-    var findData = {"sports":[3,0,-1],"education":[2,0,-1]}
+    var findData = {"sports":[3,0,-1],"education":[2,0,-1],"library":[3,0,-1]};
     var csv = Papa.parse(data);
     console.log(csv)
     var i = 0;
@@ -251,7 +289,7 @@ $(document).ready(function(){
             var name = csv.data[i][findData[themes[themeNumber]][0]];
             var coord = csv.data[i][findData[themes[themeNumber]][1]];
             if(findData[themes[themeNumber]][2] > -1){
-              console.log(findData[themes[themeNumber]][2])
+              //console.log(findData[themes[themeNumber]][2])
               // if longitude is already included in latitude do nothing
               coord += ","+csvData[findData[themes[themeNumber]][2]];
             }
@@ -265,11 +303,13 @@ $(document).ready(function(){
       setTimeout(sendGeodatamineQuery);
     } else {
       nameNb = 0;
+      previousQuery = "name"
       getNextWikidata();
     }
   }
   
   $("#analyse").on("click", function(){
+    zoomOk = false;
     $("#results").append("<p>Code INSEE : "+communes[$("#ville").val()][0]+"</p>");
     $("#results").append("<p>Code OSM : "+communes[$("#ville").val()][1]+"</p>");
     $("#results").html('<p>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ? Copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</p>');
@@ -277,12 +317,14 @@ $(document).ready(function(){
     
     // Show Leaflet map
     $("#map").show();
-    map = L.map('map').setView([0,0], 5);
-    L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-      attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-      minZoom: 1,
-      maxZoom: 20
-    }).addTo(map);    
+    if(map==undefined){
+      map = L.map('map').setView([48.8534,2.3488], 5);
+      L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+        minZoom: 1,
+        maxZoom: 20
+      }).addTo(map);
+    }
     $.get("./data/BAN"+(""+communes[$("#ville").val()][0]).slice(0,2)+".csv")
     .done(analyzeBanData)
     .fail(function( jqxhr, textStatus, error ) {
@@ -292,8 +334,8 @@ $(document).ready(function(){
 
     
     //
-    themes = ["sports","education"];
-    themeLabels = {"sports":"équipement sportif","education":"lieu d’enseignement"}
+    themes = ["sports","education","library"];
+    themeLabels = {"sports":"équipement sportif","education":"lieu d’enseignement","library":"bibliothèque"}
     themeNumber = 0;
     sendGeodatamineQuery();
   });
