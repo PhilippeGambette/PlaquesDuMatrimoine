@@ -18,7 +18,6 @@
 */
     
 $(document).ready(function(){
-    
     //Create leaflet map
     $("#map").hide()
 
@@ -66,15 +65,19 @@ $(document).ready(function(){
   });
 
   function getDpt(){
-    data = $.getJSON("./data/OSM-communes-codeInseeOsm.json-"+$("#department").val().slice(0,2)+".json",function(data){
+      data = $.getJSON("./data/OSM-communes-codeInseeOsm.json-"+$("#department").val().slice(0,2)+".json",function(data){
       listeVilles = Object.keys(data.communes);
+      //console.log(data);
       communes = data.communes;
       $('#ville').off("autoComplete");
       $('#ville').autocomplete({
          source : listeVilles
       });
       $('.ville').show();
-    })
+    }).fail(function( jqxhr, textStatus, error ) {
+      var err = textStatus + ", " + error;
+      console.log( "Request Failed: " + err );
+    });
   }
   
   $("#department").on("autocompleteselect",function(){
@@ -114,8 +117,8 @@ $(document).ready(function(){
      str2 = str.toLowerCase();
      var allPrefixes = {
      "sports":["Boule lyonnaise ","Boulodrome ","Boulodrome couvert ","Centre nautique ","Centre Sportif ","City Stade ","Complexe ","Complexe sportif ","Dojo ","École De Danse ","Espace ","Halle ","Halle sportive ","Gymnase ","Gymnase scolaire ","Jeu de boules ","Le centre ","Mini Football ","Palais des Sports ","Piscine ","Piscine municipale ","Piste d'athlétisme ","Piste d'athletisme ","Plateau Sportif ","Plateaux sportifs ","Salle ","Salle de boxe ","Salle de sport ","Salle de sports ","Salle omnisports ","Skate-Park ","Square ","Stade ","Stade municipal ","Tennis Club ","Tennis Club municipal ","Terrain ","Terrain de football ","Terrain de proximité ","Vélodrome ",".*Vélodrome "],
-     "education":["Crèche Municipale","Collège( | public| privé)* ","École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*","Espace ","Groupe scolaire ","Institut ","Institution ","Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique)*( | public| privé|.*restauration)* "],
-     "library":["Bibliothèque ","Médiathèque "],
+     "education":["Crèche Municipale","Collège( | public| privé)* ","École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*","Espace ","Groupe scolaire ","Institut ","Institution ","Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique| [Tt]echnique)*( | et technologique)*( | public| privé|.*restauration)* "],
+     "library":["Biblioth[èe]que( | centrale| communale| départementale| municipale)* ","M[ée]diath[èe]que( | centrale| communale| départementale| municipale)* "],
      "address":["All[ée]e ","Avenue ","Boulevard ","Chemin ","Cours ","Impasse ","Place ","Rue ","Sente ","Sentier ","Square "]
      };
      var prefixes ;
@@ -204,7 +207,7 @@ $(document).ready(function(){
      var endpointUrl = 'https://query.wikidata.org/sparql',
    	       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n'+
 //'  ?person wdt:P742 "'+nom+'".\n'+
-'  {?person skos:altLabel "'+nom+'"@fr} UNION {?person skos:altLabel "'+nom+'"@en}.\n'+
+'  {?person rdfs:label "'+nom.replace(/-/gi," ").replace(/ la /gi," La ").replace(/ le /gi," Le ")+'"@fr} UNION {?person skos:altLabel "'+nom.replace(/-/gi," ").replace(/ la /gi," La ").replace(/ le /gi," Le ")+'"@fr} UNION {?person skos:altLabel "'+nom.replace(/-/gi," ").replace(/ la /gi," La ").replace(/ le /gi," Le ")+'"@en}.\n'+
 '  ?person wdt:P31 wd:Q5.\n'+
 '  ?person wdt:P21 ?gender.\n'+
 '  ?person wikibase:sitelinks ?sitelinks.\n'+
@@ -223,7 +226,7 @@ $(document).ready(function(){
      // Retrieve some information from Wikidata:
      var endpointUrl = 'https://query.wikidata.org/sparql',
    	       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n'+
-'  ?person rdfs:label "'+nom+'"@fr.\n'+
+'  {?person rdfs:label "'+nom+'"@fr} UNION {?person skos:altLabel "'+nom+'"@fr} UNION {?person skos:altLabel "'+nom+'"@en}.\n'+
 '  ?person wdt:P31 wd:Q5.\n'+
 '  ?person wdt:P21 ?gender.\n'+
 '  ?person wikibase:sitelinks ?sitelinks.\n'+
@@ -241,13 +244,17 @@ $(document).ready(function(){
     var csv = Papa.parse(data).data;
     //console.log(csv);  
     var i = 0;
-    var nomCommune = communes[$("#ville").val()][0]+"";
+    var insert="";
+    if((communes[$("#ville").val()][0]+"").length==4){
+       insert = "0";
+    }
+    var codeCommune = insert+communes[$("#ville").val()][0];
     for(element in Object.keys(csv)){
       if(i > 0){
         if(csv[i].length>1){
-          if(csv[i][3]==nomCommune){
+          if(csv[i][3]==codeCommune){
             //console.log(csv[i]);
-            addTableRow("Voie",csv[i][2],csv[i][4]+" "+csv[i][5],"address");
+            addTableRow("voie",csv[i][2],csv[i][4]+" "+csv[i][5],"address");
           }
         }
       }
@@ -281,7 +288,7 @@ $(document).ready(function(){
     // For each topic, store where to find the following information: name / latitude / longitude
     var findData = {"sports":[3,0,-1],"education":[2,0,-1],"library":[3,0,-1]};
     var csv = Papa.parse(data);
-    console.log(csv)
+    //console.log(csv)
     var i = 0;
     for(element in Object.keys(csv.data)){
       if(i > 0){
@@ -310,10 +317,14 @@ $(document).ready(function(){
   
   $("#analyse").on("click", function(){
     zoomOk = false;
-    $("#results").append("<p>Code INSEE : "+communes[$("#ville").val()][0]+"</p>");
+    var insert="";
+    if((communes[$("#ville").val()][0]+"").length==4){
+       insert = "0";
+    }
+    $("#results").append("<p>Code INSEE : "+insert+communes[$("#ville").val()][0]+"</p>");
     $("#results").append("<p>Code OSM : "+communes[$("#ville").val()][1]+"</p>");
-    $("#results").html('<p>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ? Copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</p>');
-    $("#results").append("<table><tr><th>Type</th><th>Nom</th><th>Analyse du nom</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
+    $("#results").html('<p><br>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ?</p><ul><li>Si le nom de personne a bien été détecté dans la troisième colonne, mais qu’il n’a pas été trouvé dans Wikidata, n’hésitez pas à <a target="_blank" href="https://www.wikidata.org/wiki/Help:Aliases/fr#Inclusion">ajouter un <i>alias</i> à la personne concernée sur Wikidata</a> ou bien <a target="_blank" href="https://www.wikidata.org/wiki/Help:Items/fr">contribuer à Wikidata</a> pour créer la page de la personne concernée.</li><li>Sinon, copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</li></ul>');
+    $("#results").append("<table><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
     
     // Show Leaflet map
     $("#map").show();
@@ -325,7 +336,7 @@ $(document).ready(function(){
         maxZoom: 20
       }).addTo(map);
     }
-    $.get("./data/BAN"+(""+communes[$("#ville").val()][0]).slice(0,2)+".csv")
+    $.get("./data/BAN"+(insert+communes[$("#ville").val()][0]).slice(0,2)+".csv")
     .done(analyzeBanData)
     .fail(function( jqxhr, textStatus, error ) {
       var err = textStatus + ", " + error;
