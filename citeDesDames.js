@@ -21,7 +21,7 @@ $(document).ready(function(){
     //Create leaflet map
     $("#map").hide()
 
-
+  // La carte et le bouton sont cachés par défault
   $(".ville").hide();
   $(".btn").hide();
   
@@ -66,8 +66,9 @@ $(document).ready(function(){
 
   function getDpt(){
       data = $.getJSON("./data/OSM-communes-codeInseeOsm.json-"+$("#department").val().slice(0,2)+".json",function(data){
+        // Crate an array
       listeVilles = Object.keys(data.communes);
-      //console.log(data);
+      console.log(data);
       communes = data.communes;
       $('#ville').off("autoComplete");
       $('#ville').autocomplete({
@@ -81,15 +82,19 @@ $(document).ready(function(){
   }
   
   $("#department").on("autocompleteselect",function(){
-     setTimeout(getDpt,200);
+    // An event listener call getDpt() every 200 milliseconds
+    setTimeout(getDpt,200);
   })  
-
+  
   function getCity(){
+    // Faut que je trouve le moyen de vérifier en jQuery si le champs est rempli avant de d'afficher le bouton
     $('.btn').show();
   }
   
   $("#ville").on("autocompleteselect",function(){
-     setTimeout(getCity,200);
+    // An event listener call getDpt() every 200 milliseconds
+    // Fail: I can still empty the city field and the button will be visible.
+      setTimeout(getCity,200);
   })
   
   function analyzeCoord(str){
@@ -112,6 +117,7 @@ $(document).ready(function(){
      return result;
   }
   
+  // Fonctionnement de cette fonction à revoir
   function analyzeName(str,type){
      var result = "";
      str2 = str.toLowerCase();
@@ -147,6 +153,8 @@ $(document).ready(function(){
     });
   }
   
+
+  // ?
   function makeSPARQLQuery( endpointUrl, sparqlQuery, doneCallback ) {
 	  var settings = {
 		  headers: { Accept: 'application/sparql-results+json' },
@@ -155,6 +163,7 @@ $(document).ready(function(){
 	  return $.ajax( endpointUrl, settings ).then( doneCallback );
   }
 
+  // Review how Wikidata works
   function wikidataNameResults(data){
     if(data.results.bindings.length>0){
 		  var person = foundNames[nameNb];
@@ -168,7 +177,8 @@ $(document).ready(function(){
 		  var genderLabel = "";
 		  if(data.results.bindings[0].genderLabel != undefined){
 		    genderLabel = data.results.bindings[0].genderLabel.value;
-		  }
+      }
+      // Try ES6 syntax
 		  $( '.foundName'+nameNb ).each(function(){
 		    $(this).append('<td><a target="_blank" href="'+data.results.bindings[0].person.value+'">'+person+description+'</a></td><td>'+genderLabel+'</td><td></td>');
 		    if(genderLabel == "féminin" || genderLabel == "femme transgenre"){
@@ -199,6 +209,7 @@ $(document).ready(function(){
   	}
 	}
 
+  // Try ES6 syntax
   function getNextWikidataAlias(){
    if(nameNb < foundNames.length){
      var nom = foundNames[nameNb];
@@ -240,7 +251,9 @@ $(document).ready(function(){
  }
 
 
+
   function analyzeBanData(data){
+    // Parse of OSM data with Papa Parse library
     var csv = Papa.parse(data).data;
     //console.log(csv);  
     var i = 0;
@@ -262,6 +275,7 @@ $(document).ready(function(){
     }
   }
   
+  // ?
   function addTableRow(topic,name,coord,topicCode){
             if(name != ""){
               var coordinates = analyzeCoord(coord);
