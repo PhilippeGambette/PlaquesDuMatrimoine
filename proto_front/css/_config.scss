@@ -1,0 +1,26 @@
+$Playfair-family : 'Playfair';
+$Belleza-family : 'Belleza';
+$border-container: '2px purple solid';
+$uppercase: 'uppercase';
+$text-nav-link: 1.25rem;
+$padding-left-right: 30px;
+$font-size-text-footer: 0.875rem;
+$font-size-text-link: 1rem;
+$nav-title-mobile: 1.25rem;
+$nav-elem-color: #FFFFFF;
+$background-footer: #191919;
+
+@mixin padding-l-r {
+ padding-left: 30px;
+ padding-right: 30px;
+}
+
+@mixin footer{
+ background-color: $background-footer;
+ color: $nav-elem-color;
+ padding-top: 30px;
+ padding-bottom: 30px;
+ hr{
+  color: white;
+ }
+}
