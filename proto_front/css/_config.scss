@@ -10,6 +10,10 @@ $nav-title-mobile: 1.25rem;
 $nav-elem-color: #FFFFFF;
 $background-footer: #191919;
 
+@mixin height-container{
+ height: calc(100vh - 64px);
+}
+
 @mixin padding-l-r {
  padding-left: 30px;
  padding-right: 30px;

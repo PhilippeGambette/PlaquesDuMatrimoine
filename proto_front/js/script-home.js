@@ -1,12 +1,18 @@
+  'use strict';
   var lat;
   var long;
 
   document.getElementById("container-map").style.display = "none";
 
-  //Check if browser supports W3C Geolocation API
-  if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+  checkUserLocationConsent();
+
+  function checkUserLocationConsent(){
+    //Check if browser supports W3C Geolocation API
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+    }
   }
+
   //Get latitude and longitude;
   function successFunction(position) {
   var lat = position.coords.latitude;

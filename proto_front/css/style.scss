@@ -75,6 +75,7 @@ ul{
 
 .container-main {
   display: flex;
+  padding-bottom: 30px;
   width: 100%;
   height: 85vh;
   @include padding-l-r;
@@ -82,6 +83,7 @@ ul{
 
 .container-apropos{
   @include padding-l-r;
+  height: auto;
   h1{
     font-size: 3.125rem;
     font-family: $Playfair-family;
@@ -90,6 +92,10 @@ ul{
   p{
     font-family: $Belleza-family;
   }
+}
+
+.bloc-text{
+  max-height: 100%;
 }
 
 .container-left {
@@ -118,7 +124,7 @@ ul{
 
 .container-map{
  @include padding-l-r;
- height: 100vh;
+ padding-bottom: 2rem;
  h2{
    text-transform: $uppercase;
    font-family: $Playfair-family;
@@ -178,6 +184,8 @@ hr{
 
   .nav-name {
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
     a{
       text-align: center;
       white-space: nowrap;
