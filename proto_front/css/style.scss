@@ -54,7 +54,6 @@ ul{
 
 .input-home{
   border-radius: 20px;
-  // width: 320px;
   width: 20rem;
   height: 2.5rem;
   border: solid 1px black;
@@ -74,28 +73,80 @@ ul{
 }
 
 .container-main {
+  @include padding-l-r;
+  @include height-container;
   display: flex;
   padding-bottom: 30px;
+  overflow: auto;
   width: 100%;
-  height: 85vh;
-  @include padding-l-r;
 }
 
 .container-apropos{
   @include padding-l-r;
-  height: auto;
+  @include height-container;
+  overflow: auto;
   h1{
     font-size: 3.125rem;
     font-family: $Playfair-family;
   }
+}
 
-  p{
+.container-404{
+  @include padding-l-r;
+  @include height-container;
+  overflow: auto;
+  a{
     font-family: $Belleza-family;
+  }
+}
+
+.all-404{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.number-404{
+  font-family: $Playfair-family;
+  font-size: 6.25rem;
+}
+
+.quote-404,.author-404{
+  font-family: $Belleza-family;
+  font-size: 1.5rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.link-404{
+  color: $link-color;
+  font-size: 1.5rem;
+  
+  &:visited{
+    color: $link-color;
   }
 }
 
 .bloc-text{
   max-height: 100%;
+    p{
+      font-family: $Belleza-family;
+      font-size: 1.25rem;
+    }
+    ul{
+      font-family: $Belleza-family;
+      font-size: 1.25rem;
+    }
+
+    a{
+      color: $link-color;
+
+      &:visited{
+        color: $link-color;
+      }
+    }
 }
 
 .container-left {
@@ -239,6 +290,10 @@ hr{
     }
   }
 
+  .container-main{
+    height: auto;
+  }
+
   .container-left{
     h1{
       text-align: center;
@@ -261,6 +316,10 @@ hr{
       align-items: center;
       width: 100%;
     }
+  }
+
+  .container-apropos{
+    height: auto;
   }
 
   .call-scroll{

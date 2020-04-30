@@ -1,12 +1,9 @@
   'use strict';
-  var lat;
-  var long;
-
   document.getElementById("container-map").style.display = "none";
 
-  checkUserLocationConsent();
+  locationConsent();
 
-  function checkUserLocationConsent(){
+  function locationConsent(){
     //Check if browser supports W3C Geolocation API
     if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
