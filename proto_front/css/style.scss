@@ -183,7 +183,15 @@ ul{
  }
 }
 
-#js-map { height: 380px; }
+#js-map { 
+  height: 380px; 
+}
+
+#graph{
+  margin-top: 2rem;
+  width:600px;
+  height:250px;
+}
 
 .footer-all{
  @include padding-l-r;

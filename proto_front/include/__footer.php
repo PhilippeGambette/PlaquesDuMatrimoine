@@ -18,7 +18,7 @@
  </a>
  <hr>
  <p class="copyright">
-  © 2020 - Cité des dames, créatrices dans la cité
+  <?php echo date('Y') ?> - Cité des dames, créatrices dans la cité
  </p>
 
 </div>

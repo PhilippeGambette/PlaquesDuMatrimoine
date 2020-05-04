@@ -258,6 +258,12 @@ ul {
   height: 380px;
 }
 
+#graph {
+  margin-top: 2rem;
+  width: 600px;
+  height: 250px;
+}
+
 .footer-all {
   padding-left: 30px;
   padding-right: 30px;
