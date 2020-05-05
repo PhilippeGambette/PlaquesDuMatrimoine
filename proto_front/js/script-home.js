@@ -19,7 +19,7 @@
     console.log(lat);
     console.log(long);
     map(lat,long);
-    getCity(lat,long);
+    getGeoCityName(lat,long);
     }
   
     function errorFunction(){
@@ -43,17 +43,26 @@
     }
 
 
-    async function getCity(lat,long){
+    async function getGeoCityName(lat,long){
       var request = new XMLHttpRequest();
       request.open('GET',`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`, true);
 
       request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
-          console.log("Success!");
           var resp = this.response;
-          resp = JSON.stringify(resp);
-          console.log(typeof(resp));
+          var resp = JSON.parse(resp);
           console.log(resp);
+          var cityName = resp.address.village.toUpperCase();
+          if(cityName === undefined){
+            cityName = resp.address.town.toUpperCase();
+          }
+          console.log(cityName);
+          var departement = resp.address.county;
+          console.log(departement);
+          var codePostal = resp.address.postcode;
+          console.log(codePostal.substring(0,2));
+          document.getElementById("cityname").innerHTML = cityName;
+          getDptByLocation(codePostal,cityName);
         } else {
           console.log("Erreur du serveur");
         }
@@ -66,10 +75,34 @@
       request.send();
 
     }
+
+    function getDptByLocation(codePostal,cityName){
+      codePostal = codePostal.substring(0,2);
+      var requestDpt = new XMLHttpRequest();
+      requestDpt.open('GET',`http://localhost/data/OSM-communes-codeInseeOsm.json-${codePostal}.json`,true);
+
+      requestDpt.onload = function(){
+        console.log(`chemin du fichier: http://localhost/data/OSM-communes-codeInseeOsm.json-${codePostal}.json`);
+        if(this.status >= 200 && this.status < 400){
+          var resp = this.response;
+          resp = JSON.parse(resp);
+          console.log(resp.communes);
+        }else{
+          console.log("Erreur du serveur");
+        }
+      } 
+
+      requestDpt.onerror = function(){
+        console.log("Erreur réseau");
+      }
+
+      requestDpt.send();
+
+    }
   
-    testerDemo();
+    plotlyGraph();
   
-    function testerDemo(){
+    function plotlyGraph(){
       var data = [{
         values: [19, 26, 55],
         labels: ['Homme', 'Femme', 'Non répertorié'],
@@ -87,19 +120,10 @@
             },
         }
       }
+
+      let config = {responsive: true};
+
+      console.log(typeof(layout.title.text));
       
-      Plotly.newPlot('graph',data,layout)
+      Plotly.newPlot('graph',data,layout,config);
     }
-
-
-
-    // var layout = {
-    //   height: 250,
-    //   width: 600,
-    //   title: {
-    //   text:'Répartition homme/femmes pour la ville',
-    //   font: {
-    //       family: 'Courier New, monospace',
-    //       size: 24
-    //     },
-    // }

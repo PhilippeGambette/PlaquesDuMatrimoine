@@ -176,6 +176,7 @@ ul{
 .container-map{
  @include padding-l-r;
  padding-bottom: 2rem;
+ overflow: auto;
  h2{
    text-transform: $uppercase;
    font-family: $Playfair-family;
@@ -189,8 +190,7 @@ ul{
 
 #graph{
   margin-top: 2rem;
-  width:600px;
-  height:250px;
+  width:600px;  
 }
 
 .footer-all{
@@ -325,17 +325,21 @@ hr{
       width: 100%;
     }
   }
+  
+  .container-map{
+    height: auto;
+  }
 
   .container-apropos{
     height: auto;
   }
 
-  .call-scroll{
-    display: none;
-  }
-
   #js-map{
     height: 300px;
+  }
+
+  #graph{
+    width: auto;
   }
 
 }

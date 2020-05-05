@@ -246,6 +246,7 @@ ul {
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 2rem;
+  overflow: auto;
 }
 
 .container-map h2 {
@@ -261,7 +262,6 @@ ul {
 #graph {
   margin-top: 2rem;
   width: 600px;
-  height: 250px;
 }
 
 .footer-all {
@@ -410,14 +410,17 @@ hr {
             align-items: center;
     width: 100%;
   }
+  .container-map {
+    height: auto;
+  }
   .container-apropos {
     height: auto;
   }
-  .call-scroll {
-    display: none;
-  }
   #js-map {
     height: 300px;
+  }
+  #graph {
+    width: auto;
   }
 }
 /*# sourceMappingURL=style.css.map */
