@@ -264,6 +264,12 @@ ul {
   width: 600px;
 }
 
+.results {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 2rem;
+}
+
 .footer-all {
   padding-left: 30px;
   padding-right: 30px;

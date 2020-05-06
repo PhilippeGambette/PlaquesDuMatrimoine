@@ -193,6 +193,11 @@ ul{
   width:600px;  
 }
 
+.results{
+  @include padding-l-r;
+  padding-bottom: 2rem;
+}
+
 .footer-all{
  @include padding-l-r;
  @include footer;

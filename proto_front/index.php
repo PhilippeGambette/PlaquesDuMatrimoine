@@ -8,10 +8,13 @@
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
  crossorigin=""/>
+ <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
  crossorigin=""></script>
  <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
  <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>
 </head>
 <body>
@@ -22,12 +25,15 @@
    <h1>Féminisons <br>
      l'espace public !</h1>
      <div class="input-c">
-       <form action="traite_ville.php" method="post">
-         <input class="input-home" id="input-home" list="list-dept" name="ville" type="text" placeholder="Rechercher une ville, un lieu...">
-        <?php include 'include/__datalist-departement.php';?>
+       <!-- <form action="" method="get"> -->
+         <input class="input-home" id="inputDpt" list="listDpt" name="departement" type="text" placeholder="Rechercher un département.">
+         <!-- <datalist id="listDpt"></datalist> -->
 
-         <button type="submit" class="submit-home">Go!</button>
-       </form>
+         <input class="input-home" id="inputCity" list="listCity" name="ville" type="text" placeholder="Rechercher une ville.">
+         <!-- <datalist id="listCity"></datalist> -->
+
+         <button type="submit" class="submit-home" id="searchCity">Go!</button>
+       <!-- </form> -->
      </div>
   </div>
 
@@ -42,8 +48,13 @@
   <div id="graph"></div>
  </div>
 
+ <div class="results">
+  
+ </div>
+
  <?php require 'include/__footer.php' ?>
 
-<script src="js/script-home.js"></script>
+<!-- <script src="js/script-home.js"></script> -->
+<script src="js/script-review.js"></script>
 </body>
 </html>
