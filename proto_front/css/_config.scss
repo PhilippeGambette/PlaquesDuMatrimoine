@@ -20,6 +20,11 @@ $link-color: #FFC482;
  padding-right: 30px;
 }
 
+@mixin paddin-l-r-map {
+ padding-left: 60px;
+ padding-right: 60px;
+}
+
 @mixin footer{
  background-color: $background-footer;
  color: $nav-elem-color;

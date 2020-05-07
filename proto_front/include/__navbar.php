@@ -3,6 +3,7 @@
    <a href="index.php">Plaques du Matrimoine</a>
   </div>
   <div class="nav-menu">
+   <a href="proximite.php">A proximité</a>
    <a href="#">Contribuer</a>
    <a href="#">Mon compte</a>
   </div>
