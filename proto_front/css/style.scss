@@ -54,6 +54,7 @@ ul{
 
 .input-home{
   border-radius: 20px;
+  margin-bottom: 10px;
   width: 20rem;
   height: 2.5rem;
   border: solid 1px black;
@@ -155,6 +156,19 @@ ul{
   h1{
     font-size: 3.125rem;
     font-family: $Playfair-family;
+  }
+
+  .input-c{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .submit-home{
+    width: 220px;
+    transition: ease-in-out 1s;
+    &:hover{
+      border-radius: 20px;
+    }
   }
 }
 
@@ -306,6 +320,19 @@ hr{
     padding: 0;
   }
 
+}
+
+// <= iPhone X
+@media(max-width:375px){
+  .container-left{
+    h1{
+      text-align: center;
+    }
+  }
+  .input-c{
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 // <= iPhone 6

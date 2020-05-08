@@ -14,7 +14,6 @@ $(document).ready(function () {
   var valueDpt;
 
   // $('.submit-home').hide();
-  $('.submit-home').css('pointer-events','none');
   $('.submit-home').css('cursor','not-allowed');
   $('#js-map').hide();
 

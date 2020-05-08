@@ -56,13 +56,15 @@ $(document).ready(function () {
         var resp = this.response;
         var resp = JSON.parse(resp);
         console.log(resp);
-        var cityName = resp.address.village.toUpperCase();
-        if (cityName === undefined) {
-          cityName = resp.address.town.toUpperCase();
+        if(resp.address.village){
+          var cityName = resp.address.village.toUpperCase();
+          console.log(true);
+        }else if(resp.address.town){
+          var cityName = resp.address.town.toUpperCase();
+        }else{
+          var cityName = resp.address.city.toUpperCase();
         }
         console.log(cityName);
-        var departement = resp.address.county;
-        console.log(departement);
         var codePostal = resp.address.postcode;
         console.log(codePostal.substring(0, 2));
         document.getElementById("cityname").innerHTML = cityName;

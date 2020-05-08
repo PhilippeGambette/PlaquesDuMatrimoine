@@ -80,6 +80,7 @@ ul {
 
 .input-home {
   border-radius: 20px;
+  margin-bottom: 10px;
   width: 20rem;
   height: 2.5rem;
   border: solid 1px black;
@@ -221,6 +222,26 @@ ul {
 .container-left h1 {
   font-size: 3.125rem;
   font-family: "Playfair";
+}
+
+.container-left .input-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.container-left .submit-home {
+  width: 220px;
+  -webkit-transition: ease-in-out 1s;
+  transition: ease-in-out 1s;
+}
+
+.container-left .submit-home:hover {
+  border-radius: 20px;
 }
 
 .container-right {
@@ -392,6 +413,20 @@ hr {
   }
   .footer-right ul {
     padding: 0;
+  }
+}
+
+@media (max-width: 375px) {
+  .container-left h1 {
+    text-align: center;
+  }
+  .input-c {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
 }
 

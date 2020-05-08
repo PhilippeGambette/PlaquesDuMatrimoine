@@ -28,6 +28,7 @@
       <h1>Féminisons <br>
         l'espace public !</h1>
       <div class="input-c">
+      <!-- <form> -->
         <input class="input-home" id="inputDpt" list="listDpt" name="departement" type="text"
           placeholder="Rechercher un département.">
         <!-- <datalist id="listDpt"></datalist> -->
@@ -37,6 +38,7 @@
         <!-- <datalist id="listCity"></datalist> -->
 
         <button type="submit" class="submit-home" id="searchCity">Go!</button>
+        <!-- </form> -->
       </div>
     </div>
 
