@@ -13,8 +13,10 @@ $(document).ready(function () {
 
   var valueDpt;
 
-  // $('.submit-home').hide();
-  $('.submit-home').css('cursor','not-allowed');
+  $('.submit-home').hide();
+  $('#inputCity').hide();
+  $('.phrase-cityname').hide();
+  // $('.submit-home').css('cursor','not-allowed');
   $('#js-map').hide();
 
   // Autocomplete departments
@@ -47,6 +49,7 @@ $(document).ready(function () {
   });
 
   function getDpt() {
+    $('#inputCity').show();
     valueDpt = $("#inputDpt").val().slice(0, 2);
     data = $.getJSON(`../data/OSM-communes-codeInseeOsm.json-${valueDpt}.json`, function (data) {
       // Crate an array
@@ -72,8 +75,8 @@ $(document).ready(function () {
 
   function getCity() {
     // Faut que je trouve le moyen de vérifier en jQuery si le champs est rempli avant de d'afficher le bouton
-    // $('.submit-home').show();
-    $('.submit-home').css('pointer-events','auto');
+    $('.submit-home').show();
+    // $('.submit-home').css('pointer-events','auto');
     $('.submit-home').css('cursor','pointer');
   }
 
@@ -84,6 +87,7 @@ $(document).ready(function () {
   })
 
   $("#searchCity").on("click", function () {
+    $('.phrase-cityname').show();
     zoomOk = false;
     var insert = "";
     console.log($("#inputCity").val());
@@ -98,13 +102,13 @@ $(document).ready(function () {
     if ((communes[$("#inputCity").val()])[0] + "".length == 4) {
       insert = "0";
     }
-
-
+    $("#cityname-h").html($('#inputCity').val());
+    $("#results").html("<p>Résultats pour la commune de "+$("#inputCity").val()+"</p>")
     $("#results").html("<p>Test texte </p>");
     $("#results").html("<p>Code INSEE : " + insert + communes[$("#inputCity").val()][0] + "</p>");
     $("#results").append("<p>Code OSM : " + communes[$("#inputCity").val()][1] + "</p>");
     $("#results").html('<p><br>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ?</p><ul><li>Si le nom de personne a bien été détecté dans la troisième colonne, mais qu’il n’a pas été trouvé dans Wikidata, n’hésitez pas à <a target="_blank" href="https://www.wikidata.org/wiki/Help:Aliases/fr#Inclusion">ajouter un <i>alias</i> à la personne concernée sur Wikidata</a> ou bien <a target="_blank" href="https://www.wikidata.org/wiki/Help:Items/fr">contribuer à Wikidata</a> pour créer la page de la personne concernée.</li><li>Sinon, copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</li></ul>');
-    $("#results").append("<table><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
+    $("#results").append("<table ><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
 
     // Show Leaflet map
     $("#js-map").show();
@@ -182,9 +186,9 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
-        $("table").append('<tr><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
     }
   }

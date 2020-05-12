@@ -4,7 +4,6 @@
   </div>
   <div class="nav-menu">
    <a href="proximite.php">A proximité</a>
-   <a href="#">Contribuer</a>
-   <a href="#">Mon compte</a>
+   <a href="contribuer.php">Contribuer</a>
   </div>
  </nav>

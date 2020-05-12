@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Plaques du Matrimoine</title>
+ <title>Plaques du Matrimoine | A proximité</title>
  <link rel="stylesheet" href="css/style.css">
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -15,6 +15,7 @@
  <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+ <script src="PapaParse-5.0.2/papaparse.js"></script>
  <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>
 </head>
 <body>

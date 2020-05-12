@@ -48,8 +48,10 @@
   </div>
   
   <div class="container-map">
+    <h2 class="phrase-cityname">Résultats pour la commune de <span id="cityname-h"></span></h2>
     <div id="js-map"></div>
   </div>
+  
 
   <div class="results" id="results">
   </div>

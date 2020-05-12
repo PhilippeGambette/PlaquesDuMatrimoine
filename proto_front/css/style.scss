@@ -130,6 +130,45 @@ ul{
   }
 }
 
+.container-soon{
+  @include padding-l-r;
+  @include height-container;
+  overflow: auto;
+  a{
+    font-family: $Belleza-family;
+  }
+}
+
+.all-soon{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-soon{
+  font-family: $Playfair-family;
+  font-size: 3.25rem;
+  text-transform: uppercase;
+}
+
+.quote-soon{
+  font-family: $Belleza-family;
+  font-size: 1.5rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.link-soon{
+  color: $link-color;
+  font-size: 1.5rem;
+  
+  &:visited{
+    color: $link-color;
+  }
+}
+
 .bloc-text{
   max-height: 100%;
     p{
@@ -223,6 +262,16 @@ ul{
 
 table{
   font-family: $Belleza-family;
+  border-top: solid 1px;
+  border-bottom: solid 1px;
+}
+
+tr{
+      border-bottom: solid 2px;
+}
+
+tr.border_bottom td {
+  border-bottom:1pt solid black;
 }
 
 .footer-all{
@@ -318,6 +367,14 @@ hr{
 
   .footer-right ul{
     padding: 0;
+  }
+
+  .title-soon{
+    font-size: 1.975rem;
+  }
+
+  .link-soon{
+    font-size: 1.3rem;
   }
 
 }

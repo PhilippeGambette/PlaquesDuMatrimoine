@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 
   async function getGeoCityName(lat, long) {
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open('GET', `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`, true);
 
     request.onload = function () {
@@ -82,32 +82,66 @@ $(document).ready(function () {
     request.send();
   }
 
-  function getDptByLocation(codePostal) {
+  function getDptByLocation(codePostal,cityName) {
     codePostal = codePostal.substring(0, 2);
-    var requestDpt = new XMLHttpRequest();
+    const requestDpt = new XMLHttpRequest();
+    // Le code postal est requis pour appeller le fichier JSON contenant le code INSEE de chaque commune
     requestDpt.open('GET', `../data/OSM-communes-codeInseeOsm.json-${codePostal}.json`, true);
 
     requestDpt.onload = function () {
-      console.log(`chemin du fichier: http://localhost/data/OSM-communes-codeInseeOsm.json-${codePostal}.json`);
       if (this.status >= 200 && this.status < 400) {
         var resp = this.response;
         resp = JSON.parse(resp);
         console.log(resp.communes);
         var tabCommunes = Object.keys(resp.communes);
         console.log(tabCommunes);
+        const codeINSEE = resp.communes[cityName][0];
+        getBanData(codeINSEE);
       } else {
         console.log("Erreur du serveur");
       }
     }
-
     requestDpt.onerror = function () {
       console.log("Erreur réseau");
     }
-
     requestDpt.send();
-
   }
 
+  function getBanData(codeINSEE){
+
+    const insert = "";
+    if(codeINSEE+"".length == 4){
+      insert = "0";
+    }
+
+    $.get("../data/BAN"+insert+codeINSEE.toString().substring(0, 2)+".csv")
+        .done(analyzeBanData)
+        .fail(function (jqxhr, textStatus, error) {
+          var err = textStatus + ", " + error;
+          console.log("Request Failed: " + err);
+        });
+  
+
+  function analyzeBanData(data) {
+    // Parse of OSM data with Papa Parse library
+    var csv = Papa.parse(data).data;
+    console.log(csv);  
+    var i = 0;
+    var codeCommune = codeINSEE;
+    for (element in Object.keys(csv)) {
+      if (i > 0) {
+        if (csv[i].length > 1) {
+          if (csv[i][3] == codeCommune) {
+            console.log(csv[i]);
+            addTableRow("voie", csv[i][2], csv[i][4] + " " + csv[i][5], "address");
+          }
+        }
+      }
+      i++;
+    }
+  }
+
+}
 
   function plotlyGraph(cityName) {
     var data = [{
@@ -132,6 +166,6 @@ $(document).ready(function () {
       responsive: true
     };
 
-    Plotly.newPlot('graph', data, layout, config);
+    Plotly.newPlot('graph', data, config);
   }
 })

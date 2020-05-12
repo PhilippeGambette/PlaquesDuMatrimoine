@@ -192,6 +192,60 @@ ul {
   color: #FFC482;
 }
 
+.container-soon {
+  padding-left: 30px;
+  padding-right: 30px;
+  height: calc(100vh - 40px);
+  overflow: auto;
+}
+
+.container-soon a {
+  font-family: "Belleza";
+}
+
+.all-soon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.title-soon {
+  font-family: "Playfair";
+  font-size: 3.25rem;
+  text-transform: uppercase;
+}
+
+.quote-soon {
+  font-family: "Belleza";
+  font-size: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.link-soon {
+  color: #FFC482;
+  font-size: 1.5rem;
+}
+
+.link-soon:visited {
+  color: #FFC482;
+}
+
 .bloc-text {
   max-height: 100%;
 }
@@ -303,6 +357,16 @@ ul {
 
 table {
   font-family: "Belleza";
+  border-top: solid 1px;
+  border-bottom: solid 1px;
+}
+
+tr {
+  border-bottom: solid 2px;
+}
+
+tr.border_bottom td {
+  border-bottom: 1pt solid black;
 }
 
 .footer-all {
@@ -413,6 +477,12 @@ hr {
   }
   .footer-right ul {
     padding: 0;
+  }
+  .title-soon {
+    font-size: 1.975rem;
+  }
+  .link-soon {
+    font-size: 1.3rem;
   }
 }
 
