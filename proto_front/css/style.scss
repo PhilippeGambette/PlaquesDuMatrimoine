@@ -230,7 +230,7 @@ ul{
  @include paddin-l-r-map;
  padding-bottom: 2rem;
  overflow: auto;
- h2{
+ h1{
    text-transform: $uppercase;
    font-family: $Playfair-family;
    font-size: 1.875rem;
@@ -257,6 +257,25 @@ ul{
   ul{
     font-family: $Belleza-family;
     font-size: 1.25rem;
+  }
+}
+
+.results-local{
+  @include padding-l-r;
+  padding-bottom: 2rem;
+  p{
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
+  ul{
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
+  h2{
+    font-family: $Playfair-family;
+    text-transform: uppercase;
   }
 }
 

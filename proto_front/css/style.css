@@ -324,7 +324,7 @@ ul {
   overflow: auto;
 }
 
-.container-map h2 {
+.container-map h1 {
   text-transform: "uppercase";
   font-family: "Playfair";
   font-size: 1.875rem;
@@ -353,6 +353,27 @@ ul {
 .results ul {
   font-family: "Belleza";
   font-size: 1.25rem;
+}
+
+.results-local {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 2rem;
+}
+
+.results-local p {
+  font-family: "Belleza";
+  font-size: 1.25rem;
+}
+
+.results-local ul {
+  font-family: "Belleza";
+  font-size: 1.25rem;
+}
+
+.results-local h2 {
+  font-family: "Playfair";
+  text-transform: uppercase;
 }
 
 table {

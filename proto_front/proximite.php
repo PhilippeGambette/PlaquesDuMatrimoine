@@ -21,8 +21,13 @@
 <body>
  <?php include 'include/__navbar.php' ?>
  <div class="container-map" id="container-map">
-  <h2 class="proximite">A proximité de <span id="cityname"></span></h2>
+  <h1 class="proximite">A proximité de <span id="cityname"></span></h1>
   <div id="js-map"></div>
+ </div>
+ 
+ <div class="results-local" id="results-local">
+  <h2>Statistiques</h2>
+  <p>X femmes représentées pour un total de Y lieux</p>
   <div id="graph"></div>
  </div>
  <?php require 'include/__footer.php' ?>
