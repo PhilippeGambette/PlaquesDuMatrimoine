@@ -48,8 +48,10 @@
   </div>
   
   <div class="container-map">
-    <h2 class="phrase-cityname">Résultats pour la commune de <span id="cityname-h"></span></h2>
+    <h2 class="phrase-cityname">Résultats pour <span id="cityname-h"></span></h2>
     <div id="js-map"></div>
+    <h3>Statistiques</h3>
+    <p><span id="nbFemmes">X</span> femmes représentées pour un total de <span id="nbLieux"></span> lieux</p>
   </div>
   
 
@@ -59,6 +61,6 @@
   <?php require 'include/__footer.php' ?>
 
   <script src="js/script-review.js"></script>
-</body>
+</body> 
 
 </html>

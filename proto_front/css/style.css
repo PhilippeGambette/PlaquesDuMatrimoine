@@ -171,7 +171,8 @@ ul {
   font-size: 6.25rem;
 }
 
-.quote-404, .author-404 {
+.quote-404,
+.author-404 {
   font-family: "Belleza";
   font-size: 1.5rem;
   display: -webkit-box;
@@ -328,6 +329,27 @@ ul {
   text-transform: "uppercase";
   font-family: "Playfair";
   font-size: 1.875rem;
+}
+
+.container-map p {
+  font-family: "Belleza";
+  font-size: 1.25rem;
+}
+
+.container-map ul {
+  font-family: "Belleza";
+  font-size: 1.25rem;
+}
+
+.container-map h2 {
+  font-family: "Playfair";
+  text-transform: uppercase;
+}
+
+.container-map h3 {
+  font-family: "Playfair";
+  text-transform: uppercase;
+  font-size: 1.5rem;
 }
 
 #js-map {

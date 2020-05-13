@@ -55,8 +55,27 @@ $(document).ready(function () {
     });
     tiles.addTo(mymap);
 
+    const femIcon = new L.Icon({
+      iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
+      shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const homIcon = new L.Icon({
+      iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+      shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+    
+
     // Création du marker
-    L.marker([lat, long]).addTo(mymap);
+    L.marker([lat, long],{icon: femIcon}).addTo(mymap);
   }
 
 
@@ -71,7 +90,6 @@ $(document).ready(function () {
         console.log(resp);
         if (resp.address.village) {
           var cityName = resp.address.village.toUpperCase();
-          console.log(true);
         } else if (resp.address.town) {
           var cityName = resp.address.town.toUpperCase();
         } else {
@@ -112,7 +130,7 @@ $(document).ready(function () {
         codeOSM = resp.communes[cityName][1];
         
         getBanData(codeINSEE);
-        $("#results-local").append("<table><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
+        $("#results-local").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
       } else {
         console.log("Erreur du serveur");
       }
@@ -147,7 +165,6 @@ $(document).ready(function () {
         if (i > 0) {
           if (csv[i].length > 1) {
             if (csv[i][3] == codeCommune) {
-              console.log(csv[i]);
               addTableRow("voie", csv[i][2], csv[i][4] + " " + csv[i][5], "address");
             }
           }
@@ -210,6 +227,8 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
+    const nblieux = $('.count-street').length;
+    $('#nbLieux').html(nblieux);
   }
 
   function getNextWikidata() {
@@ -323,9 +342,9 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="border_bottom foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
-        $("table").append('<tr class="border_bottom"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
     }
   }
@@ -390,7 +409,7 @@ $(document).ready(function () {
       height: 400,
       width: 600,
       title: {
-        text: `Répartition homme/femmes pour la ville de ${cityName}`,
+        text: "Répartition homme/femmes pour la ville de "+cityName,
         font: {
           family: 'Courier New, monospace',
           size: 24
@@ -402,6 +421,6 @@ $(document).ready(function () {
       responsive: true
     };
 
-    Plotly.newPlot('graph', data, config);
+    Plotly.newPlot('graph', data, layout, config);
   }
 })

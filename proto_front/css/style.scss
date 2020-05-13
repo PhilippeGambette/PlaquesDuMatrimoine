@@ -7,11 +7,11 @@
   box-sizing: border-box;
 }
 
-html{
- scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
+body {
   margin: 0;
 }
 
@@ -21,16 +21,17 @@ nav {
   align-items: center;
   margin-top: 1.25rem;
   @include padding-l-r;
+
   a {
     color: black;
   }
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-ul{
+ul {
   list-style: none;
 }
 
@@ -47,25 +48,27 @@ ul{
   height: 5vh;
   font-size: $text-nav-link;
   font-family: $Belleza-family;
-  img{
+
+  img {
     border-radius: 50%;
   }
 }
 
-.input-home{
+.input-home {
   border-radius: 20px;
   margin-bottom: 10px;
   width: 20rem;
   height: 2.5rem;
   border: solid 1px black;
   padding-left: 10px;
-  &::placeholder{
+
+  &::placeholder {
     font-size: 1rem;
     font-family: $Belleza-family
   }
 }
 
-.submit-home{
+.submit-home {
   text-align: center;
   border-radius: 4px;
   border: solid 1px black;
@@ -82,38 +85,41 @@ ul{
   width: 100%;
 }
 
-.container-apropos{
+.container-apropos {
   @include padding-l-r;
   @include height-container;
   overflow: auto;
-  h1{
+
+  h1 {
     font-size: 3.125rem;
     font-family: $Playfair-family;
   }
 }
 
-.container-404{
+.container-404 {
   @include padding-l-r;
   @include height-container;
   overflow: auto;
-  a{
+
+  a {
     font-family: $Belleza-family;
   }
 }
 
-.all-404{
+.all-404 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.number-404{
+.number-404 {
   font-family: $Playfair-family;
   font-size: 6.25rem;
 }
 
-.quote-404,.author-404{
+.quote-404,
+.author-404 {
   font-family: $Belleza-family;
   font-size: 1.5rem;
   display: flex;
@@ -121,38 +127,39 @@ ul{
   justify-content: center;
 }
 
-.link-404{
+.link-404 {
   color: $link-color;
   font-size: 1.5rem;
-  
-  &:visited{
+
+  &:visited {
     color: $link-color;
   }
 }
 
-.container-soon{
+.container-soon {
   @include padding-l-r;
   @include height-container;
   overflow: auto;
-  a{
+
+  a {
     font-family: $Belleza-family;
   }
 }
 
-.all-soon{
+.all-soon {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.title-soon{
+.title-soon {
   font-family: $Playfair-family;
   font-size: 3.25rem;
   text-transform: uppercase;
 }
 
-.quote-soon{
+.quote-soon {
   font-family: $Belleza-family;
   font-size: 1.5rem;
   display: flex;
@@ -160,52 +167,56 @@ ul{
   justify-content: center;
 }
 
-.link-soon{
+.link-soon {
   color: $link-color;
   font-size: 1.5rem;
-  
-  &:visited{
+
+  &:visited {
     color: $link-color;
   }
 }
 
-.bloc-text{
+.bloc-text {
   max-height: 100%;
-    p{
-      font-family: $Belleza-family;
-      font-size: 1.25rem;
-    }
-    ul{
-      font-family: $Belleza-family;
-      font-size: 1.25rem;
-    }
 
-    a{
+  p {
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
+  ul {
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
+  a {
+    color: $link-color;
+
+    &:visited {
       color: $link-color;
-
-      &:visited{
-        color: $link-color;
-      }
     }
+  }
 }
 
 .container-left {
   width: 50%;
   margin: auto;
-  h1{
+
+  h1 {
     font-size: 3.125rem;
     font-family: $Playfair-family;
   }
 
-  .input-c{
+  .input-c {
     display: flex;
     flex-direction: column;
   }
 
-  .submit-home{
+  .submit-home {
     width: 220px;
     transition: ease-in-out 1s;
-    &:hover{
+
+    &:hover {
       border-radius: 20px;
     }
   }
@@ -214,124 +225,151 @@ ul{
 .container-right {
   width: 50%;
   margin: auto;
-  img{
+
+  img {
     width: 100%;
     height: auto;
   }
 }
 
-.call-scroll{
+.call-scroll {
   display: flex;
   justify-content: space-around;
   margin-bottom: 35px;
 }
 
-.container-map{
- @include paddin-l-r-map;
- padding-bottom: 2rem;
- overflow: auto;
- h1{
-   text-transform: $uppercase;
-   font-family: $Playfair-family;
-   font-size: 1.875rem;
- }
+.container-map {
+  @include paddin-l-r-map;
+  padding-bottom: 2rem;
+  overflow: auto;
+
+  h1 {
+    text-transform: $uppercase;
+    font-family: $Playfair-family;
+    font-size: 1.875rem;
+  }
+
+  p {
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
+  ul {
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    font-family: $Playfair-family;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-family: $Playfair-family;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+  }
 }
 
-#js-map { 
-  height: 380px; 
+#js-map {
+  height: 380px;
 }
 
-#graph{
+#graph {
   margin-top: 2rem;
-  width:600px;  
+  width: 600px;
 }
 
-.results{
+.results {
   @include padding-l-r;
   padding-bottom: 2rem;
-  p{
+
+  p {
     font-family: $Belleza-family;
     font-size: 1.25rem;
   }
 
-  ul{
+  ul {
     font-family: $Belleza-family;
     font-size: 1.25rem;
   }
 }
 
-.results-local{
+.results-local {
   @include padding-l-r;
   padding-bottom: 2rem;
-  p{
+
+  p {
     font-family: $Belleza-family;
     font-size: 1.25rem;
   }
 
-  ul{
+  ul {
     font-family: $Belleza-family;
     font-size: 1.25rem;
   }
 
-  h2{
+  h2 {
     font-family: $Playfair-family;
     text-transform: uppercase;
   }
 }
 
-table{
+table {
   font-family: $Belleza-family;
   border-top: solid 1px;
   border-bottom: solid 1px;
 }
 
-tr{
-      border-bottom: solid 2px;
+tr {
+  border-bottom: solid 2px;
 }
 
 tr.border_bottom td {
-  border-bottom:1pt solid black;
+  border-bottom: 1pt solid black;
 }
 
-.footer-all{
- @include padding-l-r;
- @include footer;
+.footer-all {
+  @include padding-l-r;
+  @include footer;
 }
 
-.titre-footer{
- font-family: $Playfair-family;
+.titre-footer {
+  font-family: $Playfair-family;
 }
 
-.footer{
+.footer {
   display: flex;
-  p{
+
+  p {
     font-family: $Belleza-family;
   }
 }
 
 
-.footer-left{
+.footer-left {
   width: 50%;
-  p{
+
+  p {
     font-size: $font-size-text-footer;
   }
 }
 
-.footer-right{
+.footer-right {
   width: 50%;
 }
 
-.footer-right>ul>li>a{
+.footer-right>ul>li>a {
   font-family: $Belleza-family;
   color: $nav-elem-color;
   font-size: $font-size-text-link;
 }
 
-.copyright{
+.copyright {
   font-family: $Belleza-family;
 }
 
-hr{
+hr {
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -345,7 +383,8 @@ hr{
     margin-bottom: 1rem;
     display: flex;
     justify-content: center;
-    a{
+
+    a {
       text-align: center;
       white-space: nowrap;
       font-size: $nav-title-mobile;
@@ -354,113 +393,115 @@ hr{
 
   .nav-menu {
     width: 100%;
+
     a {
       font-size: 0.9375rem;
       text-decoration: none;
     }
   }
 
-  .container-main{
+  .container-main {
     flex-direction: column;
   }
 
-  .container-left{
+  .container-left {
     width: 100%;
   }
 
-  .container-right{
+  .container-right {
     display: none;
   }
 
-  .footer{
+  .footer {
     flex-direction: column;
   }
 
-  .footer-left{
+  .footer-left {
     width: 100%;
   }
 
-  .footer-right{
+  .footer-right {
     width: 100%;
   }
 
-  .footer-right ul{
+  .footer-right ul {
     padding: 0;
   }
 
-  .title-soon{
+  .title-soon {
     font-size: 1.975rem;
   }
 
-  .link-soon{
+  .link-soon {
     font-size: 1.3rem;
   }
 
 }
 
 // <= iPhone X
-@media(max-width:375px){
-  .container-left{
-    h1{
+@media(max-width:375px) {
+  .container-left {
+    h1 {
       text-align: center;
     }
   }
-  .input-c{
+
+  .input-c {
     justify-content: center;
     align-items: center;
   }
 }
 
 // <= iPhone 6
-@media(max-width:378px){
-  .nav-menu{
-    img{
+@media(max-width:378px) {
+  .nav-menu {
+    img {
       display: none;
     }
   }
 
-  .container-main{
+  .container-main {
     height: auto;
   }
 
-  .container-left{
-    h1{
+  .container-left {
+    h1 {
       text-align: center;
       display: flex;
       justify-content: center;
     }
 
-    .input-home{
+    .input-home {
       width: 220px;
       // margin: auto;
       margin-bottom: 1rem;
       justify-content: center;
     }
 
-    .submit-home{
+    .submit-home {
       margin-top: 8px;
     }
 
-    .input-c{
+    .input-c {
       display: flex;
       align-items: center;
       width: 100%;
     }
   }
-  
-  .container-map{
+
+  .container-map {
     height: auto;
   }
 
-  .container-apropos{
+  .container-apropos {
     height: auto;
   }
 
-  #js-map{
+  #js-map {
     height: 300px;
   }
 
-  #graph{
+  #graph {
     width: auto;
   }
 

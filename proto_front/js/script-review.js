@@ -15,7 +15,7 @@ $(document).ready(function () {
 
   $('.submit-home').hide();
   $('#inputCity').hide();
-  $('.phrase-cityname').hide();
+  $('.container-map').hide();
   // $('.submit-home').css('cursor','not-allowed');
   $('#js-map').hide();
 
@@ -87,7 +87,7 @@ $(document).ready(function () {
   })
 
   $("#searchCity").on("click", function () {
-    $('.phrase-cityname').show();
+    $('.container-map').show();
     zoomOk = false;
     var insert = "";
     console.log($("#inputCity").val());
@@ -108,7 +108,7 @@ $(document).ready(function () {
     $("#results").html("<p>Code INSEE : " + insert + communes[$("#inputCity").val()][0] + "</p>");
     $("#results").append("<p>Code OSM : " + communes[$("#inputCity").val()][1] + "</p>");
     $("#results").html('<p><br>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ?</p><ul><li>Si le nom de personne a bien été détecté dans la troisième colonne, mais qu’il n’a pas été trouvé dans Wikidata, n’hésitez pas à <a target="_blank" href="https://www.wikidata.org/wiki/Help:Aliases/fr#Inclusion">ajouter un <i>alias</i> à la personne concernée sur Wikidata</a> ou bien <a target="_blank" href="https://www.wikidata.org/wiki/Help:Items/fr">contribuer à Wikidata</a> pour créer la page de la personne concernée.</li><li>Sinon, copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</li></ul>');
-    $("#results").append("<table ><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>")
+    $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
 
     // Show Leaflet map
     $("#js-map").show();
@@ -186,9 +186,9 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="border_bottom foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
-        $("table").append('<tr class="border_bottom"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
     }
   }
@@ -226,6 +226,8 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
+    const nblieux = $('.count-street').length;
+    $('#nbLieux').html(nblieux);
   }
 
 

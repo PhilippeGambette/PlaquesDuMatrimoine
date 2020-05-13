@@ -14,7 +14,6 @@
  crossorigin=""></script>
  <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
  <script src="PapaParse-5.0.2/papaparse.js"></script>
  <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>
 </head>
@@ -27,7 +26,7 @@
  
  <div class="results-local" id="results-local">
   <h2>Statistiques</h2>
-  <p>X femmes représentées pour un total de Y lieux</p>
+  <p><span id="nbFemmes">X</span> femmes représentées pour un total de <span id="nbLieux"></span> lieux</p>
   <div id="graph"></div>
  </div>
  <?php require 'include/__footer.php' ?>
