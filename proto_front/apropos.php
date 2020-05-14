@@ -24,6 +24,7 @@
      trouvés, pour identifier leur genre.</li>
    </ul>
    <p>Il s'agit d'un outil expérimental en cours de développement. <b>Les résultats obtenus ne sont pas fiables à 100%</b> et doivent être vérifiés : des problèmes d'homonymie, l'absence de prénom, d'accents ou de majuscules peuvent expliquer les erreurs les plus fréquentes.</p>
+   <p>Cette plateforme à été créé en partie par <a href="https://github.com/alanakra">Alan Akra</a>, étudiant en DUT MMI à Champs-sur-Marne avec la contribution de <a href="http://igm.univ-mlv.fr/~gambette/">Philippe Gambette</a> dans le cadre du stage de deuxième année</p>
   </div>
  </div>
 

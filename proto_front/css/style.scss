@@ -239,7 +239,7 @@ ul {
 }
 
 .container-map {
-  @include paddin-l-r-map;
+  @include padding-l-r-map;
   padding-bottom: 2rem;
   overflow: auto;
 
@@ -281,7 +281,7 @@ ul {
 }
 
 .results {
-  @include padding-l-r;
+  @include padding-l-r-map;
   padding-bottom: 2rem;
 
   p {
@@ -292,6 +292,14 @@ ul {
   ul {
     font-family: $Belleza-family;
     font-size: 1.25rem;
+  }
+
+  a{
+    color: $link-color;
+
+    &:visited{
+      color: $link-color;
+    }
   }
 }
 

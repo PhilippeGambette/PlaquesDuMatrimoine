@@ -12,7 +12,7 @@
  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
  crossorigin=""></script>
- <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+ <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
  <script src="PapaParse-5.0.2/papaparse.js"></script>
  <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>

@@ -185,12 +185,12 @@ ul {
 }
 
 .link-404 {
-  color: #FFC482;
+  color: #005680;
   font-size: 1.5rem;
 }
 
 .link-404:visited {
-  color: #FFC482;
+  color: #005680;
 }
 
 .container-soon {
@@ -239,12 +239,12 @@ ul {
 }
 
 .link-soon {
-  color: #FFC482;
+  color: #005680;
   font-size: 1.5rem;
 }
 
 .link-soon:visited {
-  color: #FFC482;
+  color: #005680;
 }
 
 .bloc-text {
@@ -262,11 +262,11 @@ ul {
 }
 
 .bloc-text a {
-  color: #FFC482;
+  color: #005680;
 }
 
 .bloc-text a:visited {
-  color: #FFC482;
+  color: #005680;
 }
 
 .container-left {
@@ -362,8 +362,8 @@ ul {
 }
 
 .results {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 60px;
+  padding-right: 60px;
   padding-bottom: 2rem;
 }
 
@@ -375,6 +375,14 @@ ul {
 .results ul {
   font-family: "Belleza";
   font-size: 1.25rem;
+}
+
+.results a {
+  color: #005680;
+}
+
+.results a:visited {
+  color: #005680;
 }
 
 .results-local {

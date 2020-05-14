@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  'use strict';
+  // 'use strict';
   var element;
   var str2;
   var foundNames = [];
@@ -9,6 +9,7 @@ $(document).ready(function () {
   var themeNumber;
   var nameNb;
   var previousQuery;
+  var nblieux;
 
   document.getElementById("container-map").style.display = "none";
   $("#results-local").hide();
@@ -56,8 +57,8 @@ $(document).ready(function () {
     tiles.addTo(mymap);
 
     const femIcon = new L.Icon({
-      iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
-      shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+      iconUrl: 'img/leaf-red.png',
+      shadowUrl: 'img/leaf-shadow.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
@@ -65,8 +66,17 @@ $(document).ready(function () {
     });
 
     const homIcon = new L.Icon({
-      iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
-      shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+      iconUrl: 'img/leaf-green.png',
+      shadowUrl: 'img/leaf-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const neuIcon = new L.Icon({
+      iconUrl: 'img/leaf-orange.png',
+      shadowUrl: 'img/leaf-shadow.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
@@ -227,7 +237,7 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
-    const nblieux = $('.count-street').length;
+    nblieux = $('.count-street').length;
     $('#nbLieux').html(nblieux);
   }
 
@@ -409,10 +419,10 @@ $(document).ready(function () {
       height: 400,
       width: 600,
       title: {
-        text: "Répartition homme/femmes pour la ville de "+cityName,
+        text: `Répartition hommes/femmes pour ${cityName}`,
         font: {
-          family: 'Courier New, monospace',
-          size: 24
+          family: 'Arial, San Francisco',
+          size: 15
         },
       }
     }
@@ -421,6 +431,6 @@ $(document).ready(function () {
       responsive: true
     };
 
-    Plotly.newPlot('graph', data, layout, config);
+    Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
   }
 })
