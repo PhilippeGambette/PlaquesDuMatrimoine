@@ -56,7 +56,7 @@
 
   <?php require 'include/__footer.php' ?>
 
-  <script src="js/script-review.js"></script>
+  <script src="js/script-home.js"></script>
 </body> 
 
 </html>

@@ -308,10 +308,11 @@ $(document).ready(function () {
     return $.ajax(endpointUrl, settings).then(doneCallback);
   }
 
-  // Review how Wikidata works
+
   function wikidataNameResults(data) {
     if (data.results.bindings.length > 0) {
       var person = foundNames[nameNb];
+      console.log(person);
       if (data.results.bindings[0].personLabel != undefined) {
         person = data.results.bindings[0].personLabel.value;
       }
@@ -325,7 +326,7 @@ $(document).ready(function () {
       }
       // Try ES6 syntax
       $('.foundName' + nameNb).each(function () {
-        $(this).append('<td><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
+        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
         if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
           var coordinates = $(this).find(".coord").html();
           if (!zoomOk) {
@@ -347,6 +348,27 @@ $(document).ready(function () {
         setTimeout(getNextWikidataAlias, 1000);
       } else {
         // Alias not found, look for the next name on Wikidata
+
+        if (person != undefined){
+		      console.log(person);
+		     var gender = guessGender(person);
+		     if(gender == "masculin" || gender == "féminin"){
+		       $( '.foundName'+nameNb ).each(function(){
+		         $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+		         if(gender == "féminin" || gender == "femme transgenre"){
+		            var coordinates = $(this).find(".coord").html();
+		            if(!zoomOk){
+		               map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
+		               zoomOk = true;
+		               //console.log("Zoom sur :"+coordinates);
+		            }
+		            L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+		         }
+		       });
+		        
+         }
+        }
+
         nameNb++;
         previousQuery = "name";
         setTimeout(getNextWikidata, 1000);
@@ -372,6 +394,61 @@ $(document).ready(function () {
         '} order by desc(?sitelinks)';
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
     }
+  }
+
+  function guessGender(gender){
+    $( '.foundName'+nameNb ).each(function(){
+      $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+      if(gender == "féminin" || gender == "femme transgenre"){
+         var coordinates = $(this).find(".coord").html();
+         if(!zoomOk){
+            map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
+            zoomOk = true;
+            //console.log("Zoom sur :"+coordinates);
+         }
+         L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+      }
+    });
+  }
+
+
+  function plotlyGraph(cityName) {
+    var nombreHommes = $('.masculin').length;
+    var nombreFemmes = $('.féminin').length;
+    nblieux = $('.count-street').length;
+    var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
+    console.log(nblieux);
+
+    var txHom = (nombreHommes/nblieux)*100;
+    var txFem = (nombreFemmes/nblieux)*100;
+    var txNd = (nombreNd/nblieux)*100;
+
+    $('#nbFemmes').html(nombreFemmes);
+
+
+    var data = [{
+      values: [txHom, txFem, txNd],
+      labels: ['Homme', 'Femme', 'Non répertorié'],
+      type: 'pie'
+    }];
+
+    var layout = {
+      height: 400,
+      width: 600,
+      title: {
+        text: `Répartition hommes/femmes pour ${cityName}`,
+        font: {
+          family: 'Arial, San Francisco',
+          size: 15
+        },
+      }
+    }
+
+    let config = {
+      responsive: true
+    };
+
+    Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
   }
 
 

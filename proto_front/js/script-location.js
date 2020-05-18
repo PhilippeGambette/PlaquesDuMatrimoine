@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  // 'use strict';
+  'use strict';
   var element;
   var str2;
   var foundNames = [];
@@ -18,6 +18,7 @@ $(document).ready(function () {
   locationConsent();
   
   function locationConsent() {
+    console.log('Appel à la fonction locationConsent()');
     //Check if browser supports W3C Geolocation API
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
@@ -26,6 +27,7 @@ $(document).ready(function () {
   
   //Get latitude and longitude;
   function successFunction(position) {
+    console.log('Appel à la fonction successFunction()');
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
     document.getElementById("container-map").style.display = '';
@@ -43,6 +45,7 @@ $(document).ready(function () {
   }
 
   async function map(lat, long) {
+    console.log('Appel à la fonction map()');
 
     // Making map and tiles
     const mymap = L.map('js-map').setView([lat, long], 14);
@@ -90,6 +93,7 @@ $(document).ready(function () {
 
 
   async function getGeoCityName(lat, long) {
+    console.log('Appel à la fonction geoCityName()');
     const request = new XMLHttpRequest();
     request.open('GET', `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`, true);
 
@@ -110,7 +114,6 @@ $(document).ready(function () {
         console.log(codePostal.substring(0, 2));
         document.getElementById("cityname").innerHTML = cityName;
         getDptByLocation(codePostal, cityName);
-        plotlyGraph(cityName);
       } else {
         console.log("Erreur du serveur");
       }
@@ -124,6 +127,7 @@ $(document).ready(function () {
   }
 
   function getDptByLocation(codePostal, cityName) {
+    console.log('Appel à la fonction getDptByLocation()');
     codePostal = codePostal.substring(0, 2);
     const requestDpt = new XMLHttpRequest();
     // Le code postal est requis pour appeller le fichier JSON contenant le code INSEE de chaque commune
@@ -195,6 +199,7 @@ $(document).ready(function () {
   }
 
   function sendGeodatamineQuery() {
+    console.log('Appel à la fonction geoDataMineQuery()');
     $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
       .done(analyzeGeoData)
       .fail(function (jqxhr, textStatus, error) {
@@ -205,6 +210,7 @@ $(document).ready(function () {
 
 
   function analyzeGeoData(data) {
+    console.log('Appel à la fonction analyzeBanData()');
     // For each topic, store where to find the following information: name / latitude / longitude
     var findData = {
       "sports": [3, 0, -1],
@@ -242,6 +248,7 @@ $(document).ready(function () {
   }
 
   function getNextWikidata() {
+    console.log('Appel à la fonction getNextWikiData()');
     if (nameNb < foundNames.length) {
       var nom = foundNames[nameNb];
       // Retrieve some information from Wikidata:
@@ -261,6 +268,7 @@ $(document).ready(function () {
   }
 
   function makeSPARQLQuery(endpointUrl, sparqlQuery, doneCallback) {
+    console.log('Appel à la fonction makeSPARQLQuery()');
     var settings = {
       headers: {
         Accept: 'application/sparql-results+json'
@@ -273,6 +281,7 @@ $(document).ready(function () {
   }
 
     function wikidataNameResults(data) {
+      console.log('Appel à la fonction WikidataNameResuts()');
       if (data.results.bindings.length > 0) {
         var person = foundNames[nameNb];
         if (data.results.bindings[0].personLabel != undefined) {
@@ -288,7 +297,7 @@ $(document).ready(function () {
         }
         // Try ES6 syntax
         $('.foundName' + nameNb).each(function () {
-          $(this).append('<td><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
+          $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
           if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
             var coordinates = $(this).find(".coord").html();
             if (!zoomOk) {
@@ -310,6 +319,27 @@ $(document).ready(function () {
           setTimeout(getNextWikidataAlias, 1000);
         } else {
           // Alias not found, look for the next name on Wikidata
+
+          if (person != undefined){
+            console.log(person);
+           var gender = guessGender(person);
+           if(gender == "masculin" || gender == "féminin"){
+             $( '.foundName'+nameNb ).each(function(){
+               $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+               if(gender == "féminin" || gender == "femme transgenre"){
+                  var coordinates = $(this).find(".coord").html();
+                  if(!zoomOk){
+                     map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
+                     zoomOk = true;
+                     //console.log("Zoom sur :"+coordinates);
+                  }
+                  L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+               }
+             });
+              
+           }
+          }
+
           nameNb++;
           previousQuery = "name";
           setTimeout(getNextWikidata, 1000);
@@ -318,6 +348,7 @@ $(document).ready(function () {
     }
 
     function getNextWikidataAlias() {
+      console.log('Appel à la fonction getNextWikidataAlias()');
       if (nameNb < foundNames.length) {
         var nom = foundNames[nameNb];
         //console.log("Alias ?"+nom);
@@ -338,6 +369,7 @@ $(document).ready(function () {
     }
 
   function addTableRow(topic, name, coord, topicCode) {
+    console.log('Appel à la fonction addTableRow()');
     if (name != "") {
       var coordinates = analyzeCoord(coord);
       var analyzedName = analyzeName(name, topicCode);
@@ -361,6 +393,7 @@ $(document).ready(function () {
 
 
   function analyzeCoord(str) {
+    console.log('Appel à la fonction analyseCoord()');
     var result = "";
     var patternStart = ["POLYGON ((", "POINT ("];
     var patternStop = [",", ")"];
@@ -381,6 +414,7 @@ $(document).ready(function () {
   }
 
   function analyzeName(str, type) {
+    console.log('Appel à la fonction analyseName()');
     var result = "";
     str2 = str.toLowerCase();
     var allPrefixes = {
@@ -407,10 +441,41 @@ $(document).ready(function () {
   }
 
 
+  function guessGender(gender){
+    console.log('Appel à la fonction guessGender()');
+    $( '.foundName'+nameNb ).each(function(){
+      $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+      if(gender == "féminin" || gender == "femme transgenre"){
+         var coordinates = $(this).find(".coord").html();
+         if(!zoomOk){
+            map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
+            zoomOk = true;
+            //console.log("Zoom sur :"+coordinates);
+         }
+         L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+      }
+    });
+  }
 
-  function plotlyGraph(cityName) {
+
+
+  function plotlyGraph() {
+    console.log('Appel à la fonction plotlyGraph()');
+    var nombreHommes = $('.masculin').length;
+    var nombreFemmes = $('.féminin').length;
+    nblieux = $('.count-street').length;
+    var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
+    console.log(nblieux);
+
+    var txHom = (nombreHommes/nblieux)*100;
+    var txFem = (nombreFemmes/nblieux)*100;
+    var txNd = (nombreNd/nblieux)*100;
+
+    $('#nbFemmes').html(nombreFemmes);
+    
+
     var data = [{
-      values: [19, 26, 55],
+      values: [txHom, txFem, txNd],
       labels: ['Homme', 'Femme', 'Non répertorié'],
       type: 'pie'
     }];
@@ -419,7 +484,7 @@ $(document).ready(function () {
       height: 400,
       width: 600,
       title: {
-        text: `Répartition hommes/femmes pour ${cityName}`,
+        text: `Répartition hommes/femmes`,
         font: {
           family: 'Arial, San Francisco',
           size: 15
