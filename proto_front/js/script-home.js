@@ -1,23 +1,41 @@
 $(document).ready(function () {
-  var data;
+  var cityName;
   var communes;
-  var themes;
+  var data;
+  var foundNames = [];
+  var map;
+  var nameNb = 0;
+  var previousQuery = "";
   var themeLabels;
   var themeNumber;
-  var foundNames = [];
-  var nameNb = 0;
-  var zoomOk = false;
-  var map;
-  var previousQuery = "";
-
-
+  var themes;
   var valueDpt;
+  var zoomOk = false;
+
+  const femIcon = new L.Icon({
+    iconUrl: 'img/leaf-red.png',
+    shadowUrl: 'img/leaf-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  const homIcon = new L.Icon({
+    iconUrl: 'img/leaf-green.png',
+    shadowUrl: 'img/leaf-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
   $('.submit-home').hide();
   $('#inputCity').hide();
   $('.container-map').hide();
-  // $('.submit-home').css('cursor','not-allowed');
   $('#js-map').hide();
+  $('#phraseResult').hide();
+  $('.pluriel').hide();
 
   // Autocomplete departments
   var depts = ["Ain", "Aisne", "Allier", "Alpes-de-Haute-Provence", "Hautes-Alpes", "Alpes-Maritimes", "Ardèche", "Ardennes", "Ariège", "Aube", "Aude", "Aveyron", "Bouches-du-Rhône", "Calvados", "Cantal", "Charente", "Charente-Maritime", "Cher", "Corrèze", "Corse-du-Sud", "Haute-Corse", "Côte-d’Or", "Côtes-d'Armor", "Creuse", "Dordogne", "Doubs", "Drôme", "Eure", "Eure-et-Loir", "Finistère", "Gard", "Haute-Garonne", "Gers", "Gironde", "Hérault", "Ille-et-Vilaine", "Indre", "Indre-et-Loire", "Isère", "Jura", "Landes", "Loir-et-Cher", "Loire", "Haute-Loire", "Loire-Atlantique", "Loiret", "Lot", "Lot-et-Garonne", "Lozère", "Maine-et-Loire", "Manche", "Marne", "Haute-Marne", "Mayenne", "Meurthe-et-Moselle", "Meuse", "Morbihan", "Moselle", "Nièvre", "Nord", "Oise", "Orne", "Pas-de-Calais", "Puy-de-Dôme", "Pyrénées-Atlantiques", "Hautes-Pyrénées", "Pyrénées-Orientales", "Bas-Rhin", "Haut-Rhin", "Rhône", "Haute-Saône", "Saône-et-Loire", "Sarthe", "Savoie", "Haute-Savoie", "Paris", "Seine-Maritime", "Seine-et-Marne", "Yvelines", "Deux-Sèvres", "Somme", "Tarn", "Tarn-et-Garonne", "Var", "Vaucluse", "Vendée", "Vienne", "Haute-Vienne", "Vosges", "Yonne", "Territoire de Belfort", "Essonne", "Hauts-de-Seine", "Seine-Saint-Denis", "Val-de-Marne", "Val-d’Oise"];
@@ -69,20 +87,15 @@ $(document).ready(function () {
   }
 
   $("#inputDpt").on("autocompleteselect", function () {
-    // An event listener call getDpt() every 200 milliseconds
     setTimeout(getDpt, 200);
   })
 
   function getCity() {
-    // Faut que je trouve le moyen de vérifier en jQuery si le champs est rempli avant de d'afficher le bouton
     $('.submit-home').show();
-    // $('.submit-home').css('pointer-events','auto');
     $('.submit-home').css('cursor','pointer');
   }
 
   $("#inputCity").on("autocompleteselect", function () {
-    // An event listener call getDpt() every 200 milliseconds
-    // Fail: I can still empty the city field and the button will be visible.
     setTimeout(getCity, 200);
   })
 
@@ -91,6 +104,7 @@ $(document).ready(function () {
     zoomOk = false;
     var insert = "";
     console.log($("#inputCity").val());
+    cityName = $("#inputCity").val();
     console.log(communes[$("#inputCity").val()]);
     //  Test
     console.log(communes[$("#inputCity").val()][0]);
@@ -293,6 +307,8 @@ $(document).ready(function () {
         '} order by desc(?sitelinks)';
 
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
+    }else{
+      plotlyGraph();
     }
   }
 
@@ -334,7 +350,11 @@ $(document).ready(function () {
             zoomOk = true;
             //console.log("Zoom sur :"+coordinates);
           }
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: femIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+        }else{
+          // For men
+          var coordinates = $(this).find(".coord").html();
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: homIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
         }
       });
       // Look for the next name on Wikidata
@@ -412,7 +432,8 @@ $(document).ready(function () {
   }
 
 
-  function plotlyGraph(cityName) {
+  function plotlyGraph() {
+    console.warn('Appel à la fonction plotlyGraph()');
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
     nblieux = $('.count-street').length;
@@ -423,12 +444,19 @@ $(document).ready(function () {
     var txFem = (nombreFemmes/nblieux)*100;
     var txNd = (nombreNd/nblieux)*100;
 
-    $('#nbFemmes').html(nombreFemmes);
-
+    
+    $('#phraseResult').show();
+    
+    if(nombreFemmes > 0){
+      $('.pluriel').show();
+      $('#nbFemmes').html(nombreFemmes);
+    }else{
+      $('#nbFemmes').html("Aucune")
+    }
 
     var data = [{
       values: [txHom, txFem, txNd],
-      labels: ['Homme', 'Femme', 'Non répertorié'],
+      labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
       type: 'pie'
     }];
 

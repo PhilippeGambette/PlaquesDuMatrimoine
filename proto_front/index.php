@@ -47,9 +47,10 @@
     <h2 class="phrase-cityname">Résultats pour <span id="cityname-h"></span></h2>
     <div id="js-map"></div>
     <h3>Statistiques</h3>
-    <p><span id="nbFemmes">X</span> femmes représentées pour un total de <span id="nbLieux"></span> lieux</p>
+    <p id="phraseResult"><span id="nbFemmes"></span> femme<span class="pluriel">s</span> représentée<span class="pluriel">s</span> pour un total de <span id="nbLieux"></span> lieux</p>
   </div>
   
+  <div id="graph"></div>
 
   <div class="results" id="results">
   </div>
@@ -57,6 +58,7 @@
   <?php require 'include/__footer.php' ?>
 
   <script src="js/script-home.js"></script>
+  <!-- <script src="js/plaquesDuMatrimoine.js"></script> -->
 </body> 
 
 </html>

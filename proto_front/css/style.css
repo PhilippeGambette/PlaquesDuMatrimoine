@@ -385,6 +385,11 @@ ul {
   color: #005680;
 }
 
+.results h2 {
+  font-family: "Playfair";
+  text-transform: uppercase;
+}
+
 .results-local {
   padding-left: 30px;
   padding-right: 30px;
@@ -399,11 +404,6 @@ ul {
 .results-local ul {
   font-family: "Belleza";
   font-size: 1.25rem;
-}
-
-.results-local h2 {
-  font-family: "Playfair";
-  text-transform: uppercase;
 }
 
 table {

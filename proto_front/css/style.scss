@@ -301,6 +301,10 @@ ul {
       color: $link-color;
     }
   }
+  h2 {
+    font-family: $Playfair-family;
+    text-transform: uppercase;
+  }
 }
 
 .results-local {
@@ -317,10 +321,6 @@ ul {
     font-size: 1.25rem;
   }
 
-  h2 {
-    font-family: $Playfair-family;
-    text-transform: uppercase;
-  }
 }
 
 table {

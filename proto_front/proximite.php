@@ -24,9 +24,9 @@
   <div id="js-map"></div>
  </div>
  
- <div class="results-local" id="results-local">
+ <div class="results" id="results">
   <h2>Statistiques</h2>
-  <p><span id="nbFemmes">X</span> femmes représentées pour un total de <span id="nbLieux"></span> lieux</p>
+  <p id="phraseResult"><span id="nbFemmes"></span> femme<span id="pluriel">s</span> représentées pour un total de <span id="nbLieux"></span> lieux</p>
   <div id="graph"></div>
  </div>
  <?php require 'include/__footer.php' ?>

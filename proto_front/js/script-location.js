@@ -1,37 +1,57 @@
 $(document).ready(function () {
   'use strict';
-  var element;
-  var str2;
-  var foundNames = [];
+  var cityName;
   var codeOSM;
-  var themes;
+  var element;
+  var foundNames = [];
+  var nameNb;
+  var nblieux;
+  var previousQuery;
+  var str2;
   var themeLabels;
   var themeNumber;
-  var nameNb;
-  var previousQuery;
-  var nblieux;
+  var themes;
+  var zoomOk;
 
+  const femIcon = new L.Icon({
+    iconUrl: 'img/leaf-red.png',
+    shadowUrl: 'img/leaf-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  const homIcon = new L.Icon({
+    iconUrl: 'img/leaf-green.png',
+    shadowUrl: 'img/leaf-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  // The div showing the results is hidden by default
   document.getElementById("container-map").style.display = "none";
-  $("#results-local").hide();
+  $("#results").hide();
   $(".proximite").hide();
+  $('#phraseResult').hide();
+  $('#pluriel').hide();
   
   locationConsent();
-  
+  // It is necessary for the user to accept the location on his device, if OK, the successFunction() is called else errorFunction
   function locationConsent() {
-    console.log('Appel à la fonction locationConsent()');
-    //Check if browser supports W3C Geolocation API
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
     }
   }
   
-  //Get latitude and longitude;
+  //Get latitude and longitude of the device, Call functions map() and getGeoCityName()
   function successFunction(position) {
-    console.log('Appel à la fonction successFunction()');
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
     document.getElementById("container-map").style.display = '';
-    $("#results-local").show();
+    $("#results").show();
     $(".proximite").show();
     console.log(lat);
     console.log(long);
@@ -40,12 +60,11 @@ $(document).ready(function () {
   }
 
   function errorFunction() {
-    console.log("La localisation n'est pas activée sur votre appareil");
-    // location.replace("geolocation-denial.php");
+    console.warn("La localisation n'est pas activée sur votre appareil");
   }
 
+  // Show the user position on the map
   async function map(lat, long) {
-    console.log('Appel à la fonction map()');
 
     // Making map and tiles
     const mymap = L.map('js-map').setView([lat, long], 14);
@@ -59,24 +78,6 @@ $(document).ready(function () {
     });
     tiles.addTo(mymap);
 
-    const femIcon = new L.Icon({
-      iconUrl: 'img/leaf-red.png',
-      shadowUrl: 'img/leaf-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-
-    const homIcon = new L.Icon({
-      iconUrl: 'img/leaf-green.png',
-      shadowUrl: 'img/leaf-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-
     const neuIcon = new L.Icon({
       iconUrl: 'img/leaf-orange.png',
       shadowUrl: 'img/leaf-shadow.png',
@@ -85,15 +86,13 @@ $(document).ready(function () {
       popupAnchor: [1, -34],
       shadowSize: [41, 41]
     });
-    
-
-    // Création du marker
-    L.marker([lat, long],{icon: femIcon}).addTo(mymap);
+    // Marker creation
+    L.marker([lat, long],{icon: neuIcon}).addTo(mymap).bindPopup("Ma position");
   }
 
 
+  // This function make an Ajax request to nominatim with geographic coordinates and return JSON data who contains the name of the City, postcode and the function getDptByLocation is call with this two parameters
   async function getGeoCityName(lat, long) {
-    console.log('Appel à la fonction geoCityName()');
     const request = new XMLHttpRequest();
     request.open('GET', `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`, true);
 
@@ -103,11 +102,11 @@ $(document).ready(function () {
         var resp = JSON.parse(resp);
         console.log(resp);
         if (resp.address.village) {
-          var cityName = resp.address.village.toUpperCase();
+          cityName = resp.address.village.toUpperCase();
         } else if (resp.address.town) {
-          var cityName = resp.address.town.toUpperCase();
+          cityName = resp.address.town.toUpperCase();
         } else {
-          var cityName = resp.address.city.toUpperCase();
+          cityName = resp.address.city.toUpperCase();
         }
         console.log(cityName);
         var codePostal = resp.address.postcode;
@@ -126,11 +125,12 @@ $(document).ready(function () {
     request.send();
   }
 
+
+  // This function make an Ajax request to à JSON file in local for extract the INSEE and OSM code, if success the function getBanData() is called with INSEE code in parameter
   function getDptByLocation(codePostal, cityName) {
-    console.log('Appel à la fonction getDptByLocation()');
     codePostal = codePostal.substring(0, 2);
     const requestDpt = new XMLHttpRequest();
-    // Le code postal est requis pour appeller le fichier JSON contenant le code INSEE de chaque commune
+    // The postcode is required to call the JSON file who contains the INSEE code of each city
     requestDpt.open('GET', `../data/OSM-communes-codeInseeOsm.json-${codePostal}.json`, true);
 
     requestDpt.onload = function () {
@@ -142,9 +142,11 @@ $(document).ready(function () {
         console.log(tabCommunes);
         const codeINSEE = resp.communes[cityName][0];
         codeOSM = resp.communes[cityName][1];
+        console.log(codeINSEE);
+        console.log(codeOSM);
         
         getBanData(codeINSEE);
-        $("#results-local").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
+        $("#results").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
       } else {
         console.log("Erreur du serveur");
       }
@@ -155,6 +157,8 @@ $(document).ready(function () {
     requestDpt.send();
   }
 
+
+  // This function make Ajax request to BAN of the department of location and call analyseBanData() function who convert the csv file to JSON data to be readable by the browser
   function getBanData(codeINSEE) {
 
     const insert = "";
@@ -199,7 +203,6 @@ $(document).ready(function () {
   }
 
   function sendGeodatamineQuery() {
-    console.log('Appel à la fonction geoDataMineQuery()');
     $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
       .done(analyzeGeoData)
       .fail(function (jqxhr, textStatus, error) {
@@ -210,7 +213,6 @@ $(document).ready(function () {
 
 
   function analyzeGeoData(data) {
-    console.log('Appel à la fonction analyzeBanData()');
     // For each topic, store where to find the following information: name / latitude / longitude
     var findData = {
       "sports": [3, 0, -1],
@@ -248,7 +250,6 @@ $(document).ready(function () {
   }
 
   function getNextWikidata() {
-    console.log('Appel à la fonction getNextWikiData()');
     if (nameNb < foundNames.length) {
       var nom = foundNames[nameNb];
       // Retrieve some information from Wikidata:
@@ -264,11 +265,12 @@ $(document).ready(function () {
         '} order by desc(?sitelinks)';
 
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
+    }else{
+      plotlyGraph();
     }
   }
 
   function makeSPARQLQuery(endpointUrl, sparqlQuery, doneCallback) {
-    console.log('Appel à la fonction makeSPARQLQuery()');
     var settings = {
       headers: {
         Accept: 'application/sparql-results+json'
@@ -281,9 +283,9 @@ $(document).ready(function () {
   }
 
     function wikidataNameResults(data) {
-      console.log('Appel à la fonction WikidataNameResuts()');
       if (data.results.bindings.length > 0) {
         var person = foundNames[nameNb];
+        console.log(person);
         if (data.results.bindings[0].personLabel != undefined) {
           person = data.results.bindings[0].personLabel.value;
         }
@@ -305,7 +307,11 @@ $(document).ready(function () {
               zoomOk = true;
               //console.log("Zoom sur :"+coordinates);
             }
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon:femIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+          }else{
+            // For men
+            var coordinates = $(this).find(".coord").html();
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: homIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
           }
         });
         // Look for the next name on Wikidata
@@ -348,7 +354,6 @@ $(document).ready(function () {
     }
 
     function getNextWikidataAlias() {
-      console.log('Appel à la fonction getNextWikidataAlias()');
       if (nameNb < foundNames.length) {
         var nom = foundNames[nameNb];
         //console.log("Alias ?"+nom);
@@ -369,7 +374,6 @@ $(document).ready(function () {
     }
 
   function addTableRow(topic, name, coord, topicCode) {
-    console.log('Appel à la fonction addTableRow()');
     if (name != "") {
       var coordinates = analyzeCoord(coord);
       var analyzedName = analyzeName(name, topicCode);
@@ -393,7 +397,6 @@ $(document).ready(function () {
 
 
   function analyzeCoord(str) {
-    console.log('Appel à la fonction analyseCoord()');
     var result = "";
     var patternStart = ["POLYGON ((", "POINT ("];
     var patternStop = [",", ")"];
@@ -414,7 +417,6 @@ $(document).ready(function () {
   }
 
   function analyzeName(str, type) {
-    console.log('Appel à la fonction analyseName()');
     var result = "";
     str2 = str.toLowerCase();
     var allPrefixes = {
@@ -442,7 +444,6 @@ $(document).ready(function () {
 
 
   function guessGender(gender){
-    console.log('Appel à la fonction guessGender()');
     $( '.foundName'+nameNb ).each(function(){
       $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
       if(gender == "féminin" || gender == "femme transgenre"){
@@ -460,7 +461,7 @@ $(document).ready(function () {
 
 
   function plotlyGraph() {
-    console.log('Appel à la fonction plotlyGraph()');
+    console.warn('Appel à la fonction plotlyGraph()');
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
     nblieux = $('.count-street').length;
@@ -471,12 +472,17 @@ $(document).ready(function () {
     var txFem = (nombreFemmes/nblieux)*100;
     var txNd = (nombreNd/nblieux)*100;
 
+    
+    $('#phraseResult').show();
     $('#nbFemmes').html(nombreFemmes);
     
+    if(nombreFemmes > 0){
+      $('#pluriel').show();
+    }
 
     var data = [{
       values: [txHom, txFem, txNd],
-      labels: ['Homme', 'Femme', 'Non répertorié'],
+      labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
       type: 'pie'
     }];
 
@@ -484,7 +490,7 @@ $(document).ready(function () {
       height: 400,
       width: 600,
       title: {
-        text: `Répartition hommes/femmes`,
+        text: `Répartition hommes/femmes pour ${cityName}`,
         font: {
           family: 'Arial, San Francisco',
           size: 15
