@@ -207,14 +207,20 @@ ul {
     font-family: $Playfair-family;
   }
 
+  p{
+    font-family: $Belleza-family;
+    font-size: 1.25rem;
+  }
+
   .input-c {
     display: flex;
     flex-direction: column;
   }
 
   .submit-home {
-    width: 220px;
+    width: 20rem;
     transition: ease-in-out 1s;
+    font-weight: bold;
 
     &:hover {
       border-radius: 20px;

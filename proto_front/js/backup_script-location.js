@@ -389,9 +389,9 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
-        $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
     }
   }
@@ -477,17 +477,12 @@ $(document).ready(function () {
     $('#phraseResult').show();
     $('#nbFemmes').html(nombreFemmes);
     
-    if(nombreFemmes > 1){
-      $('.pluriel').show();
-      $('#nbFemmes').html(nombreFemmes);
-    }else if(nombreFemmes == 1){
-      $('#nbFemmes').html(nombreFemmes);
-    }else{
-      $('#nbFemmes').html("Aucune")
+    if(nombreFemmes > 0){
+      $('#pluriel').show();
     }
 
     var data = [{
-      values: [txHom, txFem, txNa, txNd],
+      values: [txHom, txFem, txNd],
       labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
       type: 'pie'
     }];

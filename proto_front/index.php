@@ -27,6 +27,7 @@
     <div class="container-left">
       <h1>Féminisons <br>
         l'espace public !</h1>
+      <p>Repérez les voies et les lieux d'une commune de France métropolitaine, nommés d'après des femmes.</p>
       <div class="input-c">
         <input class="input-home" id="inputDpt" list="listDpt" name="departement" type="text"
           placeholder="Rechercher un département.">
@@ -34,7 +35,7 @@
         <input class="input-home" id="inputCity" list="listCity" name="ville" type="text"
           placeholder="Rechercher une ville.">
 
-        <button type="submit" class="submit-home" id="searchCity">Go!</button>
+        <button type="submit" class="submit-home" id="searchCity">Rechercher</button>
       </div>
     </div>
 
@@ -57,8 +58,9 @@
 
   <?php require 'include/__footer.php' ?>
 
-  <script src="js/script-home.js"></script>
-  <!-- <script src="js/plaquesDuMatrimoine.js"></script> -->
+  <!-- <script src="js/plaquesDuMatrimoine.js"></script>
+  <script src="js/script-home.js"></script> -->
+  <script src="js/backup_script-home.js"></script>
 </body> 
 
 </html>

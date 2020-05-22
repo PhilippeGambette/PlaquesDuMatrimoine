@@ -1,38 +1,10 @@
-$(document).ready(function () {
- console.log("hey");
-
- function sendGeodatamineQuery() {
-   $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + communes[$("#inputCity").val()][1])
-     .done(analyzeGeoData)
-     .fail(function (jqxhr, textStatus, error) {
-       var err = textStatus + ", " + error;
-       console.log("Request Failed: " + err);
-     });
- }
-
-
- function analyzeBanData(data) {
-   // Parse of OSM data with Papa Parse library
-   var csv = Papa.parse(data).data;
-   console.log(csv);  
-   var i = 0;
-   var insert = "";
-   if ((communes[$("#inputCity").val()][0] + "").length == 4) {
-     insert = "0";
-   }
-   var codeCommune = insert + communes[$("#inputCity").val()][0];
-   for (element in Object.keys(csv)) {
-     if (i > 0) {
-       if (csv[i].length > 1) {
-         if (csv[i][3] == codeCommune) {
-           //console.log(csv[i]);
-           addTableRow("voie", csv[i][2], csv[i][4] + " " + csv[i][5], "address");
-         }
-       }
-     }
-     i++;
-   }
- }
+  var previousQuery = "";
+  var themes;
+  var themeNumber;
+  var themeLabels;
+  function testFactor(){    
+    console.log("hey");
+  }
 
  function addTableRow(topic, name, coord, topicCode) {
    if (name != "") {
@@ -49,9 +21,9 @@ $(document).ready(function () {
          lineNb = foundNames.indexOf(analyzedName);
        }
 
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
      } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
      }
    }
  }
@@ -282,43 +254,50 @@ $(document).ready(function () {
 
 
  function plotlyGraph() {
-   console.warn('Appel à la fonction plotlyGraph()');
-   var nombreHommes = $('.masculin').length;
-   var nombreFemmes = $('.féminin').length;
-   nblieux = $('.count-street').length;
-   var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
-   console.log(nblieux);
+  console.warn('Appel à la fonction plotlyGraph()');
+  var nombreHommes = $('.masculin').length;
+  var nombreFemmes = $('.féminin').length;
+  nblieux = $('.count-street').length;
+  var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
+  console.log(nblieux);
 
-   var txHom = (nombreHommes/nblieux)*100;
-   var txFem = (nombreFemmes/nblieux)*100;
-   var txNd = (nombreNd/nblieux)*100;
+  var txHom = (nombreHommes/nblieux)*100;
+  var txFem = (nombreFemmes/nblieux)*100;
+  var txNd = (nombreNd/nblieux)*100;
 
-   $('#nbFemmes').html(nombreFemmes);
+  
+  $('#phraseResult').show();
+  
+  if(nombreFemmes > 1){
+    $('.pluriel').show();
+    $('#nbFemmes').html(nombreFemmes);
+  }else if(nombreFemmes == 1){
+    $('#nbFemmes').html(nombreFemmes);
+  }else{
+    $('#nbFemmes').html("Aucune")
+  }
 
-   var data = [{
-     values: [txHom, txFem, txNd],
-     labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
-     type: 'pie'
-   }];
+  var data = [{
+    values: [txHom, txFem, txNa, txNd],
+    labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
+    type: 'pie'
+  }];
 
-   var layout = {
-     height: 400,
-     width: 600,
-     title: {
-       text: `Répartition hommes/femmes pour ${cityName}`,
-       font: {
-         family: 'Arial, San Francisco',
-         size: 15
-       },
-     }
-   }
+  var layout = {
+    height: 400,
+    width: 600,
+    title: {
+      text: `Répartition hommes/femmes pour ${cityName}`,
+      font: {
+        family: 'Arial, San Francisco',
+        size: 15
+      },
+    }
+  }
 
-   let config = {
-     responsive: true
-   };
+  let config = {
+    responsive: true
+  };
 
-   Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
- }
-
-
-})
+  Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
+}
