@@ -17,6 +17,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="PapaParse-5.0.2/papaparse.js"></script>
+  <script async src="https://kit.fontawesome.com/997660e778.js" crossorigin="anonymous"></script>
   <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>
 </head>
 
@@ -35,7 +36,7 @@
         <input class="input-home" id="inputCity" list="listCity" name="ville" type="text"
           placeholder="Rechercher une ville.">
 
-        <button type="submit" class="submit-home" id="searchCity">Rechercher</button>
+        <button type="submit" class="submit-home" id="searchCity">Rechercher <i class="fas fa-search"></i></button>
       </div>
     </div>
 
@@ -58,8 +59,8 @@
 
   <?php require 'include/__footer.php' ?>
 
-  <!-- <script src="js/plaquesDuMatrimoine.js"></script>
-  <script src="js/script-home.js"></script> -->
+  <!-- <script src="js/plaquesDuMatrimoine.js"></script> -->
+  <!-- <script src="js/script-home.js"></script> -->
   <script src="js/backup_script-home.js"></script>
 </body> 
 

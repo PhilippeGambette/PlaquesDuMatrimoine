@@ -39,6 +39,7 @@ $(document).ready(function () {
   $('#pluriel').hide();
   
   locationConsent();
+
   // It is necessary for the user to accept the location on his device, if OK, the successFunction() is called else errorFunction
   function locationConsent() {
     if (navigator.geolocation) {
@@ -86,6 +87,7 @@ $(document).ready(function () {
       popupAnchor: [1, -34],
       shadowSize: [41, 41]
     });
+
     // Marker creation
     L.marker([lat, long],{icon: neuIcon}).addTo(mymap).bindPopup("Ma position");
   }
@@ -130,6 +132,7 @@ $(document).ready(function () {
   function getDptByLocation(codePostal, cityName) {
     codePostal = codePostal.substring(0, 2);
     const requestDpt = new XMLHttpRequest();
+
     // The postcode is required to call the JSON file who contains the INSEE code of each city
     requestDpt.open('GET', `../data/OSM-communes-codeInseeOsm.json-${codePostal}.json`, true);
 
@@ -214,6 +217,7 @@ $(document).ready(function () {
 
 
   function analyzeGeoData(data) {
+
     // For each topic, store where to find the following information: name / latitude / longitude
     var findData = {
       "sports": [3, 0, -1],
@@ -246,6 +250,8 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
+
+     // Counts the number of rows in the table and displays the result. 
     nblieux = $('.count-street').length;
     $('#nbLieux').html(nblieux);
   }
@@ -253,17 +259,18 @@ $(document).ready(function () {
   function getNextWikidata() {
     if (nameNb < foundNames.length) {
       var nom = foundNames[nameNb];
-      // Retrieve some information from Wikidata:
+
+      // Querying the Wikidata database with a SPARQL query and call makeSPARQLQuery function() who has wikadataNameResults as callback function
       var endpointUrl = 'https://query.wikidata.org/sparql',
-        sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
-        '  {?person rdfs:label "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@en}.\n' +
-        '  ?person wdt:P31 wd:Q5.\n' +
-        '  ?person wdt:P21 ?gender.\n' +
-        '  ?person wikibase:sitelinks ?sitelinks.\n' +
-        '  SERVICE wikibase:label {\n' +
-        '     bd:serviceParam wikibase:language "fr" .\n' +
-        '   }\n' +
-        '} order by desc(?sitelinks)';
+       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
+       '  {?person rdfs:label "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@en}.\n' +
+       '  ?person wdt:P31 wd:Q5.\n' +
+       '  ?person wdt:P21 ?gender.\n' +
+       '  ?person wikibase:sitelinks ?sitelinks.\n' +
+       '  SERVICE wikibase:label {\n' +
+       '     bd:serviceParam wikibase:language "fr" .\n' +
+       '   }\n' +
+      '} order by desc(?sitelinks)';
 
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
     }else{
@@ -298,7 +305,7 @@ $(document).ready(function () {
         if (data.results.bindings[0].genderLabel != undefined) {
           genderLabel = data.results.bindings[0].genderLabel.value;
         }
-        // Try ES6 syntax
+       
         $('.foundName' + nameNb).each(function () {
           $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
           if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
@@ -308,13 +315,14 @@ $(document).ready(function () {
               zoomOk = true;
               //console.log("Zoom sur :"+coordinates);
             }
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon:femIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
           }else{
             // For men
             var coordinates = $(this).find(".coord").html();
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: homIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
           }
         });
+
         // Look for the next name on Wikidata
         nameNb++;
         previousQuery = "name";
@@ -325,8 +333,8 @@ $(document).ready(function () {
           previousQuery = "alias";
           setTimeout(getNextWikidataAlias, 1000);
         } else {
-          // Alias not found, look for the next name on Wikidata
 
+          // Alias not found, look for the next name on Wikidata
           if (person != undefined){
             console.log(person);
            var gender = guessGender(person);
@@ -360,16 +368,16 @@ $(document).ready(function () {
         //console.log("Alias ?"+nom);
         // Retrieve some information from Wikidata:
         var endpointUrl = 'https://query.wikidata.org/sparql',
-          sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
-          //'  ?person wdt:P742 "'+nom+'".\n'+
-          '  {?person rdfs:label "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@en}.\n' +
-          '  ?person wdt:P31 wd:Q5.\n' +
-          '  ?person wdt:P21 ?gender.\n' +
-          '  ?person wikibase:sitelinks ?sitelinks.\n' +
-          '  SERVICE wikibase:label {\n' +
-          '     bd:serviceParam wikibase:language "fr" .\n' +
-          '   }\n' +
-          '} order by desc(?sitelinks)';
+         sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma WHERE {\n' +
+         '  {?person rdfs:label "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr} UNION {?person skos:altLabel \"' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @en}.\n' +
+         '  ?person wdt:P31 wd:Q5.\n' +
+         '  ?person wdt:P21 ?gender.\n' +
+         '  ?sitelink schema:about ?person;\n' +
+         '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
+         '    schema:name ?lemma.\n' +
+         '  SERVICE wikibase:label {bd:serviceParam wikibase:language \"fr,en\"}\n' +
+         '  } order by desc(?sitelink)';
+
         makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
       }
     }
@@ -462,9 +470,12 @@ $(document).ready(function () {
 
 
   function plotlyGraph() {
-    console.warn('Appel à la fonction plotlyGraph()');
+    
+    // Count the number of lines with a "female" or "male" class
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
+
+    
     nblieux = $('.count-street').length;
     var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
     console.log(nblieux);

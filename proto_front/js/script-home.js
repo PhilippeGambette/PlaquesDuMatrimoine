@@ -2,7 +2,6 @@ $(document).ready(function () {
   var cityName;
   var communes;
   var data;
-  var foundNames = [];
   var map;
   var nameNb = 0;
   var valueDpt;

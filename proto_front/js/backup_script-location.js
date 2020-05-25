@@ -255,15 +255,15 @@ $(document).ready(function () {
       var nom = foundNames[nameNb];
       // Retrieve some information from Wikidata:
       var endpointUrl = 'https://query.wikidata.org/sparql',
-        sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
-        '  {?person rdfs:label "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@en}.\n' +
-        '  ?person wdt:P31 wd:Q5.\n' +
-        '  ?person wdt:P21 ?gender.\n' +
-        '  ?person wikibase:sitelinks ?sitelinks.\n' +
-        '  SERVICE wikibase:label {\n' +
-        '     bd:serviceParam wikibase:language "fr" .\n' +
-        '   }\n' +
-        '} order by desc(?sitelinks)';
+       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
+       '  {?person rdfs:label "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@en}.\n' +
+       '  ?person wdt:P31 wd:Q5.\n' +
+       '  ?person wdt:P21 ?gender.\n' +
+       '  ?person wikibase:sitelinks ?sitelinks.\n' +
+       '  SERVICE wikibase:label {\n' +
+       '     bd:serviceParam wikibase:language "fr" .\n' +
+       '   }\n' +
+       '} order by desc(?sitelinks)';
 
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
     }else{
@@ -360,16 +360,15 @@ $(document).ready(function () {
         //console.log("Alias ?"+nom);
         // Retrieve some information from Wikidata:
         var endpointUrl = 'https://query.wikidata.org/sparql',
-          sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
-          //'  ?person wdt:P742 "'+nom+'".\n'+
-          '  {?person rdfs:label "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@en}.\n' +
+          sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma WHERE {\n' +
+          '  {?person rdfs:label "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr} UNION {?person skos:altLabel \"' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @en}.\n' +
           '  ?person wdt:P31 wd:Q5.\n' +
           '  ?person wdt:P21 ?gender.\n' +
-          '  ?person wikibase:sitelinks ?sitelinks.\n' +
-          '  SERVICE wikibase:label {\n' +
-          '     bd:serviceParam wikibase:language "fr" .\n' +
-          '   }\n' +
-          '} order by desc(?sitelinks)';
+          '  ?sitelink schema:about ?person;\n' +
+          '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
+          '    schema:name ?lemma.\n' +
+          '  SERVICE wikibase:label {bd:serviceParam wikibase:language \"fr,en\"}\n' +
+          '  } order by desc(?sitelink)';
         makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
       }
     }

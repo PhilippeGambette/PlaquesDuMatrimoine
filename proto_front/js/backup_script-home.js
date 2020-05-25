@@ -12,7 +12,7 @@ $(document).ready(function () {
   var valueDpt;
   var zoomOk = false;
 
-  const femIcon = new L.Icon({
+  const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -21,7 +21,7 @@ $(document).ready(function () {
     shadowSize: [41, 41]
   });
 
-  const homIcon = new L.Icon({
+  const HOMICON = new L.Icon({
     iconUrl: 'img/leaf-green.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -117,11 +117,8 @@ $(document).ready(function () {
       insert = "0";
     }
     $("#cityname-h").html($('#inputCity').val());
-    $("#results").html("<p>Résultats pour la commune de "+$("#inputCity").val()+"</p>")
-    $("#results").html("<p>Test texte </p>");
     $("#results").html("<p>Code INSEE : " + insert + communes[$("#inputCity").val()][0] + "</p>");
     $("#results").append("<p>Code OSM : " + communes[$("#inputCity").val()][1] + "</p>");
-    $("#results").html('<p><br>Vous voulez nous aider à améliorer les résultats ci-dessous, trouvés automatiquement en interrogeant <a href="https://www.wikidata.org/">Wikidata</a> ?</p><p>Si le nom de personne a bien été détecté dans la troisième colonne, mais qu’il n’a pas été trouvé dans Wikidata, n’hésitez pas à <a target="_blank" href="https://www.wikidata.org/wiki/Help:Aliases/fr#Inclusion">ajouter un <i>alias</i> à la personne concernée sur Wikidata</a> ou bien <a target="_blank" href="https://www.wikidata.org/wiki/Help:Items/fr">contribuer à Wikidata</a> pour créer la page de la personne concernée.</p><p>Sinon, copiez-collez le tableau dans un logiciel de tableur puis remplissez la dernière colonne pour les noms de personnes qui n’ont pas été trouvés dans Wikidata, et transmettez-le à l’adresse philippe.gambette<&alpha;rob&alpha;se>u-pem.fr</p>');
     $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
 
     // Show Leaflet map
@@ -240,8 +237,8 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
-    const nblieux = $('.count-street').length;
-    $('#nbLieux').html(nblieux);
+    const NBLIEUX = $('.count-street').length;
+    $('#NBLIEUX').html(NBLIEUX);
   }
 
 
@@ -351,11 +348,11 @@ $(document).ready(function () {
             zoomOk = true;
             //console.log("Zoom sur :"+coordinates);
           }
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: femIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
         }else{
           // For men
           var coordinates = $(this).find(".coord").html();
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: homIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
         }
       });
       // Look for the next name on Wikidata
@@ -403,16 +400,16 @@ $(document).ready(function () {
       //console.log("Alias ?"+nom);
       // Retrieve some information from Wikidata:
       var endpointUrl = 'https://query.wikidata.org/sparql',
-        sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
-        //'  ?person wdt:P742 "'+nom+'".\n'+
-        '  {?person rdfs:label "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '"@en}.\n' +
+        sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma WHERE {\n' +
+        '  {?person rdfs:label "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr} UNION {?person skos:altLabel "' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr} UNION {?person skos:altLabel \"' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @en}.\n' +
         '  ?person wdt:P31 wd:Q5.\n' +
         '  ?person wdt:P21 ?gender.\n' +
-        '  ?person wikibase:sitelinks ?sitelinks.\n' +
-        '  SERVICE wikibase:label {\n' +
-        '     bd:serviceParam wikibase:language "fr" .\n' +
-        '   }\n' +
-        '} order by desc(?sitelinks)';
+        '  ?sitelink schema:about ?person;\n' +
+        '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
+        '    schema:name ?lemma.\n' +
+        '  SERVICE wikibase:label {bd:serviceParam wikibase:language \"fr,en\"}\n' +
+        '  } order by desc(?sitelink)';
+        
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
     }
   }
@@ -437,13 +434,13 @@ $(document).ready(function () {
     console.warn('Appel à la fonction plotlyGraph()');
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
-    nblieux = $('.count-street').length;
-    var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
-    console.log(nblieux);
+    NBLIEUX = $('.count-street').length;
+    var nombreNd = (NBLIEUX - (nombreHommes+nombreFemmes));
+    console.log(NBLIEUX);
 
-    var txHom = (nombreHommes/nblieux)*100;
-    var txFem = (nombreFemmes/nblieux)*100;
-    var txNd = (nombreNd/nblieux)*100;
+    var txHom = (nombreHommes/NBLIEUX)*100;
+    var txFem = (nombreFemmes/NBLIEUX)*100;
+    var txNd = (nombreNd/NBLIEUX)*100;
 
     
     $('#phraseResult').show();
