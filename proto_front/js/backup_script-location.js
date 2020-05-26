@@ -5,7 +5,7 @@ $(document).ready(function () {
   var element;
   var foundNames = [];
   var nameNb;
-  var nblieux;
+  var NBLIEUX;
   var previousQuery;
   var str2;
   var themeLabels;
@@ -13,7 +13,7 @@ $(document).ready(function () {
   var themes;
   var zoomOk;
 
-  const femIcon = new L.Icon({
+  const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -22,7 +22,7 @@ $(document).ready(function () {
     shadowSize: [41, 41]
   });
 
-  const homIcon = new L.Icon({
+  const HOMICON = new L.Icon({
     iconUrl: 'img/leaf-green.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -246,8 +246,6 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
-    nblieux = $('.count-street').length;
-    $('#nbLieux').html(nblieux);
   }
 
   function getNextWikidata() {
@@ -308,11 +306,11 @@ $(document).ready(function () {
               zoomOk = true;
               //console.log("Zoom sur :"+coordinates);
             }
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon:femIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon:FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
           }else{
             // For men
             var coordinates = $(this).find(".coord").html();
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: homIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
           }
         });
         // Look for the next name on Wikidata
@@ -388,7 +386,7 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + "</td><td>" + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td class="detected_name">' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
         $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + "</td><td>" + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
@@ -464,13 +462,13 @@ $(document).ready(function () {
     console.warn('Appel à la fonction plotlyGraph()');
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
-    nblieux = $('.count-street').length;
-    var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
-    console.log(nblieux);
+    NBLIEUX = $('.count-street').length;
+    var nombreNd = (NBLIEUX - (nombreHommes+nombreFemmes));
+    console.log(NBLIEUX);
 
-    var txHom = (nombreHommes/nblieux)*100;
-    var txFem = (nombreFemmes/nblieux)*100;
-    var txNd = (nombreNd/nblieux)*100;
+    var txHom = (nombreHommes/NBLIEUX)*100;
+    var txFem = (nombreFemmes/NBLIEUX)*100;
+    var txNd = (nombreNd/NBLIEUX)*100;
 
     
     $('#phraseResult').show();

@@ -13,7 +13,7 @@ $(document).ready(function () {
   var themes;
   var zoomOk;
 
-  const femIcon = new L.Icon({
+  const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -22,7 +22,7 @@ $(document).ready(function () {
     shadowSize: [41, 41]
   });
 
-  const homIcon = new L.Icon({
+  const HOMICON = new L.Icon({
     iconUrl: 'img/leaf-green.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -397,7 +397,7 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td class="detected_name">' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
         $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
@@ -474,8 +474,8 @@ $(document).ready(function () {
     // Count the number of lines with a "female" or "male" class
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
-
-    
+    var detectedName = $('.detected_name').length;      
+    var nombreNonIdentifie = detectedName - (nombreHommes+nombreFemmes);
     nblieux = $('.count-street').length;
     var nombreNd = (nblieux - (nombreHommes+nombreFemmes));
     console.log(nblieux);
@@ -483,7 +483,7 @@ $(document).ready(function () {
     var txHom = (nombreHommes/nblieux)*100;
     var txFem = (nombreFemmes/nblieux)*100;
     var txNd = (nombreNd/nblieux)*100;
-
+    var txNi = (nombreNonIdentifie/nblieux)*100;
     
     $('#phraseResult').show();
     $('#nbFemmes').html(nombreFemmes);
@@ -498,8 +498,8 @@ $(document).ready(function () {
     }
 
     var data = [{
-      values: [txHom, txFem, txNa, txNd],
-      labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
+      values: [txHom, txFem, txNi, txNd],
+      labels: ['Homme', 'Femme','Non identifié', 'Aucun nom de personne identifié'],
       type: 'pie'
     }];
 

@@ -15,6 +15,7 @@
  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
  <script src="PapaParse-5.0.2/papaparse.js"></script>
+ <script async src="https://kit.fontawesome.com/997660e778.js" crossorigin="anonymous"></script>
  <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>
 </head>
 <body>
@@ -25,7 +26,7 @@
  </div>
  
  <div class="results" id="results">
-  <h2>Statistiques</h2>
+  <h2>Statistiques <i class="fas fa-chart-pie"></i></h2>
   <p id="phraseResult"><span id="nbFemmes"></span> femme<span id="pluriel">s</span> représentées pour un total de <span id="nbLieux"></span> lieux</p>
   <div id="graph"></div>
  </div>

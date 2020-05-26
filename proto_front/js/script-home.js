@@ -7,7 +7,7 @@ $(document).ready(function () {
   var valueDpt;
   var zoomOk = false;
 
-  const femIcon = new L.Icon({
+  const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -16,7 +16,7 @@ $(document).ready(function () {
     shadowSize: [41, 41]
   });
 
-  const homIcon = new L.Icon({
+  const HOMICON = new L.Icon({
     iconUrl: 'img/leaf-green.png',
     shadowUrl: 'img/leaf-shadow.png',
     iconSize: [25, 41],
@@ -39,7 +39,7 @@ $(document).ready(function () {
     "2A", "2B", "21", "22", "23", "24", "25", "26", "27", "28", "29",
     "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
     "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
-    "50", "51", , "53", "54", "55", "56", "57", "58", "59",
+    "50", "51", "52", "53", "54", "55", "56", "57", "58", "59",
     "60", "61", "62", "63", "64", "65", "66", "67", "68", "69",
     "70", "71", "72", "73", "74", "75", "76", "77", "78", "79",
     "80", "81", "82", "83", "84", "85", "86", "87", "88", "89",
@@ -104,10 +104,7 @@ $(document).ready(function () {
     console.log(communes[$("#inputCity").val()]);
     //  Test
     console.log(communes[$("#inputCity").val()][0]);
-    console.log(communes[$("#inputCity").val()][0] + "");
     console.log(communes[$("#inputCity").val()][1] + "");
-    console.log((communes[$("#inputCity").val()][0] + "").length);
-    console.log((communes[$("#inputCity").val()])[0]);
 
     if ((communes[$("#inputCity").val()])[0] + "".length == 4) {
       insert = "0";
@@ -200,6 +197,18 @@ $(document).ready(function () {
         $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
     }
+  }
+
+  function sendGeodatamineQuery() {
+    if(inputCity){
+      codeOSM = communes[inputCity][1];
+    }
+    $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
+      .done(analyzeGeoData)
+      .fail(function (jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        console.log("Request Failed: " + err);
+      });
   }
 
 })

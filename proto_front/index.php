@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plaques du Matrimoine</title>
   <link rel="stylesheet" href="css/style.css">
-  <link async rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin="" />
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
@@ -48,7 +48,7 @@
   <div class="container-map">
     <h2 class="phrase-cityname">Résultats pour <span id="cityname-h"></span></h2>
     <div id="js-map"></div>
-    <h3>Statistiques</h3>
+    <h3>Statistiques <i class="fas fa-chart-pie"></i></h3>
     <p id="phraseResult"><span id="nbFemmes"></span> femme<span class="pluriel">s</span> représentée<span class="pluriel">s</span> pour un total de <span id="nbLieux"></span> lieux</p>
   </div>
   

@@ -4,6 +4,7 @@
   var themeLabels;
   var foundNames = [];
   var codeOSM;
+  var communes;
   function testFactor(){    
     console.log("hey");
   }
@@ -66,19 +67,6 @@
    const nblieux = $('.count-street').length;
    $('#nbLieux').html(nblieux);
  }
-
- function sendGeodatamineQuery() {
-  if($("#inputCity").val()){
-    codeOSM = communes[$("#inputCity").val()][1];
-  }
-  console.log("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM);
-  $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
-    .done(analyzeGeoData)
-    .fail(function (jqxhr, textStatus, error) {
-      var err = textStatus + ", " + error;
-      console.log("Request Failed: " + err);
-    });
-}
 
 
  function analyzeCoord(str) {
@@ -186,11 +174,11 @@
            zoomOk = true;
            //console.log("Zoom sur :"+coordinates);
          }
-         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: femIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
        }else{
          // For men
          var coordinates = $(this).find(".coord").html();
-         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: homIcon}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
        }
      });
      // Look for the next name on Wikidata
@@ -294,7 +282,7 @@
 
   var data = [{
     values: [txHom, txFem, txNa, txNd],
-    labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
+    labels: ['Homme', 'Femme','Non identifié', 'Aucun nom de personne identifié'],
     type: 'pie'
   }];
 

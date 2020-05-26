@@ -44,7 +44,7 @@ $(document).ready(function () {
     "2A", "2B", "21", "22", "23", "24", "25", "26", "27", "28", "29",
     "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
     "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
-    "50", "51", , "53", "54", "55", "56", "57", "58", "59",
+    "50", "51", "52", "53", "54", "55", "56", "57", "58", "59",
     "60", "61", "62", "63", "64", "65", "66", "67", "68", "69",
     "70", "71", "72", "73", "74", "75", "76", "77", "78", "79",
     "80", "81", "82", "83", "84", "85", "86", "87", "88", "89",
@@ -101,6 +101,7 @@ $(document).ready(function () {
 
   $("#searchCity").on("click", function () {
     $('.container-map').show();
+    window.location= '#phraseResult';
     zoomOk = false;
     var insert = "";
     console.log($("#inputCity").val());
@@ -197,7 +198,7 @@ $(document).ready(function () {
           lineNb = foundNames.indexOf(analyzedName);
         }
 
-        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td class="detected_name">' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
       } else {
         $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
@@ -237,8 +238,6 @@ $(document).ready(function () {
       previousQuery = "name"
       getNextWikidata();
     }
-    const NBLIEUX = $('.count-street').length;
-    $('#NBLIEUX').html(NBLIEUX);
   }
 
 
@@ -323,6 +322,7 @@ $(document).ready(function () {
 
 
   function wikidataNameResults(data) {
+    // console.log(data.results.bindings.sitelink[0]);
     if (data.results.bindings.length > 0) {
       var person = foundNames[nameNb];
       console.log(person);
@@ -431,16 +431,18 @@ $(document).ready(function () {
 
 
   function plotlyGraph() {
-    console.warn('Appel à la fonction plotlyGraph()');
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
-    NBLIEUX = $('.count-street').length;
+    var detectedName = $('.detected_name').length;
+    var nombreNonIdentifie = detectedName - (nombreHommes+nombreFemmes);
+    const NBLIEUX = $('.count-street').length;
     var nombreNd = (NBLIEUX - (nombreHommes+nombreFemmes));
     console.log(NBLIEUX);
 
     var txHom = (nombreHommes/NBLIEUX)*100;
     var txFem = (nombreFemmes/NBLIEUX)*100;
     var txNd = (nombreNd/NBLIEUX)*100;
+    var txNi = (nombreNonIdentifie/NBLIEUX)*100;
 
     
     $('#phraseResult').show();
@@ -454,9 +456,11 @@ $(document).ready(function () {
       $('#nbFemmes').html("Aucune")
     }
 
+    $('#nblieux').html(NBLIEUX);
+
     var data = [{
-      values: [txHom, txFem, txNd],
-      labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
+      values: [txHom, txFem, txNi, txNd],
+      labels: ['Homme', 'Femme','Non identifié', 'Aucun nom de personne identifié'],
       type: 'pie'
     }];
 
@@ -478,6 +482,4 @@ $(document).ready(function () {
 
     Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
   }
-
-
 })
