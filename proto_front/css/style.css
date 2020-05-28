@@ -364,7 +364,11 @@ ul {
 
 #graph {
   margin-top: 2rem;
-  width: 600px;
+  width: 100%;
+}
+
+.svg-container {
+  margin: auto;
 }
 
 .results {

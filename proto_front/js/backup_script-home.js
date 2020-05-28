@@ -101,7 +101,6 @@ $(document).ready(function () {
 
   $("#searchCity").on("click", function () {
     $('.container-map').show();
-    window.location= '#phraseResult';
     zoomOk = false;
     var insert = "";
     console.log($("#inputCity").val());
@@ -323,6 +322,11 @@ $(document).ready(function () {
 
   function wikidataNameResults(data) {
     if (data.results.bindings.length > 0) {
+      // Lien wikipedia
+      console.log("wikipedia: "+data.results.bindings[0].sitelink.value);
+  
+      // Lien wikidata
+      console.log("wikidata: "+data.results.bindings[0].person.value);
       var person = foundNames[nameNb];
       console.log(person);
       if (data.results.bindings[0].personLabel != undefined) {
@@ -338,7 +342,7 @@ $(document).ready(function () {
       }
       // Try ES6 syntax
       $('.foundName' + nameNb).each(function () {
-        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
+        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
         console.log(data.results.bindings[0].person.value);
         if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
           var coordinates = $(this).find(".coord").html();
@@ -347,11 +351,11 @@ $(document).ready(function () {
             zoomOk = true;
             //console.log("Zoom sur :"+coordinates);
           }
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' +data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
         }else{
           // For men
           var coordinates = $(this).find(".coord").html();
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
         }
       });
       // Look for the next name on Wikidata
@@ -434,14 +438,14 @@ $(document).ready(function () {
     var nombreFemmes = $('.féminin').length;
     var detectedName = $('.detected_name').length;
     var nombreNonIdentifie = detectedName - (nombreHommes+nombreFemmes);
-    const NBLIEUX = $('.count-street').length;
-    var nombreNd = (NBLIEUX - (nombreHommes+nombreFemmes));
-    console.log(NBLIEUX);
+    const nbLieux = $('.count-street').length;
+    var nombreNd = (nbLieux - (nombreHommes+nombreFemmes));
+    console.log(nbLieux);
 
-    var txHom = (nombreHommes/NBLIEUX)*100;
-    var txFem = (nombreFemmes/NBLIEUX)*100;
-    var txNd = (nombreNd/NBLIEUX)*100;
-    var txNi = (nombreNonIdentifie/NBLIEUX)*100;
+    var txHom = (nombreHommes/nbLieux)*100;
+    var txFem = (nombreFemmes/nbLieux)*100;
+    var txNd = (nombreNd/nbLieux)*100;
+    var txNi = (nombreNonIdentifie/nbLieux)*100;
 
     
     $('#phraseResult').show();
@@ -455,7 +459,7 @@ $(document).ready(function () {
       $('#nbFemmes').html("Aucune")
     }
 
-    $('#nblieux').html(NBLIEUX);
+    $('#nbLieux').append(nbLieux);
 
     var data = [{
       values: [txHom, txFem, txNi, txNd],
@@ -475,9 +479,7 @@ $(document).ready(function () {
       }
     }
 
-    let config = {
-      responsive: true
-    };
+    var config = {responsive: true}
 
     Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
   }

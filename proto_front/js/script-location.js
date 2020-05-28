@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  'use strict';
+  // 'use strict';
   var cityName;
   var codeOSM;
   var element;
@@ -8,28 +8,10 @@ $(document).ready(function () {
   var nblieux;
   var previousQuery;
   var str2;
-  var themeLabels;
-  var themeNumber;
-  var themes;
-  var zoomOk;
-
-  const FEMICON = new L.Icon({
-    iconUrl: 'img/leaf-red.png',
-    shadowUrl: 'img/leaf-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-
-  const HOMICON = new L.Icon({
-    iconUrl: 'img/leaf-green.png',
-    shadowUrl: 'img/leaf-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
+  // var themeLabels;
+  // var themeNumber;
+  // var themes;
+  // var zoomOkx
 
   // The div showing the results is hidden by default
   document.getElementById("container-map").style.display = "none";
@@ -315,11 +297,11 @@ $(document).ready(function () {
               zoomOk = true;
               //console.log("Zoom sur :"+coordinates);
             }
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' +data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
           }else{
             // For men
             var coordinates = $(this).find(".coord").html();
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
           }
         });
 

@@ -32,5 +32,6 @@
  </div>
  <?php require 'include/__footer.php' ?>
  <script src="js/script-location.js"></script>
+ <!-- <script src="js/backup_script-location.js"></script> -->
 </body>
 </html>

@@ -2,29 +2,11 @@ $(document).ready(function () {
   var cityName;
   // var communes;
   var data;
-  var map;
+  // var map;
   var nameNb = 0;
   var valueDpt;
-  var zoomOk = false;
-  var inputCity;
-
-  const FEMICON = new L.Icon({
-    iconUrl: 'img/leaf-red.png',
-    shadowUrl: 'img/leaf-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-
-  const HOMICON = new L.Icon({
-    iconUrl: 'img/leaf-green.png',
-    shadowUrl: 'img/leaf-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
+  // var zoomOk = false;
+  // var inputCity;
 
   $('.submit-home').hide();
   $('#inputCity').hide();
@@ -107,6 +89,7 @@ $(document).ready(function () {
     //  Test
     console.log(communes[$("#inputCity").val()][0]);
     console.log(communes[$("#inputCity").val()][1] + "");
+    console.log((communes[$("#inputCity").val()][1]).toString());
 
     if ((communes[$("#inputCity").val()])[0] + "".length == 4) {
       insert = "0";
