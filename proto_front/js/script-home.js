@@ -1,11 +1,12 @@
 $(document).ready(function () {
   var cityName;
-  var communes;
+  // var communes;
   var data;
   var map;
   var nameNb = 0;
   var valueDpt;
   var zoomOk = false;
+  var inputCity;
 
   const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
@@ -99,7 +100,8 @@ $(document).ready(function () {
     testFactor();
     zoomOk = false;
     var insert = "";
-    console.log($("#inputCity").val());
+    inputCity = $("#inputCity").val();
+    console.log(inputCity);
     cityName = $("#inputCity").val();
     console.log(communes[$("#inputCity").val()]);
     //  Test
@@ -144,16 +146,6 @@ $(document).ready(function () {
     sendGeodatamineQuery();
   });
 
-  function sendGeodatamineQuery() {
-    $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + communes[$("#inputCity").val()][1])
-      .done(analyzeGeoData)
-      .fail(function (jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-      });
-  }
-
-
   function analyzeBanData(data) {
     // Parse of OSM data with Papa Parse library
     var csv = Papa.parse(data).data;
@@ -197,18 +189,6 @@ $(document).ready(function () {
         $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
       }
     }
-  }
-
-  function sendGeodatamineQuery() {
-    if(inputCity){
-      codeOSM = communes[inputCity][1];
-    }
-    $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
-      .done(analyzeGeoData)
-      .fail(function (jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-      });
   }
 
 })

@@ -322,7 +322,6 @@ $(document).ready(function () {
 
 
   function wikidataNameResults(data) {
-    // console.log(data.results.bindings.sitelink[0]);
     if (data.results.bindings.length > 0) {
       var person = foundNames[nameNb];
       console.log(person);

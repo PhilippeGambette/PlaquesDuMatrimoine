@@ -1,10 +1,12 @@
+  var communes;
   var previousQuery = "";
   var themes;
   var themeNumber;
   var themeLabels;
   var foundNames = [];
+  var inputCity;
   var codeOSM;
-  var communes;
+
   function testFactor(){    
     console.log("hey");
   }
@@ -68,6 +70,18 @@
    $('#nbLieux').html(nblieux);
  }
 
+ function sendGeodatamineQuery() {
+  if(inputCity){
+    codeOSM = communes[inputCity][1];
+  }
+  console.log("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM);
+  $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
+    .done(analyzeGeoData)
+    .fail(function (jqxhr, textStatus, error) {
+      var err = textStatus + ", " + error;
+      console.log("Request Failed: " + err);
+    });
+}
 
  function analyzeCoord(str) {
    var result = "";
