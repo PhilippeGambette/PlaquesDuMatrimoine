@@ -1,3 +1,4 @@
+  'use strict';
   var communes;
   var map;
   var previousQuery = "";
@@ -9,6 +10,9 @@
   var codeOSM;
   var zoomOk = false;
   var cityName;
+  var str2;
+  var nameNb;
+  var element;
 
   
   const FEMICON = new L.Icon({
@@ -28,10 +32,6 @@
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
   });
-
-  function testFactor(){    
-    console.log("hey");
-  }
 
  function addTableRow(topic, name, coord, topicCode) {
    if (name != "") {
@@ -92,14 +92,15 @@
    $('#nbLieux').html(nblieux);
  }
 
+ // Function returning thematics data from OpenStreetMap with queries sent to Geodatamine and call analyseGeoData()
  function sendGeodatamineQuery() {
-  if(inputCity){
-    codeOSM = communes[inputCity][1];
-  }else{
-    codeOSM = (communes[$("#inputCity").val()][1]).toString()
+
+  if($("#inputCity").length != 0){
+    codeOSM = (communes[$("#inputCity").val()][1]).toString();
   }
+  
   console.log("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM);
-  $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
+  $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM) 
     .done(analyzeGeoData)
     .fail(function (jqxhr, textStatus, error) {
       var err = textStatus + ", " + error;
@@ -156,7 +157,8 @@
  function getNextWikidata() {
    if (nameNb < foundNames.length) {
      var nom = foundNames[nameNb];
-     // Retrieve some information from Wikidata:
+     
+     // Querying the Wikidata database with a SPARQL query and call makeSPARQLQuery function() who has wikadataNameResults as callback function
      var endpointUrl = 'https://query.wikidata.org/sparql',
      sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma WHERE {\n' +
      '  {?person rdfs:label "' + nom + '" @fr} UNION {?person skos:altLabel "' + nom + '" @fr} UNION {?person skos:altLabel \"' + nom + '" @en}.\n' +
@@ -294,6 +296,8 @@
 
 
  function plotlyGraph() {
+
+  // Count the number of lines with a "female" or "male" class
   var nombreHommes = $('.masculin').length;
   var nombreFemmes = $('.féminin').length;
   var detectedName = $('.detected_name').length;
@@ -328,7 +332,7 @@
   }];
 
   if(!cityName){
-    cityName = ($("#inputCity").val()).toString();
+    cityName = $("#inputCity").val();
   }
 
   var layout = {

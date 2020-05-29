@@ -79,7 +79,6 @@ $(document).ready(function () {
 
   $("#searchCity").on("click", function () {
     $('.container-map').show();
-    testFactor();
     zoomOk = false;
     var insert = "";
     inputCity = $("#inputCity").val();
@@ -96,9 +95,8 @@ $(document).ready(function () {
     }
     $("#cityname-h").html($('#inputCity').val());
     $("#results").html("<p>Résultats pour la commune de "+$("#inputCity").val()+"</p>")
-    $("#results").html("<p>Test texte </p>");
-    $("#results").html("<p>Code INSEE : " + insert + communes[$("#inputCity").val()][0] + "</p>");
-    $("#results").append("<p>Code OSM : " + communes[$("#inputCity").val()][1] + "</p>");
+    console.log("Code INSEE : " + insert + communes[$("#inputCity").val()][0]);
+    console.log("Code OSM : " + communes[$("#inputCity").val()][1]);
     $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
 
     // Show Leaflet map
@@ -149,28 +147,6 @@ $(document).ready(function () {
         }
       }
       i++;
-    }
-  }
-
-  function addTableRow(topic, name, coord, topicCode) {
-    if (name != "") {
-      var coordinates = analyzeCoord(coord);
-      var analyzedName = analyzeName(name, topicCode);
-      if (analyzedName.slice(0, 3) == "de " || analyzedName.slice(0, 3) == "du " || analyzedName.slice(0, 4) == "des " || analyzedName.slice(0, 2) == "d'" || analyzedName.slice(0, 2) == "d’") {
-        analyzedName = "";
-      }
-      if (analyzedName != "") {
-        var lineNb = foundNames.length;
-        if (!(foundNames.includes(analyzedName))) {
-          foundNames[lineNb] = analyzedName;
-        } else {
-          lineNb = foundNames.indexOf(analyzedName);
-        }
-
-        $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
-      } else {
-        $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
-      }
     }
   }
 

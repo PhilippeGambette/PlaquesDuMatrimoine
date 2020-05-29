@@ -31,6 +31,7 @@
   <div id="graph"></div>
  </div>
  <?php require 'include/__footer.php' ?>
+ <script src="js/plaquesDuMatrimoine.js"></script>
  <script src="js/script-location.js"></script>
  <!-- <script src="js/backup_script-location.js"></script> -->
 </body>

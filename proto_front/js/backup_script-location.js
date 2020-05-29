@@ -5,7 +5,7 @@ $(document).ready(function () {
   var element;
   var foundNames = [];
   var nameNb;
-  var NBLIEUX;
+  var nblieux;
   var previousQuery;
   var str2;
   var themeLabels;
@@ -251,17 +251,18 @@ $(document).ready(function () {
   function getNextWikidata() {
     if (nameNb < foundNames.length) {
       var nom = foundNames[nameNb];
-      // Retrieve some information from Wikidata:
+      
+      // Querying the Wikidata database with a SPARQL query and call makeSPARQLQuery function() who has wikadataNameResults as callback function:
       var endpointUrl = 'https://query.wikidata.org/sparql',
-       sparqlQuery = 'select ?person ?sitelinks ?genderLabel ?personDescription ?personLabel where {\n' +
-       '  {?person rdfs:label "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@fr} UNION {?person skos:altLabel "' + nom + '"@en}.\n' +
-       '  ?person wdt:P31 wd:Q5.\n' +
-       '  ?person wdt:P21 ?gender.\n' +
-       '  ?person wikibase:sitelinks ?sitelinks.\n' +
-       '  SERVICE wikibase:label {\n' +
-       '     bd:serviceParam wikibase:language "fr" .\n' +
-       '   }\n' +
-       '} order by desc(?sitelinks)';
+      sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma WHERE {\n' +
+      '  {?person rdfs:label "' + nom + '" @fr} UNION {?person skos:altLabel "' + nom + '" @fr} UNION {?person skos:altLabel \"' + nom + '" @en}.\n' +
+      '  ?person wdt:P31 wd:Q5.\n' +
+      '  ?person wdt:P21 ?gender.\n' +
+      '  ?sitelink schema:about ?person;\n' +
+      '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
+      '    schema:name ?lemma.\n' +
+      '  SERVICE wikibase:label {bd:serviceParam wikibase:language \"fr,en\"}\n' +
+      '  } order by desc(?sitelink)';
 
       makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
     }else{
@@ -296,9 +297,9 @@ $(document).ready(function () {
         if (data.results.bindings[0].genderLabel != undefined) {
           genderLabel = data.results.bindings[0].genderLabel.value;
         }
-        // Try ES6 syntax
+
         $('.foundName' + nameNb).each(function () {
-          $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].person.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
+          $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
           if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
             var coordinates = $(this).find(".coord").html();
             if (!zoomOk) {
@@ -306,11 +307,11 @@ $(document).ready(function () {
               zoomOk = true;
               //console.log("Zoom sur :"+coordinates);
             }
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon:FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon:FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
           }else{
             // For men
             var coordinates = $(this).find(".coord").html();
-            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].person.value + '">' + person + description + "</a>");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
           }
         });
         // Look for the next name on Wikidata
@@ -459,27 +460,33 @@ $(document).ready(function () {
 
 
   function plotlyGraph() {
-    console.warn('Appel à la fonction plotlyGraph()');
+
+    // Count the number of lines with a "female" or "male" class
     var nombreHommes = $('.masculin').length;
     var nombreFemmes = $('.féminin').length;
-    NBLIEUX = $('.count-street').length;
-    var nombreNd = (NBLIEUX - (nombreHommes+nombreFemmes));
-    console.log(NBLIEUX);
+    var detectedName = $('.detected_name').length; 
+    var nombreNonIdentifie = detectedName - (nombreHommes+nombreFemmes);
+    nblieux = $('.count-street').length;
+    console.log(nblieux);
+    var nombreNd = (nbLieux - (nombreHommes+nombreFemmes));
+    console.log(nbLieux);
 
-    var txHom = (nombreHommes/NBLIEUX)*100;
-    var txFem = (nombreFemmes/NBLIEUX)*100;
-    var txNd = (nombreNd/NBLIEUX)*100;
-
+    var txHom = (nombreHommes/nblieux)*100;
+    var txFem = (nombreFemmes/nblieux)*100;
+    var txNd = (nombreNd/nblieux)*100;
+    var txNi = (nombreNonIdentifie/nbLieux)*100;
     
-    $('#phraseResult').show();
-    $('#nbFemmes').html(nombreFemmes);
-    
-    if(nombreFemmes > 0){
-      $('#pluriel').show();
+    if(nombreFemmes > 1){
+      $('.pluriel').show();
+      $('#nbFemmes').html(nombreFemmes);
+    }else if(nombreFemmes == 1){
+      $('#nbFemmes').html(nombreFemmes);
+    }else{
+      $('#nbFemmes').html("Aucune")
     }
 
     var data = [{
-      values: [txHom, txFem, txNd],
+      values: [txHom, txFem, txNi, txNd],
       labels: ['Homme', 'Femme', 'Aucun nom de personne identifié'],
       type: 'pie'
     }];
