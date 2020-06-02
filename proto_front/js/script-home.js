@@ -1,12 +1,8 @@
 $(document).ready(function () {
   var cityName;
-  // var communes;
   var data;
-  // var map;
   var nameNb = 0;
   var valueDpt;
-  // var zoomOk = false;
-  // var inputCity;
 
   $('.submit-home').hide();
   $('#inputCity').hide();
@@ -52,7 +48,6 @@ $(document).ready(function () {
       listeVilles = Object.keys(data.communes);
       console.log(data);
       communes = data.communes;
-      console.log(communes);
       $('#inputCity').off("autoComplete");
       $('#inputCity').autocomplete({
         source: listeVilles
@@ -95,6 +90,7 @@ $(document).ready(function () {
     }
     $("#cityname-h").html($('#inputCity').val());
     $("#results").html("<p>Résultats pour la commune de "+$("#inputCity").val()+"</p>")
+    $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
     console.log("Code INSEE : " + insert + communes[$("#inputCity").val()][0]);
     console.log("Code OSM : " + communes[$("#inputCity").val()][1]);
     $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')

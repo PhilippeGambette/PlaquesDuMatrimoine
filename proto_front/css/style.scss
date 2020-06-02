@@ -316,6 +316,25 @@ ul {
     font-family: $Playfair-family;
     text-transform: uppercase;
   }
+  
+  .load-data {
+    h3{
+     text-align: center;
+     font-family: $Belleza-family;
+     animation: fadeIn 3s ease-in-out infinite;
+    }
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .results-local {

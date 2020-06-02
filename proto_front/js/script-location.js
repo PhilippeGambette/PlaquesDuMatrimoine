@@ -1,17 +1,7 @@
 $(document).ready(function () {
-  // 'use strict';
   var cityName;
-  // var codeOSM;
-  // var element;
-  var foundNames = [];
-  // var nameNb;
   var nblieux;
   var previousQuery;
-  // var str2;
-  // var themeLabels;
-  // var themeNumber;
-  // var themes;
-  // var zoomOkx
 
   // The div showing the results is hidden by default
   document.getElementById("container-map").style.display = "none";
@@ -129,7 +119,8 @@ $(document).ready(function () {
         console.log(codeOSM);
         
         getBanData(codeINSEE);
-        $("#results").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>')
+        $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
+        $("#results").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>');
       } else {
         console.log("Erreur du serveur");
       }

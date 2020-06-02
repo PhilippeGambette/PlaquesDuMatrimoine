@@ -294,9 +294,9 @@
    });
  }
 
+  function plotlyGraph() {
 
- function plotlyGraph() {
-
+  $('.load-data').hide();
   // Count the number of lines with a "female" or "male" class
   var nombreHommes = $('.masculin').length;
   var nombreFemmes = $('.féminin').length;
