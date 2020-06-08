@@ -13,7 +13,15 @@
   var str2;
   var nameNb;
   var element;
+  var mymap;
+  var cityList = [];
 
+  if(localStorage.getItem('cityList')){
+    console.log(true);
+    console.log(localStorage.getItem('cityList'))
+  }else{
+    console.log(false);
+  }
   
   const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
@@ -32,6 +40,8 @@
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
   });
+
+  
 
  function addTableRow(topic, name, coord, topicCode) {
    if (name != "") {
@@ -88,8 +98,6 @@
      previousQuery = "name"
      getNextWikidata();
    }
-   const nblieux = $('.count-street').length;
-   $('#nbLieux').html(nblieux);
  }
 
  // Function returning thematics data from OpenStreetMap with queries sent to Geodatamine and call analyseGeoData()

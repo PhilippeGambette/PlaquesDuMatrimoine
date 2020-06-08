@@ -1,7 +1,5 @@
 $(document).ready(function () {
   var cityName;
-  var nblieux;
-  var previousQuery;
 
   // The div showing the results is hidden by default
   document.getElementById("container-map").style.display = "none";
@@ -9,7 +7,7 @@ $(document).ready(function () {
   $(".proximite").hide();
   $('#phraseResult').hide();
   $('#pluriel').hide();
-  
+
   locationConsent();
 
   // It is necessary for the user to accept the location on his device, if OK, the successFunction() is called else errorFunction
@@ -18,7 +16,7 @@ $(document).ready(function () {
       navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
     }
   }
-  
+
   //Get latitude and longitude of the device, Call functions map() and getGeoCityName()
   function successFunction(position) {
     var lat = position.coords.latitude;
@@ -37,10 +35,10 @@ $(document).ready(function () {
   }
 
   // Show the user position on the map
-  async function map(lat, long) {
+  function map(lat, long) {
 
     // Making map and tiles
-    const mymap = L.map('js-map').setView([lat, long], 14);
+    mymap = L.map('js-map').setView([lat, long], 14);
 
     const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
 
@@ -61,9 +59,10 @@ $(document).ready(function () {
     });
 
     // Marker creation
-    L.marker([lat, long],{icon: neuIcon}).addTo(mymap).bindPopup("Ma position");
+    L.marker([lat, long], {
+      icon: neuIcon
+    }).addTo(mymap).bindPopup("Ma position");
   }
-
 
   // This function make an Ajax request to nominatim with geographic coordinates and return JSON data who contains the name of the City, postcode and the function getDptByLocation is call with this two parameters
   async function getGeoCityName(lat, long) {
@@ -117,7 +116,7 @@ $(document).ready(function () {
         codeOSM = resp.communes[cityName][1];
         console.log(codeINSEE);
         console.log(codeOSM);
-        
+
         getBanData(codeINSEE);
         $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
         $("#results").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Coordonnées</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Nom à trouver sur Wikidata</th></tr></table>');
@@ -196,5 +195,5 @@ $(document).ready(function () {
     return result;
   }
 
-  
+
 })
