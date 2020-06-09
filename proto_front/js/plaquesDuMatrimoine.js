@@ -13,12 +13,12 @@
   var str2;
   var nameNb;
   var element;
-  var mymap;
   var cityList = [];
-
+  
   if(localStorage.getItem('cityList')){
     console.log(true);
     console.log(localStorage.getItem('cityList'))
+    console.log(typeof(localStorage.getItem('cityList')));
   }else{
     console.log(false);
   }
@@ -41,6 +41,35 @@
     shadowSize: [41, 41]
   });
 
+  // Show the user position on the map
+  function makeMap(lat, long) {
+
+    // Making map and tiles
+    map = L.map('js-map').setView([lat, long], 14);
+
+    const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+    const tiles = L.tileLayer(tileUrl, {
+      attribution
+    });
+    tiles.addTo(map);
+
+    const neuIcon = new L.Icon({
+      iconUrl: 'img/leaf-orange.png',
+      shadowUrl: 'img/leaf-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    // Marker creation
+    L.marker([lat, long], {
+      icon: neuIcon
+    }).addTo(map).bindPopup("Ma position");
+  }
   
 
  function addTableRow(topic, name, coord, topicCode) {

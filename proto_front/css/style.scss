@@ -220,7 +220,6 @@ ul {
   .submit-home {
     width: 20rem;
     transition: ease-in-out 1s;
-    font-weight: bold;
 
     &:hover {
       border-radius: 20px;
@@ -518,6 +517,7 @@ hr {
 
     .submit-home {
       margin-top: 8px;
+      width: 220px;
     }
 
     .input-c {

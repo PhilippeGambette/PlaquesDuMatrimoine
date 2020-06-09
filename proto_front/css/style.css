@@ -298,7 +298,6 @@ ul {
   width: 20rem;
   -webkit-transition: ease-in-out 1s;
   transition: ease-in-out 1s;
-  font-weight: bold;
 }
 
 .container-left .submit-home:hover {
@@ -611,6 +610,7 @@ hr {
   }
   .container-left .submit-home {
     margin-top: 8px;
+    width: 220px;
   }
   .container-left .input-c {
     display: -webkit-box;

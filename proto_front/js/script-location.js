@@ -1,6 +1,4 @@
 $(document).ready(function () {
-  var cityName;
-
   // The div showing the results is hidden by default
   document.getElementById("container-map").style.display = "none";
   $("#results").hide();
@@ -26,7 +24,7 @@ $(document).ready(function () {
     $(".proximite").show();
     console.log(lat);
     console.log(long);
-    map(lat, long);
+    makeMap(lat, long);
     getGeoCityName(lat, long);
   }
 
@@ -34,35 +32,7 @@ $(document).ready(function () {
     console.warn("La localisation n'est pas activée sur votre appareil");
   }
 
-  // Show the user position on the map
-  function map(lat, long) {
-
-    // Making map and tiles
-    mymap = L.map('js-map').setView([lat, long], 14);
-
-    const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
-
-    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-    const tiles = L.tileLayer(tileUrl, {
-      attribution
-    });
-    tiles.addTo(mymap);
-
-    const neuIcon = new L.Icon({
-      iconUrl: 'img/leaf-orange.png',
-      shadowUrl: 'img/leaf-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-
-    // Marker creation
-    L.marker([lat, long], {
-      icon: neuIcon
-    }).addTo(mymap).bindPopup("Ma position");
-  }
+  
 
   // This function make an Ajax request to nominatim with geographic coordinates and return JSON data who contains the name of the City, postcode and the function getDptByLocation is call with this two parameters
   async function getGeoCityName(lat, long) {

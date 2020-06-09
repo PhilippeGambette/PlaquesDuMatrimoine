@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  var cityName;
   var data;
   var nameNb = 0;
   var valueDpt;
@@ -34,12 +33,12 @@ $(document).ready(function () {
 
   $('#inputDpt').autocomplete({
     source: liste,
-    minLength : 3
+    minLength : 2
   });
 
   $('#inputCity').autocomplete({
     source: listeVilles,
-    minLength : 3
+    minLength : 2
   });
 
   function getDpt() {
@@ -75,11 +74,11 @@ $(document).ready(function () {
   })
 
   $("#searchCity").on("click", function () {
-    localStorage.setItem('cityList', cityList.push($("#inputCity").val()));
     $('.container-map').show();
     zoomOk = false;
     var insert = "";
     inputCity = $("#inputCity").val();
+    localStorage.setItem('cityList', cityList.push(inputCity));
     console.log(inputCity);
     cityName = $("#inputCity").val();
     console.log(communes[$("#inputCity").val()]);
