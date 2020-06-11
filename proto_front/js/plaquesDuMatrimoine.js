@@ -87,9 +87,9 @@
          lineNb = foundNames.indexOf(analyzedName);
        }
 
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td data-coord='+coordinates.split(" ")+'>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
      } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td data-coord='+coordinates.split(" ")+'>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
      }
    }
  }
@@ -246,13 +246,15 @@
        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
        if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
          var coordinates = $(this).find(".coord").html();
+        //  var coordinates = $(this).find("[data-coord]").html();
          if (!zoomOk) {
            map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
            zoomOk = true;
            //console.log("Zoom sur :"+coordinates);
          }
          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
-       }else{
+        //  L.marker([coordinates.split(",")[1], coordinates.split(",")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
+        }else{
          // For men
          var coordinates = $(this).find(".coord").html();
          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
@@ -376,7 +378,7 @@
     height: 400,
     width: 600,
     title: {
-      text: `Répartition hommes/femmes pour ${cityName}`,
+      text: `Répartition hommes/femmes pour les noms de lieux de ${cityName}`,
       font: {
         family: 'Arial, San Francisco',
         size: 15
