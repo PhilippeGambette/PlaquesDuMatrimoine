@@ -6,6 +6,7 @@ require './include/connexion.php';
 // Connection to database
  try {
   $db = new PDO("mysql:host=$hote; dbname=$base;", $utilisateur, $motdepasse);
+  $db->query('SET NAMES utf8');
  } catch (PDOException $e) {
   echo "Erreur!: " . $e->getMessage() . "<br/>";
   die();
@@ -14,34 +15,48 @@ require './include/connexion.php';
 // Write mode
  if($_GET["action"] == "write"){
  // Insertion of data from Wikidata
-  $pdoStat = $db->prepare("INSERT INTO `personne` (NULL, :id_wikidata, :alias, :genderLabel, :personDescription :sitelink, :lemma)");
   var_dump($_GET);
   $id_wikidata = $_GET['id_wikidata'];
   $alias = $_GET['alias'];
+  $nom_complet = $_GET['nom_complet'];
   $genderLabel = $_GET['genderLabel'];
   $personDescription = $_GET['personDescription'];
   $siteLink = $_GET['siteLink'];
   $lemma = $_GET['lemma'];
 
-  $pdoStat->bindValue(':id_wikidata', $id_wikidata, PDO::PARAM_STR);
-  $pdoStat->bindValue(':alias', $alias, PDO::PARAM_STR);
-  $pdoStat->bindValue(':genderLabel', $genderLabel, PDO::PARAM_STR);
-  $pdoStat->bindValue(':personDescription', $personDescription, PDO::PARAM_STR);
-  $pdoStat->bindValue(':siteLink', $siteLink, PDO::PARAM_STR);
-  $pdoStat->bindValue(':lemma', $lemma, PDO::PARAM_STR);
 
-  $insertIsOK =  $pdoStat->execute();
+  $requete = $db->exec("INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`) VALUES (NULL, '".$id_wikidata. "', '". $alias . "', '". $nom_complet . "', '".$genderLabel . "', '" .$personDescription. "', '" . $siteLink . "', '". $lemma . "')") ;
 
-  if($insertIsOK){
-   echo "Les données ont été insérées";
-  }else{
-   echo "Erreur dans l'envoi";
-  }
-  
  }
+ // Read mode
   else if($_GET["action"] == "read"){
-  echo "Mode lecture";
- }
+   var_dump($_GET);
+   $nomPotentiel = $_GET['nom_potentiel'];
+   $prenomPotentiel = $_GET['prenom_potentiel'];
 
- // INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `genderLabel`, `personDescription`, `sitelink`, `lemma`) VALUES (NULL, 'Q535', 'Victor Hugo', 'masculin', 'écrivain, poète et homme politique français', 'https://fr.wikipedia.org/wiki/Victor_Hugo', 'Victor Hugo')
+   $requete = "SELECT * FROM alias WHERE nom_potentiel= '$nomPotentiel' AND prenom_potentiel= '$prenomPotentiel'";
+   echo($requete);
+   $stmt = $db->prepare($requete);
+   $stmt->execute();
+   $tableauResult=$stmt->fetchAll(PDO::FETCH_ASSOC);
+   
+   $codeJSON = array();
+
+   // while($ligne = $result->fetch()){
+   //  $codeJSON[] = $ligne;
+   // }
+
+   foreach($tableauResult as $result){echo "<BR>".$result["nom_complet_potentiel"] ."<BR>";}
+   
+   // header('content-type:application/json');
+   // echo(json_encode($codeJSON, JSON_UNESCAPED_UNICODE));
+
+ }
+  /**url write mode
+  *http://localhost/plaquesdumatrimoine/proto_front/api.php?action=write&id_wikidata=&alias=&nom_complet=&genderLabel=&personDescription=&siteLink=&lemma= 
+  */ 
+
+  /**url read mode
+   * http://localhost/plaquesdumatrimoine/proto_front/api.php?action=read&nom_potentiel=&prenom_potentiel=
+   */
 ?>
