@@ -87,9 +87,9 @@
          lineNb = foundNames.indexOf(analyzedName);
        }
 
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName">' + name + '</td><td data-coord='+coordinates.split(" ")+'>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
      } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + "</td><td>" + name + '</td><td data-coord='+coordinates.split(" ")+'>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
      }
    }
  }
@@ -246,57 +246,79 @@
        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
        if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
          var coordinates = $(this).find(".coord").html();
-        //  var coordinates = $(this).find("[data-coord]").html();
-         if (!zoomOk) {
-           map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
-           zoomOk = true;
-           //console.log("Zoom sur :"+coordinates);
-         }
-         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
+        //  var coordinates =$(this).find("[data-coord]").html();
+        if (!zoomOk) {
+          map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
+          zoomOk = true;
+          console.log("Zoom sur :"+coordinates);
+        }
+        L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
         //  L.marker([coordinates.split(",")[1], coordinates.split(",")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
-        }else{
-         // For men
-         var coordinates = $(this).find(".coord").html();
-         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
-       }
+      }else{
+        // For men
+        var coordinates = $(this).find(".coord").html();
+        //  var coordinates =$(this).find("[data-coord]").html();
+          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
+        //  L.marker([coordinates.split(",")[1], coordinates.split(",")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
+        }
      });
      // Look for the next name on Wikidata
      nameNb++;
      previousQuery = "name";
      setTimeout(getNextWikidata, 1000);
-   } else {
-     if (previousQuery == "name") {
+    } else {
+      if (previousQuery == "name") {
        // Look again as an alias
        previousQuery = "alias";
        setTimeout(getNextWikidataAlias, 1000);
-     } else {
+      } else {
        // Alias not found, look for the next name on Wikidata
-
+       
        if (person != undefined){
-       console.log(person);
-      var gender = guessGender(person);
-      if(gender == "masculin" || gender == "féminin"){
-        $( '.foundName'+nameNb ).each(function(){
-          $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
-          if(gender == "féminin" || gender == "femme transgenre"){
-             var coordinates = $(this).find(".coord").html();
-             if(!zoomOk){
-                map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
-                zoomOk = true;
-                //console.log("Zoom sur :"+coordinates);
-             }
-             L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+         console.log(person);
+         var gender = guessGender(person);
+         if(gender == "masculin" || gender == "féminin"){
+           $( '.foundName'+nameNb ).each(function(){
+             $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+             if(gender == "féminin" || gender == "femme transgenre"){
+               var coordinates = $(this).find(".coord").html();
+              //  var coordinates = $(this).find("[data-coord]").html();
+               if(!zoomOk){
+                 map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
+                 zoomOk = true;
+                 //console.log("Zoom sur :"+coordinates);
+                }
+                 L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+                // L.marker([coordinates.split(",")[1],coordinates.split(",")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+              }
+            });
+            
           }
-        });
-         
         }
-       }
-
-       nameNb++;
-       previousQuery = "name";
-       setTimeout(getNextWikidata, 1000);
+        
+        nameNb++;
+        previousQuery = "name";
+        setTimeout(getNextWikidata, 1000);
+      }
+    }
+  }
+  
+  function guessGender(gender){
+    $( '.foundName'+nameNb ).each(function(){
+      $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+      if(gender == "féminin" || gender == "femme transgenre"){
+        // var coordinates = $(this).find(".coord").html();
+        var coordinates =$(this).find("[data-coord]").html();
+        if(!zoomOk){
+          //  map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
+           map.setView([coordinates.split(",")[1],coordinates.split(",")[0]], 11);
+           zoomOk = true;
+           //console.log("Zoom sur :"+coordinates);
+        }
+        // L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+        L.marker([coordinates.split(",")[1],coordinates.split(",")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
      }
-   }
+   });
  }
 
  function getNextWikidataAlias() {
@@ -316,21 +338,6 @@
       '  } order by desc(?sitelink)';
      makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
    }
- }
-
- function guessGender(gender){
-   $( '.foundName'+nameNb ).each(function(){
-     $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
-     if(gender == "féminin" || gender == "femme transgenre"){
-        var coordinates = $(this).find(".coord").html();
-        if(!zoomOk){
-           map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
-           zoomOk = true;
-           //console.log("Zoom sur :"+coordinates);
-        }
-        L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
-     }
-   });
  }
 
   function plotlyGraph() {
