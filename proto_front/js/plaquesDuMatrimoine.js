@@ -86,10 +86,10 @@
        } else {
          lineNb = foundNames.indexOf(analyzedName);
        }
-
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName + '</td><td class="coord">' + coordinates + "</td></tr>");
+       
+       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName +  "</tr>");
      } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName + "</td><td>" + coordinates + "</td></tr>");
+       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName + "</td>");
      }
    }
  }
@@ -245,21 +245,18 @@
      $('.foundName' + nameNb).each(function () {
        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
        if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
-         var coordinates = $(this).find(".coord").html();
-        //  var coordinates =$(this).find("[data-coord]").html();
+         var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
+         console.log(coordinates);
         if (!zoomOk) {
           map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
           zoomOk = true;
           console.log("Zoom sur :"+coordinates);
         }
         L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
-        //  L.marker([coordinates.split(",")[1], coordinates.split(",")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
       }else{
         // For men
-        var coordinates = $(this).find(".coord").html();
-        //  var coordinates =$(this).find("[data-coord]").html();
+        var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
           L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
-        //  L.marker([coordinates.split(",")[1], coordinates.split(",")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + "</a>");
         }
      });
      // Look for the next name on Wikidata
@@ -281,15 +278,13 @@
            $( '.foundName'+nameNb ).each(function(){
              $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
              if(gender == "féminin" || gender == "femme transgenre"){
-               var coordinates = $(this).find(".coord").html();
-              //  var coordinates = $(this).find("[data-coord]").html();
+              var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
                if(!zoomOk){
                  map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
                  zoomOk = true;
                  //console.log("Zoom sur :"+coordinates);
                 }
                  L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
-                // L.marker([coordinates.split(",")[1],coordinates.split(",")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
               }
             });
             
@@ -307,16 +302,13 @@
     $( '.foundName'+nameNb ).each(function(){
       $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
       if(gender == "féminin" || gender == "femme transgenre"){
-        // var coordinates = $(this).find(".coord").html();
-        var coordinates =$(this).find("[data-coord]").html();
+        var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
         if(!zoomOk){
-          //  map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
            map.setView([coordinates.split(",")[1],coordinates.split(",")[0]], 11);
            zoomOk = true;
            //console.log("Zoom sur :"+coordinates);
         }
-        // L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
-        L.marker([coordinates.split(",")[1],coordinates.split(",")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+        L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
      }
    });
  }
@@ -343,6 +335,7 @@
   function plotlyGraph() {
 
   $('.load-data').hide();
+  $('.pluriel').hide();
   // Count the number of lines with a "female" or "male" class
   var nombreHommes = $('.masculin').length;
   var nombreFemmes = $('.féminin').length;
