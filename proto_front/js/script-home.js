@@ -78,7 +78,6 @@ $(document).ready(function () {
     zoomOk = false;
     var insert = "";
     inputCity = $("#inputCity").val();
-    localStorage.setItem('cityList', cityList.push(inputCity));
     console.log(inputCity);
     cityName = $("#inputCity").val();
     console.log(communes[$("#inputCity").val()]);

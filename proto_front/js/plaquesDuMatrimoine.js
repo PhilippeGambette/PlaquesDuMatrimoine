@@ -15,14 +15,6 @@
   var element;
   var cityList = [];
   
-  if(localStorage.getItem('cityList')){
-    console.log(true);
-    console.log(localStorage.getItem('cityList'))
-    console.log(typeof(localStorage.getItem('cityList')));
-  }else{
-    console.log(false);
-  }
-  
   const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
     shadowUrl: 'img/leaf-shadow.png',
@@ -241,12 +233,11 @@
      if (data.results.bindings[0].genderLabel != undefined) {
        genderLabel = data.results.bindings[0].genderLabel.value;
      }
-     // Try ES6 syntax
+
      $('.foundName' + nameNb).each(function () {
        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + data.results.bindings[0].sitelink.value + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td>');
        if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
          var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
-         console.log(coordinates);
         if (!zoomOk) {
           map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
           zoomOk = true;
@@ -341,7 +332,7 @@
   var nombreFemmes = $('.féminin').length;
   var detectedName = $('.detected_name').length;
   var nombreNonIdentifie = detectedName - (nombreHommes+nombreFemmes);
-  const nbLieux = $('.count-street').length;
+  var nbLieux = $('.count-street').length;
   var nombreNd = (nbLieux - (nombreHommes+nombreFemmes));
   console.log(nbLieux);
 
@@ -386,7 +377,12 @@
     }
   }
 
-  var config = {responsive: true}
+  var config = {
+    responsive: true,
+    showLink: true,
+    linkText: 'Plaques du Matrimoine',
+    plotlyServerURL: 'https://matrimoine.alanakra.fr'
+  }
 
   Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
 }

@@ -61,7 +61,6 @@
 
   <script src="./js/plaquesDuMatrimoine.js"></script>
   <script src="./js/script-home.js"></script>
-  <!-- <script src="./js/backup_script-home.js"></script> -->
 </body> 
 
 </html>
