@@ -20,6 +20,12 @@
 </head>
 <body>
  <?php include 'include/__navbar.php' ?>
+ <div id="overlay_geolocation">
+  <div class="please_location">
+   <p>La localisation n'est pas disponible ou vous avez refusé son activation</p>
+   <button id="no_geolocation">OK</button>
+  </div>
+ </div>
  <div class="container-map" id="container-map">
   <h1 class="proximite">A proximité de <span id="cityname"></span></h1>
   <div id="js-map"></div>
@@ -34,6 +40,5 @@
  <?php require 'include/__footer.php' ?>
  <script src="js/plaquesDuMatrimoine.js"></script>
  <script src="js/script-location.js"></script>
- <!-- <script src="js/backup_script-location.js"></script> -->
 </body>
 </html>

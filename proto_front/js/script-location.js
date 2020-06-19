@@ -1,20 +1,21 @@
 $(document).ready(function () {
   // The div showing the results is hidden by default
-  document.getElementById("container-map").style.display = "none";
+  $(".container-map").hide();
+  $("#overlay_geolocation").hide();
   $("#results").hide();
   $(".proximite").hide();
   $('#phraseResult').hide();
   $('#pluriel').hide();
-
+  
   locationConsent();
-
+  
   // It is necessary for the user to accept the location on his device, if OK, the successFunction() is called else errorFunction
   function locationConsent() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
     }
   }
-
+  
   //Get latitude and longitude of the device, Call functions map() and getGeoCityName()
   function successFunction(position) {
     var lat = position.coords.latitude;
@@ -22,14 +23,21 @@ $(document).ready(function () {
     document.getElementById("container-map").style.display = '';
     $("#results").show();
     $(".proximite").show();
+    $("#overlay_geolocation").hide();
     console.log(lat);
     console.log(long);
     makeMap(lat, long);
     getGeoCityName(lat, long);
   }
-
+  
   function errorFunction() {
     console.warn("La localisation n'est pas activée sur votre appareil");
+    document.getElementById("container-map").style.display = '';
+    $("#results").show();
+    $("#overlay_geolocation").show();
+    $("#no_geolocation").on("click", function(){
+      window.location.href='./index.php';
+    });
   }
 
   
@@ -101,7 +109,7 @@ $(document).ready(function () {
   }
 
 
-  // This function make Ajax request to BAN of the department of location and call analyseBanData() function who convert the csv file to JSON data to be readable by the browser
+  // This function make an Ajax request to BAN of the department of location and call analyseBanData() function who convert the csv file to JSON data to be readable by the browser
   function getBanData(codeINSEE) {
 
     const insert = "";
