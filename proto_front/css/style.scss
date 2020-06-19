@@ -147,10 +147,13 @@ ul {
 }
 
 .all-soon {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  font-family: $Belleza-family;
+  transform: translate(-50%,-50%);
+  text-align: center;
 }
 
 .title-soon {
@@ -349,6 +352,31 @@ ul {
     font-family: $Belleza-family;
     font-size: 1.25rem;
   }
+
+}
+
+#overlay_geolocation{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 15;
+  cursor: pointer;
+}
+
+.please_location{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  font-family: $Belleza-family;
+  transform: translate(-50%,-50%);
+  text-align: center;
 
 }
 
