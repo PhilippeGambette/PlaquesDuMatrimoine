@@ -176,6 +176,15 @@ if($_GET["action"] == "write"){
    echo (json_encode($dataCheckNameInDbAlias, JSON_UNESCAPED_UNICODE));
 
  }
+
+ //  Contribution mode
+ else if($_GET["action"] == "contribution"){
+   $sendFrom = $_GET['sender'];
+   $subject = 'Contribution de '.$sendFrom.' pour la ville de ';
+   $message = $_GET['message'];
+   $to = 'newsletter@alanakra.fr';
+   mail($to,$subject,$message,'From:'.$sendFrom.'');
+ }
   /**url write mode
   *http://localhost/plaquesdumatrimoine/proto_front/api.php?action=write&id_wikidata=&alias=&nom_complet=&genderLabel=&personDescription=&sitelink=&lemma=&nom_potentiel=&picture= 
   *
@@ -187,4 +196,8 @@ if($_GET["action"] == "write"){
    * http://localhost/plaquesdumatrimoine/proto_front/api.php?action=read&nom_potentiel=
    * http://localhost/plaquesdumatrimoine/proto_front/api.php?action=read&nom_potentiel=Gustave Eiffel
    */
+
+   /**url contribution mode
+    * http://localhost/plaquesdumatrimoine/proto_front/api.php?action=contribution&bonjour@alanakra.fr&
+    */
 ?>
