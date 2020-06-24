@@ -179,9 +179,9 @@ if($_GET["action"] == "write"){
 
  //  Contribution mode
  else if($_GET["action"] == "contribution"){
-   $sendFrom = $_GET['sender'];
+   $sendFrom = htmlspecialchars($_GET['sender']);
    $subject = 'Contribution de '.$sendFrom.' pour la ville de ';
-   $message = $_GET['message'];
+   $message = htmlspecialchars($_GET['message']) ;
    $to = 'newsletter@alanakra.fr';
    mail($to,$subject,$message,'From:'.$sendFrom.'');
  }
@@ -198,6 +198,6 @@ if($_GET["action"] == "write"){
    */
 
    /**url contribution mode
-    * http://localhost/plaquesdumatrimoine/proto_front/api.php?action=contribution&bonjour@alanakra.fr&
+    * http://localhost/plaquesdumatrimoine/proto_front/api.php?action=contribution&sender=&message=
     */
 ?>
