@@ -32,8 +32,8 @@ $(document).ready(function () {
   
   function errorFunction() {
     console.warn("La localisation n'est pas activée sur votre appareil");
-    document.getElementById("container-map").style.display = '';
-    $("#results").show();
+    // document.getElementById("container-map").style.display = '';
+    // $("#results").show();
     $("#overlay_geolocation").show();
     $("#no_geolocation").on("click", function(){
       window.location.href='./index.php';

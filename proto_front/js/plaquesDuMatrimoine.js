@@ -279,7 +279,7 @@
      }
      
      $('.foundName' + nameNb).each(function () {
-       $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td></td><td><a>Contribuer</a></td>');
+       $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td><i data-contribute='+idWikidata+' class="fas fa-user-edit contribute"></i></td>');  
        if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
          var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
          if (!zoomOk) {

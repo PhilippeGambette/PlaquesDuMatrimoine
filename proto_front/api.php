@@ -179,7 +179,7 @@ if($_GET["action"] == "write"){
 
  //  Contribution mode
  else if($_GET["action"] == "contribution"){
-   $sendFrom = htmlspecialchars($_GET['sender']);
+   $sendFrom = htmlspecialchars($_GET['sender'], ENT_NOQUOTES, UTF-8);
    $subject = 'Contribution de '.$sendFrom.' pour la ville de ';
    $message = htmlspecialchars($_GET['message']) ;
    $to = 'newsletter@alanakra.fr';

@@ -27,6 +27,17 @@
    <button id="no_geolocation">OK</button>
   </div>
  </div>
+
+ <!-- <div id="contribute">
+  <form action="">
+   <label for="email">Votre adresse e-mail</label>
+   <input type="email" name="" id="">
+
+   <label for="">Une suggestion pour <span></span></label>
+   <textarea name="" id="" cols="30" rows="10"></textarea>
+  </form>
+ </div> -->
+
  <div class="container-map" id="container-map">
   <h1 class="proximite">A proximité de <span id="cityname"></span></h1>
   <div id="js-map"></div>
