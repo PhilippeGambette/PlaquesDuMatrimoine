@@ -13,3 +13,12 @@
  font-weight: normal;
  font-style: normal;
 }
+
+@font-face {
+ font-family: 'Inter';
+ font-style:  normal;
+ font-weight: 600;
+ font-display: swap;
+ src: url(../font/Inter_Web/Inter-Bold.woff) format("woff"),
+      url(../font/Inter_Web/Inter-Bold.woff2) format("woff2");
+}

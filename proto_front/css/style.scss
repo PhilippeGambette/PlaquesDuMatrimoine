@@ -1,5 +1,6 @@
 @import 'font-family';
 @import 'config';
+@import 'geolocation';
 
 *,
 *::after,
@@ -38,7 +39,7 @@ ul {
 .nav-name {
   width: 50%;
   font-size: 1.875rem;
-  font-family: $Playfair-family;
+  font-family: $Matrimoine-family;
 }
 
 .nav-menu {
@@ -92,7 +93,7 @@ ul {
 
   h1 {
     font-size: 3.125rem;
-    font-family: $Playfair-family;
+    font-family: $Main-font;
   }
 }
 
@@ -114,7 +115,7 @@ ul {
 }
 
 .number-404 {
-  font-family: $Playfair-family;
+  font-family: $Main-font;
   font-size: 6.25rem;
 }
 
@@ -157,7 +158,7 @@ ul {
 }
 
 .title-soon {
-  font-family: $Playfair-family;
+  font-family: $Main-font;
   font-size: 3.25rem;
   text-transform: uppercase;
 }
@@ -207,7 +208,7 @@ ul {
 
   h1 {
     font-size: 3.125rem;
-    font-family: $Playfair-family;
+    font-family: $Main-font;
   }
 
   p{
@@ -253,7 +254,7 @@ ul {
 
   h1 {
     text-transform: $uppercase;
-    font-family: $Playfair-family;
+    font-family: $Main-font;
     font-size: 1.875rem;
   }
 
@@ -268,12 +269,12 @@ ul {
   }
 
   h2 {
-    font-family: $Playfair-family;
+    font-family: $Main-font;
     text-transform: uppercase;
   }
 
   h3 {
-    font-family: $Playfair-family;
+    font-family: $Main-font;
     text-transform: uppercase;
     font-size: 1.5rem;
   }
@@ -315,7 +316,7 @@ ul {
     }
   }
   h2 {
-    font-family: $Playfair-family;
+    font-family: $Main-font;
     text-transform: uppercase;
   }
   
@@ -355,17 +356,12 @@ ul {
 
 }
 
-#overlay_geolocation{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 15;
-  cursor: pointer;
+.contribute{
+  color: black;
+  transition: ease-out;
+  &:hover{
+   color: #F55873;
+  }
 }
 
 .please_location{
@@ -377,7 +373,6 @@ ul {
   font-family: $Belleza-family;
   transform: translate(-50%,-50%);
   text-align: center;
-
 }
 
 table {
@@ -400,7 +395,7 @@ tr.border_bottom td {
 }
 
 .titre-footer {
-  font-family: $Playfair-family;
+  font-family: $Matrimoine-family;
 }
 
 .footer {

@@ -14,6 +14,50 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../font/Inter_Web/Inter-Bold.woff) format("woff"), url(../font/Inter_Web/Inter-Bold.woff2) format("woff2");
+}
+
+#overlay_geolocation {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 15;
+  cursor: pointer;
+}
+
+#contribute {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 15;
+  cursor: pointer;
+}
+
+#contribute form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 *,
 *::after,
 *::before {
@@ -136,7 +180,7 @@ ul {
 
 .container-apropos h1 {
   font-size: 3.125rem;
-  font-family: "Playfair";
+  font-family: "Inter";
 }
 
 .container-404 {
@@ -167,7 +211,7 @@ ul {
 }
 
 .number-404 {
-  font-family: "Playfair";
+  font-family: "Inter";
   font-size: 6.25rem;
 }
 
@@ -216,7 +260,7 @@ ul {
 }
 
 .title-soon {
-  font-family: "Playfair";
+  font-family: "Inter";
   font-size: 3.25rem;
   text-transform: uppercase;
 }
@@ -271,7 +315,7 @@ ul {
 
 .container-left h1 {
   font-size: 3.125rem;
-  font-family: "Playfair";
+  font-family: "Inter";
 }
 
 .container-left p {
@@ -327,7 +371,7 @@ ul {
 
 .container-map h1 {
   text-transform: "uppercase";
-  font-family: "Playfair";
+  font-family: "Inter";
   font-size: 1.875rem;
 }
 
@@ -342,12 +386,12 @@ ul {
 }
 
 .container-map h2 {
-  font-family: "Playfair";
+  font-family: "Inter";
   text-transform: uppercase;
 }
 
 .container-map h3 {
-  font-family: "Playfair";
+  font-family: "Inter";
   text-transform: uppercase;
   font-size: 1.5rem;
 }
@@ -390,7 +434,7 @@ ul {
 }
 
 .results h2 {
-  font-family: "Playfair";
+  font-family: "Inter";
   text-transform: uppercase;
 }
 
@@ -435,17 +479,14 @@ ul {
   font-size: 1.25rem;
 }
 
-#overlay_geolocation {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 15;
-  cursor: pointer;
+.contribute {
+  color: black;
+  -webkit-transition: ease-out;
+  transition: ease-out;
+}
+
+.contribute:hover {
+  color: #F55873;
 }
 
 .please_location {
