@@ -245,11 +245,11 @@
        
        var description = data[0].personDescription;
        var genderLabel = data[0].genderLabel;
-       var wikidataLink = data[0].sitelink;
+       var wikipediaLink = data[0].sitelink;
        var picture = data[0].picture;
        console.log(description);
        console.log(genderLabel);
-       console.log(wikidataLink);
+       console.log(wikipediaLink);
        console.log(picture);
   
       }else if (data.results.bindings.length > 0) {
