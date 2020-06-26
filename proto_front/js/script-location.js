@@ -97,7 +97,7 @@ $(document).ready(function () {
 
         getBanData(codeINSEE);
         $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
-        $("#results").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th></th></tr></table>');
+        $("#results").append('<table class="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Contribuer</th></tr></table>');
       } else {
         console.log("Erreur du serveur");
       }

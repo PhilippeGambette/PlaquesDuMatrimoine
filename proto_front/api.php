@@ -179,11 +179,18 @@ if($_GET["action"] == "write"){
 
  //  Contribution mode
  else if($_GET["action"] == "contribution"){
+   var_dump($_GET);
    $sendFrom = htmlspecialchars($_GET['sender'], ENT_NOQUOTES, UTF-8);
    $subject = 'Contribution de '.$sendFrom.' pour la ville de ';
    $message = htmlspecialchars($_GET['message']) ;
    $to = 'newsletter@alanakra.fr';
-   mail($to,$subject,$message,'From:'.$sendFrom.'');
+   $send = mail($to,$subject,$message,'From:'.$sendFrom.'');
+
+   if($send){
+     echo "Votre envoi s'est bien passé";
+   }else{
+     echo "L'envoi à échoué";
+   }
  }
   /**url write mode
   *http://localhost/plaquesdumatrimoine/proto_front/api.php?action=write&id_wikidata=&alias=&nom_complet=&genderLabel=&personDescription=&sitelink=&lemma=&nom_potentiel=&picture= 

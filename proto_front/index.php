@@ -42,7 +42,7 @@
     </div>
 
     <div class="container-right">
-      <img src="img/logo-plaques-du-matrimoine_522.jpg">
+      <img src="img/logo-plaques-du-matrimoine_522.jpg" alt="logo de Plaques du matrimoine">
     </div>
   </div>
   

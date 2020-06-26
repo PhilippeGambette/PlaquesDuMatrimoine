@@ -191,6 +191,7 @@
       console.log(true);
       wikidataNameResults(data);
     }else{
+      // Person is not in the database
       console.log(false);
       setTimeout(getNextWikidata, 1000);
     }
@@ -207,7 +208,7 @@
         '  ?person rdfs:label \"' + nom + '" @fr.\n' +
         '  ?person wdt:P31 wd:Q5.\n' +
         '  ?person wdt:P21 ?gender.\n' +
-        '  ?person wdt:P18 ?pic.\n' +
+        '  OPTIONAL { ?person wdt:P18 ?pic.}\n' +
         '  ?sitelink schema:about ?person;\n' +
         '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
         '    schema:name ?lemma.\n' +
@@ -235,71 +236,78 @@
 
 
  function wikidataNameResults(data) {
-   console.log(data);
-   console.log(typeof(data));
-
-   if(data.length != undefined){
-     console.log('From Database');
-    }else{
-     console.log('From wikidata');
-   
-  
-   if (data.results.bindings.length > 0) {
-     var person = foundNames[nameNb];
-     console.log(person);
-     if (data.results.bindings[0].personLabel != undefined) {
-       person = data.results.bindings[0].personLabel.value;
-     }
-     var description = ""
-     if (data.results.bindings[0].personDescription != undefined) {
-       description = " (" + data.results.bindings[0].personDescription.value + ")";
-     }
-     var genderLabel = "";
-     if (data.results.bindings[0].genderLabel != undefined) {
-       genderLabel = data.results.bindings[0].genderLabel.value;
-     }
-
-     var picture ="";
-     if (data.results.bindings[0].p != undefined){
-       picture = data.results.bindings[0].p.value;
-       console.log(picture);
-     }
-
-     var wikipediaLink = data.results.bindings[0].sitelink.value;
-     var wikidataLink = data.results.bindings[0].person.value;
-     var idWikidata = wikidataLink.split('http://www.wikidata.org/entity/');
-     
-     $.get('api.php?action=write&id_wikidata='+idWikidata[1]+'&alias='+person+'&genderLabel='+genderLabel+'&personDescription='+description+'&sitelink='+wikipediaLink+'&nom_complet='+person+'&lemma='+person+'&nom_potentiel='+person+'&picture='+picture+'').done(function(data){
-       console.log(data);
-    //    addInfo(idWikidata[1], person, genderLabel, description, wikipediaLink);
-     })
-
-     function addInfo(idWikidata, person, genderLabel, description,wikipediaLink){
+   if(data.length != undefined|| data.results.bindings.length > 0){
+     console.log('C\'est carré');
+     if(data.length != undefined && data[0].nom_potentiel != undefined){
+       //  Results already saved in database
+       console.log('From Database');
+       var person = foundNames[nameNb];
        
-     }
-     
-     $('.foundName' + nameNb).each(function () {
-       $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td><i data-contribute='+idWikidata+' class="fas fa-user-edit contribute"></i></td>');  
-       if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
-         var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
-         if (!zoomOk) {
-           map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
-           zoomOk = true;
-           console.log("Zoom sur :"+coordinates);
+       var description = data[0].personDescription;
+       var genderLabel = data[0].genderLabel;
+       var wikidataLink = data[0].sitelink;
+       var picture = data[0].picture;
+       console.log(description);
+       console.log(genderLabel);
+       console.log(wikidataLink);
+       console.log(picture);
+  
+      }else if (data.results.bindings.length > 0) {
+       var person = foundNames[nameNb];
+       console.log(person);
+       if (data.results.bindings[0].personLabel != undefined) {
+         person = data.results.bindings[0].personLabel.value;
+       }
+       var description = ""
+       if (data.results.bindings[0].personDescription != undefined) {
+         description = " (" + data.results.bindings[0].personDescription.value + ")";
+       }
+       var genderLabel = "";
+       if (data.results.bindings[0].genderLabel != undefined) {
+         genderLabel = data.results.bindings[0].genderLabel.value;
+       }
+  
+       var picture ="";
+       if (data.results.bindings[0].p != undefined){
+         picture = data.results.bindings[0].p.value;
+       }
+  
+       var wikipediaLink = data.results.bindings[0].sitelink.value;
+       var wikidataLink = data.results.bindings[0].person.value;
+       var idWikidata = wikidataLink.split("/")[4];
+       
+       $.get('api.php?action=write&id_wikidata='+idWikidata+'&alias='+person+'&genderLabel='+genderLabel+'&personDescription='+description+'&sitelink='+wikipediaLink+'&nom_complet='+person+'&lemma='+person+'&nom_potentiel='+person+'&picture='+picture+'').done(function(data){
+         console.log(data);
+       })
+      }
+      
+  
+       $('.foundName' + nameNb).each(function () {
+         $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td><i data-contribute='+idWikidata+' class="fas fa-user-edit contribute"></i></td>');  
+         if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
+           var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
+           if (!zoomOk) {
+             map.setView([coordinates.split(" ")[1], coordinates.split(" ")[0]], 11);
+             zoomOk = true;
+             console.log("Zoom sur :"+coordinates);
+            }
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + wikipediaLink + '">' + person + description + "</a>");
+          }else{
+            // For men
+            var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
+            L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + wikipediaLink + '">' + person + description + "</a>");
           }
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + wikipediaLink + '">' + person + description + "</a>");
-        }else{
-          // For men
-          var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
-          L.marker([coordinates.split(" ")[1], coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html() + ' :<br><a target="_blank" href="' + wikipediaLink + '">' + person + description + "</a>");
-        }
-     });
-     // Look for the next name on Wikidata
-     nameNb++;
-     previousQuery = "name";
-    //  setTimeout(getNextWikidata, 1000);
-    checkresultInLocal();
-    } else {
+       });
+       // Look for the next name on Wikidata
+       nameNb++;
+       previousQuery = "name";
+      //  setTimeout(getNextWikidata, 1000);
+      checkresultInLocal();
+       
+   }
+    
+    else {
+
       if (previousQuery == "name") {
        // Look again as an alias
        previousQuery = "alias";
@@ -333,7 +341,6 @@
       }
     }
     }
-  }
   
   function guessGender(gender){
     $( '.foundName'+nameNb ).each(function(){
@@ -357,16 +364,16 @@
      // Retrieve some information from Wikidata:
      var endpointUrl = 'https://query.wikidata.org/sparql',
       sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma (MIN(?pic) AS ?p) WHERE {\n' +
-        '  ?person rdfs:label \"' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr.\n' +
-        '  ?person wdt:P31 wd:Q5.\n' +
-        '  ?person wdt:P21 ?gender.\n' +
-        '  ?person wdt:P18 ?pic.\n' +
-        '  ?sitelink schema:about ?person;\n' +
-        '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
-        '    schema:name ?lemma.\n' +
-        '  SERVICE wikibase:label {bd:serviceParam wikibase:language \"fr,en\"}\n' +
-        '  }\n' +
-        'GROUP BY ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma';
+      '  ?person rdfs:label \"' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr.\n' +
+      '  ?person wdt:P31 wd:Q5.\n' +
+      '  ?person wdt:P21 ?gender.\n' +
+      '  OPTIONAL { ?person wdt:P18 ?pic.}\n' +
+      '  ?sitelink schema:about ?person;\n' +
+      '    schema:isPartOf <https://fr.wikipedia.org/>;\n' +
+      '    schema:name ?lemma.\n' +
+      '  SERVICE wikibase:label {bd:serviceParam wikibase:language \"fr,en\"}\n' +
+      '  }\n' +
+      'GROUP BY ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma';
      makeSPARQLQuery(endpointUrl, sparqlQuery, wikidataNameResults);
    }
  }
