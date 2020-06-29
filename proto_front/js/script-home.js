@@ -80,11 +80,6 @@ $(document).ready(function () {
     inputCity = $("#inputCity").val();
     console.log(inputCity);
     cityName = $("#inputCity").val();
-    console.log(communes[$("#inputCity").val()]);
-    //  Test
-    console.log(communes[$("#inputCity").val()][0]);
-    console.log(communes[$("#inputCity").val()][1] + "");
-    console.log((communes[$("#inputCity").val()][1]).toString());
 
     if ((communes[$("#inputCity").val()])[0] + "".length == 4) {
       insert = "0";
@@ -94,7 +89,8 @@ $(document).ready(function () {
     $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
     console.log("Code INSEE : " + insert + communes[$("#inputCity").val()][0]);
     console.log("Code OSM : " + communes[$("#inputCity").val()][1]);
-    $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Nom trouvé sur Wikidata</th><th>Genre</th><th>Contribuer</th></tr></table>')
+    $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Nom trouvé sur Wikidata</th><th>Genre</th></tr></table>');
+    $('.svg-container').hide();
 
     // Show Leaflet map
     $("#js-map").show();

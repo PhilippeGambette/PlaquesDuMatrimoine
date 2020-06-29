@@ -14,6 +14,11 @@
   var nameNb;
   var element;
   var cityList = [];
+
+  $(document).on('click','.fa-user-edit', function(){
+    var form = '<tr><td colspan=5><form><label for="sender">Votre adresse e-mail </label> <input type="email" name="sender" id="sender"></form><tr>';
+    $(this).parent().parent().after(form);
+  })
   
   const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
@@ -79,9 +84,9 @@
          lineNb = foundNames.indexOf(analyzedName);
        }
        
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName +  "</tr>");
+       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + ' <i class="fas fa-user-edit contribute"></i> </td><td>' + analyzedName +  "</tr>");
      } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + '</td><td>' + analyzedName + "</td>");
+       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + ' <i class="fas fa-user-edit contribute"></i></td><td>' + analyzedName + "</td>");
      }
    }
  }
@@ -283,7 +288,7 @@
       
   
        $('.foundName' + nameNb).each(function () {
-         $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td><td><i data-contribute='+idWikidata+' class="fas fa-user-edit contribute"></i></td>');  
+         $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td>');  
          if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
            var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
            if (!zoomOk) {
@@ -382,6 +387,7 @@
 
   $('.load-data').hide();
   $('.pluriel').hide();
+  $('.svg-container').show();
   // Count the number of lines with a "female" or "male" class
   var nombreHommes = $('.masculin').length;
   var nombreFemmes = $('.féminin').length;
