@@ -58,6 +58,59 @@
           flex-direction: column;
 }
 
+.container-contribution {
+  padding-left: 30px;
+  padding-right: 30px;
+  height: calc(100vh - 40px);
+}
+
+.container-contribution .fa-user-edit:hover {
+  cursor: pointer;
+}
+
+.container-contribution h1 {
+  font-family: 'Inter';
+}
+
+.container-contribution form {
+  text-align: center;
+  border: solid red 2px;
+}
+
+.container-contribution form label {
+  font-size: 1.25rem;
+  font-family: 'Belleza';
+}
+
+.container-contribution form input[type=text], .container-contribution form [type=email] {
+  border: solid 2px black;
+  border-radius: 3px;
+}
+
+.container-contribution form textarea {
+  border: solid 2px black;
+  border-radius: 3px;
+}
+
+.container-contribution form input[type=submit] {
+  background-color: #1E90FF;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.container-contribution form input[type=submit]:hover {
+  background-color: #244A6F;
+}
+
 *,
 *::after,
 *::before {
@@ -111,8 +164,9 @@ ul {
   display: -ms-flexbox;
   display: flex;
   width: 50%;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   height: 5vh;
   font-size: 1.25rem;
   font-family: "Belleza";
@@ -592,6 +646,9 @@ hr {
   }
   .nav-menu {
     width: 100%;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
   .nav-menu a {
     font-size: 0.9375rem;

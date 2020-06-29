@@ -1,6 +1,7 @@
 @import 'font-family';
 @import 'config';
 @import 'geolocation';
+@import 'contribution';
 
 *,
 *::after,
@@ -45,7 +46,7 @@ ul {
 .nav-menu {
   display: flex;
   width: 50%;
-  justify-content: space-around;
+  justify-content: flex-end;
   height: 5vh;
   font-size: $text-nav-link;
   font-family: $Belleza-family;
@@ -453,6 +454,7 @@ hr {
 
   .nav-menu {
     width: 100%;
+    justify-content: center;
 
     a {
       font-size: 0.9375rem;

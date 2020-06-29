@@ -1,0 +1,54 @@
+.container-contribution {
+ @include padding-l-r;
+ @include height-container;
+
+ // Contrinution button home
+ .fa-user-edit{
+  &:hover{
+   cursor: pointer;
+  }
+ }
+
+ h1 {
+  font-family: 'Inter';
+ }
+
+ form {
+  text-align: center;
+  border: solid red 2px;
+
+  label {
+   font-size: 1.25rem;
+   font-family: 'Belleza';
+  }
+
+  input[type=text],[type=email] {
+    border: solid 2px black;
+    border-radius: 3px;
+   }
+   
+   textarea{
+    border: solid 2px black;
+    border-radius: 3px;
+  }
+
+  input[type=submit] {
+   background-color: #1E90FF;
+   color: white;
+   border: none;
+   border-radius: 3px;
+   padding-left: 20px;
+   padding-right: 20px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   transition-duration: 1s;
+   margin-top: 15px;
+   cursor: pointer;
+
+   &:hover {
+    background-color: #244A6F;
+   }
+  }
+  
+ }
+}
