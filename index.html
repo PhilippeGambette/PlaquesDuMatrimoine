@@ -50,7 +50,9 @@
         <li>des données d'<a href="https://www.openstreetmap.org/">OpenStreetMap</a> interrogées automatiquement grâce à l'<a href="https://geodatamine.fr/">API GéoDataMine</a></li>
         <li>des données de <a href="https://wikidata.org">Wikidata</a> interrogée automatiquement sur les noms de personnes trouvés, pour identifier leur genre.</li>
         </ul>
-        <p>Choisissez d'abord un département, puis une ville dans ce département.</p>
+        <p>Il s'agit d'un outil expérimental en cours de développement. <b>Les résultats obtenus ne sont pas fiables à 100%</b> et doivent être vérifiés : des problèmes d'homonymie, l'absence de prénom, d'accents ou de majuscules peuvent expliquer les erreurs les plus fréquentes.</p>
+        <div id="formulaire">
+        <p>Pour tester <i>PlaquesDuMatrimoine</i>, choisissez d'abord un département, puis une ville dans ce département.</p>
         <label for="department">Département : </label>
         <input type="departement" placeholder="département choisi" id="department" name="department" data-validation-required-message="Choisissez un département en écrivant son numéro ou quelques lettres de son nom…" value="">
         <p class="help-block text-danger"></p>
@@ -60,7 +62,12 @@
         <p class="help-block text-danger"></p>
         
         <button type="submit" id="analyse" class="btn btn-light btn-lg btn-block">Chercher les lieux nommés d'après des femmes dans cette ville...</button>
-      </div>										
+        </div>
+      </div>					
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm" id="result-title">
       </div>
     </div>
     <div class="row">
@@ -68,15 +75,48 @@
         <div id="map" class="map map-home" style="margin:0px;padding:0px;width:100%;height:500px"></div>
       </div>
     </div>
-
     <div class="row">
-      
       <div class="col-sm" id="results">
-      
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
       </div>
     </div>
   </div>
 
 </div>
+<footer class="container">
+  <div class="inside">
+    <div class="row">
+      <div class="col-sm">
+<p>
+<br><br><br><br><hr>
+<small>
+Outil développé par <a href="http://igm.univ-mlv.fr/~gambette/">Philippe Gambette</a> dans le cadre du projet 
+<i><a href="https://citedesdames.hypotheses.org/">Cité des Dames : créatrices dans la cité</a></i>,
+financé par l'<a href="http://www.future-isite.fr/li-site-future/">I-Site Future</a> 
+de l'<a href="http://univ-eiffel.fr/">université Gustave Eiffel</a>.
+Pour plus de détails sur son fonctionnement et le contexte de sa conception, voir
+<a href="https://f.hypotheses.org/wp-content/blogs.dir/7044/files/2020/02/2020-01-29-PlaquesDuMatrimoine.pdf">ce diaporama</a>
+présenté lors de la première séance du séminaire <i>Cité des dames, créatrices dans la cité</i>,
+intitulée « <a href="https://citedesdames.hypotheses.org/430">Textes de femmes, langages et villes</a> ».
+</small>
+</p>
+<p>
+<small>
+Bibliothèques utilisées : 
+<a href="https://getbootstrap.com/">Bootstrap</a>, 
+<a href="https://jquery.com/">jQuery</a>, 
+<a href="https://jqueryui.com/">jQuery UI</a>, 
+<a href="https://leafletjs.com/">Leaflet</a>, 
+<a href="https://www.papaparse.com/">Papa Parse</a> 
+et <a href="https://plot.ly/javascript/">plotly</a>.
+</small>
+</p>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
