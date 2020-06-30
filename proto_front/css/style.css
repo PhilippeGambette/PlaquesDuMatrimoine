@@ -701,6 +701,14 @@ hr {
         -ms-flex-align: center;
             align-items: center;
   }
+  .results {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .container-map {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
 }
 
 @media (max-width: 378px) {

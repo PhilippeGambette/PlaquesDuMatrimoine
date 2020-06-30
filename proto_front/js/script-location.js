@@ -90,7 +90,7 @@ $(document).ready(function () {
         var resp = this.response;
         resp = JSON.parse(resp);
         var tabCommunes = Object.keys(resp.communes);
-        const codeINSEE = resp.communes[cityName][0];
+        codeINSEE = resp.communes[cityName][0];
         codeOSM = resp.communes[cityName][1];
         console.log(codeINSEE);
         console.log(codeOSM);

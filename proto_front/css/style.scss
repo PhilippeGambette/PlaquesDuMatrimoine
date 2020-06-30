@@ -512,6 +512,14 @@ hr {
     justify-content: center;
     align-items: center;
   }
+
+  .results{
+    @include padding-l-r-map-mobile;
+  }
+  
+  .container-map{
+    @include padding-l-r-map-mobile;
+  }
 }
 
 // <= iPhone 6

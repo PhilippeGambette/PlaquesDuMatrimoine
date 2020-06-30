@@ -43,6 +43,7 @@ $(document).ready(function () {
 
   function getDpt() {
     $('#inputCity').show();
+    console.log($("#inputDpt").val());
     valueDpt = $("#inputDpt").val().slice(0, 2);
     data = $.getJSON(`../data/OSM-communes-codeInseeOsm.json-${valueDpt}.json`, function (data) {
       // Crate an array
@@ -87,7 +88,8 @@ $(document).ready(function () {
     $("#cityname-h").html($('#inputCity').val());
     $("#results").html("<p>Résultats pour la commune de "+$("#inputCity").val()+"</p>")
     $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
-    console.log("Code INSEE : " + insert + communes[$("#inputCity").val()][0]);
+    codeINSEE = insert + communes[$("#inputCity").val()][0];
+    console.log("Code INSEE : " + codeINSEE);
     console.log("Code OSM : " + communes[$("#inputCity").val()][1]);
     $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Nom trouvé sur Wikidata</th><th>Genre</th></tr></table>');
     $('.svg-container').hide();

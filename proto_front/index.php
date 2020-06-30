@@ -60,6 +60,7 @@
 
   <?php require 'include/__footer.php' ?>
 
+  <script src="./js/namelist.js"></script>
   <script src="./js/plaquesDuMatrimoine.js"></script>
   <script src="./js/script-home.js"></script>
 </body> 

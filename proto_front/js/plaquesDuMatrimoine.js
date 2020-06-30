@@ -14,11 +14,11 @@
   var nameNb;
   var element;
   var cityList = [];
+  var codeINSEE;
 
   $(document).on('click','.fa-user-edit', function(){
-    var form = '<tr><td colspan=5><form><label for="sender">Votre adresse e-mail </label> <input type="email" name="sender" id="sender"></form><tr>';
-    $(this).parent().parent().after(form);
-  })
+    $(this).parent().parent().after();
+  });
   
   const FEMICON = new L.Icon({
     iconUrl: 'img/leaf-red.png',
@@ -84,9 +84,9 @@
          lineNb = foundNames.indexOf(analyzedName);
        }
        
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + ' <i class="fas fa-user-edit contribute"></i> </td><td>' + analyzedName +  "</tr>");
+       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + ' <a href="contribuer.php?cityname='+cityName+'&nom='+name+'&topic='+topic+'&codeINSEE='+codeINSEE+'" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a> </td><td>' + analyzedName +  "</tr>");
      } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + ' <i class="fas fa-user-edit contribute"></i></td><td>' + analyzedName + "</td>");
+       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + '  <a href="contribuer.php?cityname='+cityName+'&nom='+name+'&topic='+topic+'&codeINSEE='+codeINSEE+'" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a></td><td>' + analyzedName + "</td>");
      }
    }
  }

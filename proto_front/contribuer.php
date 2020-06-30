@@ -9,10 +9,19 @@
 <body>
  <?php include 'include/__navbar.php' ?>
   <div class="container-contribution">
-     <!-- <h1>Contribution pour la ville de </h1>  -->
-     <h1>Contribution pour <?php echo $_GET['cityname'] ?></h1> 
+     <h1>Contribution pour <?php echo $_GET['topic'] ?> <?php echo $_GET['nom'] ?>, <?php echo ($_GET['cityname'])?></h1> 
      
      <form action="sendmail.php" method="get">
+
+      <label for="cityname">Ville</label> <br>
+      <input type="text" name="cityname" value="<?php echo($_GET['cityname']) ?>" disabled> <br><br>
+
+      <label for="nom">Nom du lieu</label><br>
+      <input type="text" name="nom" value="<?php echo($_GET['nom']) ?>" disabled><br><br>
+
+      <label for="topic">Type de lieu</label><br>
+      <input type="text" name="topic" value="<?php echo($_GET['topic']) ?>" disabled><br><br>
+
       <label for="sender">Votre adresse e-mail</label> <br>
       <input type="email" name="sender" id=""> <br><br>
 
