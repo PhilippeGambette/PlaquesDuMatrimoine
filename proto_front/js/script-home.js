@@ -91,7 +91,16 @@ $(document).ready(function () {
     codeINSEE = insert + communes[$("#inputCity").val()][0];
     console.log("Code INSEE : " + codeINSEE);
     console.log("Code OSM : " + communes[$("#inputCity").val()][1]);
-    $("#results").append('<table id="table-results"><tr><th>Type</th><th>Nom du lieu</th><th>Nom de personne potentiel</th><th>Nom trouvé sur Wikidata</th><th>Genre</th></tr></table>');
+    var appendTable = `<table id="table-results">
+    <tr>
+      <th>Type</th>
+      <th>Nom du lieu</th>
+      <th>Nom de personne potentiel</th>
+      <th>Nom trouvé sur Wikidata</th>
+      <th>Genre</th>
+    </tr>
+    </table>`
+    $("#results").append(appendTable);
     $('.svg-container').hide();
 
     // Show Leaflet map

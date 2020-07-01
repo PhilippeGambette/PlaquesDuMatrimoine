@@ -64,17 +64,17 @@
   height: calc(100vh - 40px);
 }
 
-.container-contribution .fa-user-edit:hover {
-  cursor: pointer;
-}
-
 .container-contribution h1 {
   font-family: 'Inter';
 }
 
+.container-contribution p {
+  font-family: "Belleza";
+  font-size: 1.25rem;
+}
+
 .container-contribution form {
   text-align: center;
-  border: solid red 2px;
 }
 
 .container-contribution form label {
@@ -82,7 +82,8 @@
   font-family: 'Belleza';
 }
 
-.container-contribution form input[type=text], .container-contribution form [type=email] {
+.container-contribution form input[type=text],
+.container-contribution form [type=email], .container-contribution form .choose-dpt {
   border: solid 2px black;
   border-radius: 3px;
 }
@@ -92,7 +93,7 @@
   border-radius: 3px;
 }
 
-.container-contribution form input[type=submit] {
+.container-contribution form button[type=submit] {
   background-color: #1E90FF;
   color: white;
   border: none;
@@ -107,8 +108,34 @@
   cursor: pointer;
 }
 
-.container-contribution form input[type=submit]:hover {
+.container-contribution form button[type=submit]:hover {
   background-color: #244A6F;
+}
+
+.container-contribution form .choose-gender {
+  padding-bottom: 1rem;
+}
+
+.fa-user-edit:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 414px) {
+  .container-contribution {
+    height: auto;
+    padding-bottom: 1.25rem;
+  }
+  input[type=text] {
+    width: 90%;
+    margin-bottom: 0.625rem;
+  }
+  input[type=email] {
+    width: 90%;
+    margin-bottom: 0.625rem;
+  }
+  label {
+    margin-bottom: 0.625rem;
+  }
 }
 
 *,
@@ -207,10 +234,21 @@ ul {
 
 .submit-home {
   text-align: center;
-  border-radius: 4px;
-  border: solid 1px black;
-  background-color: white;
+  border-radius: 3px;
+  border: none;
+  background-color: #1E90FF;
+  color: white;
   height: 2.2rem;
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.submit-home:hover {
+  background-color: #244A6F;
 }
 
 .container-main {

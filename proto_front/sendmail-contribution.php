@@ -3,7 +3,7 @@
    
    $sendFrom = htmlspecialchars($_GET['sender'], ENT_NOQUOTES, UTF-8);
    $subject = 'Plaques du Matrimoine: Contribution de '.$sendFrom.' pour la ville de ';
-   $message = "Message de ".$sendFrom." : ".htmlspecialchars($_GET['message']) ;
+   $message = "Message de ".$sendFrom.", Proposition de lieu : ".htmlspecialchars($_GET['message']) ;
    $to = 'philippe.gambette@gmail.com';
    $send = mail($to,$subject,$message,'From : newsletter@alanakra.fr');
 

@@ -83,10 +83,20 @@
        } else {
          lineNb = foundNames.indexOf(analyzedName);
        }
-       
-       $("table").append('<tr class="border_bottom count-street foundName' + lineNb + '"><td>' + topic + '</td><td class="placeName" data-coord='+coordinates.split(" ")+'>' + name + ' <a href="contribuer.php?cityname='+cityName+'&nom='+name+'&topic='+topic+'&codeINSEE='+codeINSEE+'" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a> </td><td>' + analyzedName +  "</tr>");
-     } else {
-       $("table").append('<tr class="border_bottom count-street"><td>' + topic + '</td><td data-coord='+coordinates.split(" ")+'>' + name + '  <a href="contribuer.php?cityname='+cityName+'&nom='+name+'&topic='+topic+'&codeINSEE='+codeINSEE+'" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a></td><td>' + analyzedName + "</td>");
+
+       var foundName = `<tr class="border_bottom count-street foundName` + lineNb + `">
+       <td>` + topic + `</td>
+       <td class="placeName" data-coord=`+coordinates.split(" ")+ `>` + name +  `<a href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a> </td>
+       <td>` + analyzedName +  
+      `</tr>`;
+      $("table").append(foundName);
+    } else {
+       var notFound = `<tr class="border_bottom count-street">
+       <td>` + topic + `</td>
+       <td data-coord=`+coordinates.split(" ")+`>` + name + `<a href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>
+       </td>
+       <td>` + analyzedName + `</td>`;
+       $("table").append(notFound);
      }
    }
  }
@@ -121,8 +131,7 @@
      setTimeout(sendGeodatamineQuery);
    } else {
      nameNb = 0;
-     previousQuery = "name"
-    //  getNextWikidata();
+     previousQuery = "name";
      checkresultInLocal();
    }
  }
@@ -347,19 +356,56 @@
     }
     }
   
-  function guessGender(gender){
-    $( '.foundName'+nameNb ).each(function(){
-      $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
-      if(gender == "féminin" || gender == "femme transgenre"){
-        var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
-        if(!zoomOk){
-           map.setView([coordinates.split(",")[1],coordinates.split(",")[0]], 11);
-           zoomOk = true;
-           //console.log("Zoom sur :"+coordinates);
+    function guessGender(name){
+      var gender = "";
+      var guessedFirstName = "";
+      console.warn("Prénom de "+name);
+      // Look for female first names:
+      var i = 0;
+      while(i<femaleFirstNames.length){
+        var tryRegexp = name.replace(new RegExp("^"+femaleFirstNames[i]+" ", "ig"), "");
+        if(tryRegexp.length < name.length){
+          guessedFirstName = femaleFirstNames[i];
+          gender = "féminin";
+          console.warn("féminin !");
+          console.warn("Prénom deviné : "+guessedFirstName);
         }
-        L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
-     }
-   });
+        i++;
+      }
+      // Look for male first names:	   
+      var i = 0;
+      while(i<maleFirstNames.length){
+        var tryRegexp = name.replace(new RegExp("^"+maleFirstNames[i]+" ", "ig"), "");
+        if(tryRegexp.length < name.length){
+          guessedFirstName = maleFirstNames[i];
+          gender = "masculin";
+        }
+        i++;
+      }
+      if(gender != ""){
+        // Confirm if we indeed found a first name (it should be followed by a whitespace and an uppercase letter or a lowercase d)
+        var tryRegexp = name.replace(new RegExp("^"+guessedFirstName+" [A-Zd]", "g"), ""); 
+        if(tryRegexp.length == name.length){
+          gender = "";
+        }
+      }
+      console.log(gender);
+      return gender;
+   }
+
+
+   function normalizeName(name){
+    var i = 0;
+    while(i<specialNames.length){
+      var tryRegexp = name.replace(new RegExp("^"+specialNames[i].substring(3), "ig"), "");
+      if(tryRegexp.length < name.length){
+        name = tryRegexp;
+      }
+      i++;
+    }
+    name = name.replace(/-/gi," ").replace(/ la /gi," La ").replace(/ le /gi," Le ").replace(/ \(.*\)/gi,"");
+    console.log("Nom normalisé à chercher : "+name);
+    return name;
  }
 
  function getNextWikidataAlias() {
@@ -369,7 +415,7 @@
      // Retrieve some information from Wikidata:
      var endpointUrl = 'https://query.wikidata.org/sparql',
       sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma (MIN(?pic) AS ?p) WHERE {\n' +
-      '  ?person rdfs:label \"' + nom.replace(/-/gi, " ").replace(/ la /gi, " La ").replace(/ le /gi, " Le ") + '" @fr.\n' +
+      '  ?person rdfs:label \"' + normalizeName(name) + '" @fr.\n' +
       '  ?person wdt:P31 wd:Q5.\n' +
       '  ?person wdt:P21 ?gender.\n' +
       '  OPTIONAL { ?person wdt:P18 ?pic.}\n' +
