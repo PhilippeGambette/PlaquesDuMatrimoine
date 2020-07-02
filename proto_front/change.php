@@ -12,6 +12,7 @@
      <h1>Contribution pour <?php echo $_GET['topic'] ?> <?php echo $_GET['nom'] ?>, <?php echo ($_GET['cityname'])?></h1> 
      
      <form action="sendmail-change.php" method="get">
+     <p>Tous les champs marqués d'un <span class="required">*</span> sont obligatoires</p>
 
       <label for="cityname">Ville</label> <br>
       <input type="text" name="cityname" value="<?php echo($_GET['cityname']) ?>" disabled> <br><br>
@@ -22,12 +23,13 @@
       <label for="topic">Type de lieu</label><br>
       <input type="text" name="topic" value="<?php echo($_GET['topic']) ?>" disabled><br><br>
 
-      <label for="sender">Votre adresse e-mail</label> <br>
-      <input type="email" name="sender" id=""> <br><br>
+      <label for="sender">Votre adresse e-mail <span class="required">*</span></label> <br>
+      <input type="email" name="sender" id="" required> <br><br>
 
       <div class="choose-gender">
+      <p>Merci de définir le genre de la personne <span class="required">*</span></p>
            <div>
-            <input id="féminin" type="radio" name="gender" id="" value="féminin">
+            <input id="féminin" type="radio" name="gender" id="" value="féminin" required>
             <label id="féminin" for="féminin">Féminin</label> 
            </div>
 
@@ -42,7 +44,7 @@
            </div> 
       </div>
 
-      <label for="message">Informations sur la personne</label><br>
+      <label for="message">Informations sur la personne <span class="required">*</span></label><br>
       <textarea name="message" id="" cols="30" rows="10" placeholder=""></textarea> <br>
 
       <button type="submit">Envoyer</button>

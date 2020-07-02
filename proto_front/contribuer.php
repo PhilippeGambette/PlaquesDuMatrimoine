@@ -15,12 +15,13 @@
   <p>Vous souhaitez proposer un nom de lieu non répertorié ? N'hésitez pas, nous vous répondrons le plus rapidement
    possible !</p>
    <form action="sendmail-contribution.php" method="get">
+   <p>Tous les champs sont obligatoires</p>
 
    <label for="cityname">Ville</label> <br>
-   <input type="text" name="cityname"> <br><br>
+   <input type="text" name="cityname" required> <br><br>
 
    <label for="departement">Département</label> <br>
-   <input list="list-departement" name="departement" id="departement" class="choose-dpt" value="Merci de sélectionner un département"> <br><br>
+   <input list="list-departement" name="departement" id="departement" class="choose-dpt" value="Merci de sélectionner un département" required> <br><br>
    <datalist id="list-departement">
            <option value="01 Ain">
            <option value="02 Aisne">
@@ -121,17 +122,18 @@
          </datalist>
 
    <label for="nom">Nom du lieu</label><br>
-   <input type="text" name="nom"><br><br>
+   <input type="text" name="nom" required><br><br>
 
    <label for="topic">Type de lieu</label><br>
-   <input type="text" name="topic"><br><br>
+   <input type="text" name="topic" required><br><br>
 
    <label for="sender">Votre adresse e-mail</label> <br>
-   <input type="email" name="sender" id=""> <br><br>
+   <input type="email" name="sender" id="" required> <br><br>
 
    <div class="choose-gender">
+   <p>Merci de définir le genre de la personne</p>
     <div>
-     <input id="féminin" type="radio" name="gender" id="" value="féminin">
+     <input id="féminin" type="radio" name="gender" id="" value="féminin" required>
      <label id="féminin" for="féminin">Féminin</label>
     </div>
 

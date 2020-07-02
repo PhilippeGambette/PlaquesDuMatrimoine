@@ -86,14 +86,14 @@
 
        var foundName = `<tr class="border_bottom count-street foundName` + lineNb + `">
        <td>` + topic + `</td>
-       <td class="placeName" data-coord=`+coordinates.split(" ")+ `>` + name +  `<a href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a> </td>
+       <td class="placeName" data-coord=`+coordinates.split(" ")+ `>` + name +  `<a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a> </td>
        <td>` + analyzedName +  
       `</tr>`;
       $("table").append(foundName);
     } else {
        var notFound = `<tr class="border_bottom count-street">
        <td>` + topic + `</td>
-       <td data-coord=`+coordinates.split(" ")+`>` + name + `<a href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>
+       <td data-coord=`+coordinates.split(" ")+`>` + name + `<a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>
        </td>
        <td>` + analyzedName + `</td>`;
        $("table").append(notFound);
@@ -250,12 +250,11 @@
 
 
  function wikidataNameResults(data) {
+   var person = foundNames[nameNb];
    if(data.length != undefined|| data.results.bindings.length > 0){
-     console.log('C\'est carré');
      if(data.length != undefined && data[0].nom_potentiel != undefined){
        //  Results already saved in database
        console.log('From Database');
-       var person = foundNames[nameNb];
        
        var description = data[0].personDescription;
        var genderLabel = data[0].genderLabel;
@@ -329,20 +328,23 @@
       } else {
        // Alias not found, look for the next name on Wikidata
        
+       console.log(person);
        if (person != undefined){
          console.log(person);
          var gender = guessGender(person);
          if(gender == "masculin" || gender == "féminin"){
            $( '.foundName'+nameNb ).each(function(){
-             $(this).append('<td>'+person+'</td><td>'+gender+'</td><td></td>');
+             $(this).append('<td>'+person+'</td><td class='+gender+'>'+gender+'</td><td></td>');
+             var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
              if(gender == "féminin" || gender == "femme transgenre"){
-              var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
                if(!zoomOk){
                  map.setView([coordinates.split(" ")[1],coordinates.split(" ")[0]], 11);
                  zoomOk = true;
                  //console.log("Zoom sur :"+coordinates);
                 }
-                 L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]]).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+                 L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]],{icon: FEMICON}).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
+                }else{
+                  L.marker([coordinates.split(" ")[1],coordinates.split(" ")[0]],{icon: HOMICON}).addTo(map).bindPopup($(this).find(".placeName").html()+' :<br>'+person);
               }
             });
             
@@ -395,6 +397,7 @@
 
 
    function normalizeName(name){
+    console.log(name);
     var i = 0;
     while(i<specialNames.length){
       var tryRegexp = name.replace(new RegExp("^"+specialNames[i].substring(3), "ig"), "");
@@ -473,8 +476,8 @@
   }
 
   var layout = {
-    height: 400,
-    width: 600,
+    // height: 400,
+    // width: 600,
     title: {
       text: `Répartition hommes/femmes pour les noms de lieux de ${cityName}`,
       font: {

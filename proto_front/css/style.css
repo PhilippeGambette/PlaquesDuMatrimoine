@@ -73,6 +73,10 @@
   font-size: 1.25rem;
 }
 
+.container-contribution .required {
+  color: red;
+}
+
 .container-contribution form {
   text-align: center;
 }
@@ -201,6 +205,15 @@ ul {
 
 .nav-menu img {
   border-radius: 50%;
+}
+
+.nav-menu a {
+  -webkit-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.nav-menu a:hover {
+  text-decoration: underline;
 }
 
 .input-home {
