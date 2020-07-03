@@ -146,6 +146,11 @@
      <input id="masculin" type="radio" name="gender" id="" value="masculin">
      <label for="masculin">Masculin</label>
     </div>
+
+    <div>
+     <input id="homme transgenre" type="radio" name="gender" id="" value="masculin">
+     <label for="homme transgenre">Homme transgenre</label>
+    </div>
    </div>
 
    <label for="message">Informations sur la personne</label><br>

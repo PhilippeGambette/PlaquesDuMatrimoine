@@ -86,14 +86,14 @@
 
        var foundName = `<tr class="border_bottom count-street foundName` + lineNb + `">
        <td>` + topic + `</td>
-       <td class="placeName" data-coord=`+coordinates.split(" ")+ `>` + name +  `<a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a> </td>
+       <td class="placeName" data-coord=`+coordinates.split(" ")+ `> <a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a>` + name +  ` </td>
        <td>` + analyzedName +  
       `</tr>`;
       $("table").append(foundName);
     } else {
        var notFound = `<tr class="border_bottom count-street">
        <td>` + topic + `</td>
-       <td data-coord=`+coordinates.split(" ")+`>` + name + `<a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>
+       <td data-coord=`+coordinates.split(" ")+`> <a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>` + name + `
        </td>
        <td>` + analyzedName + `</td>`;
        $("table").append(notFound);
@@ -179,7 +179,7 @@
      "sports": ["Boule lyonnaise ", "Boulodrome ", "Boulodrome couvert ", "Centre nautique ", "Centre Sportif ", "City Stade ", "Complexe ", "Complexe sportif ", "Dojo ", "École De Danse ", "Espace ", "Halle ", "Halle sportive ", "Gymnase ", "Gymnase scolaire ", "Jeu de boules ", "Le centre ", "Mini Football ", "Palais des Sports ", "Piscine ", "Piscine municipale ", "Piste d'athlétisme ", "Piste d'athletisme ", "Plateau Sportif ", "Plateaux sportifs ", "Salle ", "Salle de boxe ", "Salle de sport ", "Salle de sports ", "Salle omnisports ", "Skate-Park ", "Square ", "Stade ", "Stade municipal ", "Tennis Club ", "Tennis Club municipal ", "Terrain ", "Terrain de football ", "Terrain de proximité ", "Vélodrome ", ".*Vélodrome "],
      "education": ["Crèche Municipale", "Collège( | public| privé)* ", "École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |d'application )*(privée|publique)*[ ]*", "Espace ", "Groupe scolaire ", "Institut ", "Institution ", "Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique| [Tt]echnique)*( | et technologique)*( | public| privé|.*restauration)* "],
      "library": ["Biblioth[èe]que( | centrale| communale| départementale| municipale)* ", "M[ée]diath[èe]que( | centrale| communale| départementale| municipale)* "],
-     "address": ["All[ée]e ", "Avenue ", "Boulevard ", "Chemin ", "Cours ", "Impasse ", "Place ", "Rue ", "Sente ", "Sentier ", "Square "]
+     "address": ["All[ée]e ", "Avenue ", "Boulevard ", "Chemin ", "Cours ", "Impasse ", "Passage " ,"Place ", "Rue ", "Sente ", "Sentier ", "Square "]
    };
    var prefixes;
    if (type == "address") {
@@ -210,6 +210,13 @@
       setTimeout(getNextWikidata, 1000);
     }
    })
+ }
+
+ function wikidataError(){
+   console.error('Erreur de requête');
+   nameNb++;
+   previousQuery = "name";
+   setTimeout(getNextWikidata, 1000);
  }
 
  function getNextWikidata() {
@@ -291,7 +298,7 @@
        
        $.get('api.php?action=write&id_wikidata='+idWikidata+'&alias='+person+'&genderLabel='+genderLabel+'&personDescription='+description+'&sitelink='+wikipediaLink+'&nom_complet='+person+'&lemma='+person+'&nom_potentiel='+person+'&picture='+picture+'').done(function(data){
          console.log(data);
-       })
+       }).fail(wikidataError)
       }
       
   
@@ -361,7 +368,6 @@
     function guessGender(name){
       var gender = "";
       var guessedFirstName = "";
-      console.warn("Prénom de "+name);
       // Look for female first names:
       var i = 0;
       while(i<femaleFirstNames.length){
@@ -369,8 +375,6 @@
         if(tryRegexp.length < name.length){
           guessedFirstName = femaleFirstNames[i];
           gender = "féminin";
-          console.warn("féminin !");
-          console.warn("Prénom deviné : "+guessedFirstName);
         }
         i++;
       }
@@ -476,10 +480,8 @@
   }
 
   var layout = {
-    // height: 400,
-    // width: 600,
     title: {
-      text: `Répartition hommes/femmes pour les noms de lieux de ${cityName}`,
+      text: `Répartition hommes/femmes pour les noms de lieux de <br> ${cityName}`,
       font: {
         family: 'Arial, San Francisco',
         size: 15

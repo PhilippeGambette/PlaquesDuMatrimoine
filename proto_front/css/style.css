@@ -61,7 +61,7 @@
 .container-contribution {
   padding-left: 30px;
   padding-right: 30px;
-  height: calc(100vh - 40px);
+  height: auto;
 }
 
 .container-contribution h1 {
@@ -79,6 +79,8 @@
 
 .container-contribution form {
   text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .container-contribution form label {
@@ -753,12 +755,12 @@ hr {
             align-items: center;
   }
   .results {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .container-map {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
