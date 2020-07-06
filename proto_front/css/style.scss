@@ -156,7 +156,7 @@ ul {
   }
 }
 
-.container-soon {
+.container-present {
   @include padding-l-r;
   @include height-container;
   overflow: auto;
@@ -164,9 +164,13 @@ ul {
   a {
     font-family: $Belleza-family;
   }
+
+  h1{
+    font-size: 3.125rem;
+  }
 }
 
-.all-soon {
+.all-present {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -176,13 +180,13 @@ ul {
   text-align: center;
 }
 
-.title-soon {
+.title-present {
   font-family: $Main-font;
   font-size: 3.25rem;
   text-transform: uppercase;
 }
 
-.quote-soon {
+.quote-present {
   font-family: $Belleza-family;
   font-size: 1.5rem;
   display: flex;
@@ -190,7 +194,7 @@ ul {
   justify-content: center;
 }
 
-.link-soon {
+.link-present {
   color: $link-color;
   font-size: 1.5rem;
 
@@ -477,7 +481,7 @@ hr {
     justify-content: center;
 
     a {
-      font-size: 0.9375rem;
+      font-size: $nav-title-mobile;
       text-decoration: none;
     }
   }
@@ -510,11 +514,11 @@ hr {
     padding: 0;
   }
 
-  .title-soon {
+  .title-present {
     font-size: 1.975rem;
   }
 
-  .link-soon {
+  .link-present {
     font-size: 1.3rem;
   }
 

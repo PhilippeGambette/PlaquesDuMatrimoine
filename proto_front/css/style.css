@@ -89,7 +89,7 @@
 }
 
 .container-contribution form input[type=text],
-.container-contribution form [type=email], .container-contribution form .choose-dpt {
+.container-contribution form [type=email], .container-contribution form [type=number] .choose-dpt {
   border: solid 2px black;
   border-radius: 3px;
 }
@@ -344,18 +344,22 @@ ul {
   color: #005680;
 }
 
-.container-soon {
+.container-present {
   padding-left: 30px;
   padding-right: 30px;
   height: calc(100vh - 40px);
   overflow: auto;
 }
 
-.container-soon a {
+.container-present a {
   font-family: "Belleza";
 }
 
-.all-soon {
+.container-present h1 {
+  font-size: 3.125rem;
+}
+
+.all-present {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -366,13 +370,13 @@ ul {
   text-align: center;
 }
 
-.title-soon {
+.title-present {
   font-family: "Inter";
   font-size: 3.25rem;
   text-transform: uppercase;
 }
 
-.quote-soon {
+.quote-present {
   font-family: "Belleza";
   font-size: 1.5rem;
   display: -webkit-box;
@@ -384,12 +388,12 @@ ul {
           justify-content: center;
 }
 
-.link-soon {
+.link-present {
   color: #005680;
   font-size: 1.5rem;
 }
 
-.link-soon:visited {
+.link-present:visited {
   color: #005680;
 }
 
@@ -704,7 +708,7 @@ hr {
             justify-content: center;
   }
   .nav-menu a {
-    font-size: 0.9375rem;
+    font-size: 1.25rem;
     text-decoration: none;
   }
   .container-main {
@@ -734,10 +738,10 @@ hr {
   .footer-right ul {
     padding: 0;
   }
-  .title-soon {
+  .title-present {
     font-size: 1.975rem;
   }
-  .link-soon {
+  .link-present {
     font-size: 1.3rem;
   }
 }

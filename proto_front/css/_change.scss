@@ -26,7 +26,7 @@
     }
 
     input[type=text],
-    [type=email], .choose-dpt {
+    [type=email],[type=number] .choose-dpt {
       border: solid 2px black;
       border-radius: 3px;
     }

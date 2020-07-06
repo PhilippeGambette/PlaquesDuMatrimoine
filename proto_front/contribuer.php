@@ -14,7 +14,7 @@
   <h1>Proposition d'un nouveau lieu</h1>
   <p>Vous souhaitez proposer un nom de lieu non répertorié ? N'hésitez pas, nous vous répondrons le plus rapidement
    possible !</p>
-   <form action="sendmail-contribution.php" method="get">
+   <form action="sendmail-contribution.php" method="post">
    <p>Tous les champs sont obligatoires</p>
 
    <label for="cityname">Ville</label> <br>
@@ -155,6 +155,9 @@
 
    <label for="message">Informations sur la personne</label><br>
    <textarea name="message" id="" cols="30" rows="10" placeholder=""></textarea> <br>
+
+   <label for="result">8 + 9</label><br>
+   <input type="number" name="result" id="result" required><br>
 
    <button type="submit">Envoyer</button>
   </form>

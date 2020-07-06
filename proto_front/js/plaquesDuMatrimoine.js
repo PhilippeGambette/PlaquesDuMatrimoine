@@ -6,7 +6,6 @@
   var themeNumber;
   var themeLabels;
   var foundNames = [];
-  var inputCity;
   var codeOSM;
   var zoomOk = false;
   var cityName;
@@ -16,8 +15,23 @@
   var cityList = [];
   var codeINSEE;
 
-  $(document).on('click','.fa-user-edit', function(){
-    $(this).parent().parent().after();
+  $(document).on('click','.change', function(){
+   
+   $(this).on('click', function(){
+     var nom = $(this).parent().next().val();
+     var topic = $(this).parent().prev().html();
+     $.post('change.php',
+     {
+       cityname: cityName,
+       nom: name,
+       topic: topic,
+       codeINSEE: codeINSEE
+     },
+     function(data, status){
+      console.log('Data: ' + data + '\nStatus: ' + status);
+    });
+   });
+
   });
   
   const FEMICON = new L.Icon({
@@ -86,16 +100,26 @@
 
        var foundName = `<tr class="border_bottom count-street foundName` + lineNb + `">
        <td>` + topic + `</td>
-       <td class="placeName" data-coord=`+coordinates.split(" ")+ `> <a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a>` + name +  ` </td>
+       <td class="placeName" data-coord=`+coordinates.split(" ")+ `>  <i class="fas fa-user-edit contribute change"  ></i> ` + name +  ` </td>
        <td>` + analyzedName +  
       `</tr>`;
+      //  var foundName = `<tr class="border_bottom count-street foundName` + lineNb + `">
+      //  <td>` + topic + `</td>
+      //  <td class="placeName" data-coord=`+coordinates.split(" ")+ `> <a class="change" title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a>` + name +  ` </td>
+      //  <td>` + analyzedName +  
+      // `</tr>`;
       $("table").append(foundName);
     } else {
        var notFound = `<tr class="border_bottom count-street">
        <td>` + topic + `</td>
-       <td data-coord=`+coordinates.split(" ")+`> <a title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>` + name + `
+       <td class="change" data-coord=`+coordinates.split(" ")+`>  <i class="fas fa-user-edit contribute"></i> </a>` + name + `
        </td>
        <td>` + analyzedName + `</td>`;
+      //  var notFound = `<tr class="border_bottom count-street">
+      //  <td>` + topic + `</td>
+      //  <td data-coord=`+coordinates.split(" ")+`> <a class="change" title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>` + name + `
+      //  </td>
+      //  <td>` + analyzedName + `</td>`;
        $("table").append(notFound);
      }
    }
@@ -209,7 +233,7 @@
       console.log(false);
       setTimeout(getNextWikidata, 1000);
     }
-   })
+   }).fail(wikidataError);
  }
 
  function wikidataError(){

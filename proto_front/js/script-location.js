@@ -108,6 +108,7 @@ $(document).ready(function () {
         </table>`
         $("#results").append(appendTable);
         $('.svg-container').hide();
+        document.title = 'Résultats pour '+ cityName;
       } else {
         console.log("Erreur du serveur");
       }
