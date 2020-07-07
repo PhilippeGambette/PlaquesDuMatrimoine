@@ -1,15 +1,17 @@
 @font-face{
  font-family: 'Playfair';
- src: url(../font/PlayfairDisplay-Regular.woff);
- src: url(../font/PlayfairDisplay-Regular.woff2);
+ font-display: swap;
+ src: url(../font/PlayfairDisplay-Regular.woff) format("woff"),
+      url(../font/PlayfairDisplay-Regular.woff2);
  font-weight: normal;
  font-style: normal;
 }
 
 @font-face{
  font-family: 'Belleza';
- src: url(../font/Belleza-Regular.woff);
- src: url(../font/Belleza-Regular.woff2);
+ font-display: swap;
+ src: url(../font/Belleza-Regular.woff) format("woff"),
+      url(../font/Belleza-Regular.woff2);
  font-weight: normal;
  font-style: normal;
 }

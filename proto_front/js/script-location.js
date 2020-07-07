@@ -1,9 +1,9 @@
 $(document).ready(function () {
   // The div showing the results is hidden by default
-  $(".container-map").hide();
-  $("#overlay_geolocation").hide();
-  $("#results").hide();
-  $(".proximite").hide();
+  $('.container-map').hide();
+  $('#overlay_geolocation').hide();
+  $('#results').hide();
+  $('.proximite').hide();
   $('#phraseResult').hide();
   $('#pluriel').hide();
   
@@ -20,10 +20,10 @@ $(document).ready(function () {
   function successFunction(position) {
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
-    document.getElementById("container-map").style.display = '';
-    $("#results").show();
-    $(".proximite").show();
-    $("#overlay_geolocation").hide();
+    document.getElementById('container-map').style.display = '';
+    $('#results').show();
+    $('.proximite').show();
+    $('#overlay_geolocation').hide();
     console.log(lat);
     console.log(long);
     makeMap(lat, long);
@@ -31,11 +31,9 @@ $(document).ready(function () {
   }
   
   function errorFunction() {
-    console.warn("La localisation n'est pas activée sur votre appareil");
-    // document.getElementById("container-map").style.display = '';
-    // $("#results").show();
-    $("#overlay_geolocation").show();
-    $("#no_geolocation").on("click", function(){
+    console.warn('La localisation n\'est pas activée sur votre appareil');
+    $('#overlay_geolocation').show();
+    $('#no_geolocation').on('click', function(){
       window.location.href='./index.php';
     });
   }
@@ -62,15 +60,15 @@ $(document).ready(function () {
         console.log(cityName);
         var codePostal = resp.address.postcode;
         console.log(codePostal.substring(0, 2));
-        document.getElementById("cityname").innerHTML = cityName;
+        document.getElementById('cityname').innerHTML = cityName;
         getDptByLocation(codePostal, cityName);
       } else {
-        console.log("Erreur du serveur");
+        console.log('Erreur du serveur');
       }
     };
 
     request.onerror = function () {
-      console.log("Erreur réseau");
+      console.log('Erreur réseau');
     };
 
     request.send();
@@ -96,7 +94,7 @@ $(document).ready(function () {
         console.log(codeOSM);
 
         getBanData(codeINSEE);
-        $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
+        $('#results').html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
         var appendTable = `<table class="table-results">
         <tr>
           <th>Type</th>
@@ -106,15 +104,15 @@ $(document).ready(function () {
           <th>Genre</th>
         </tr>
         </table>`
-        $("#results").append(appendTable);
+        $('#results').append(appendTable);
         $('.svg-container').hide();
         document.title = 'Résultats pour '+ cityName;
       } else {
-        console.log("Erreur du serveur");
+        console.log('Erreur du serveur');
       }
     }
     requestDpt.onerror = function () {
-      console.log("Erreur réseau");
+      console.log('Erreur réseau');
     }
     requestDpt.send();
   }
@@ -128,11 +126,11 @@ $(document).ready(function () {
       insert = "0";
     }
 
-    $.get("../data/BAN" + insert + codeINSEE.toString().substring(0, 2) + ".csv")
+    $.get('../data/BAN' + insert + codeINSEE.toString().substring(0, 2) + '.csv')
       .done(analyzeBanData)
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
+        console.log('Request Failed: ' + err);
       });
 
 
@@ -145,7 +143,7 @@ $(document).ready(function () {
         if (i > 0) {
           if (csv[i].length > 1) {
             if (csv[i][3] == codeCommune) {
-              addTableRow("voie", csv[i][2], csv[i][4] + " " + csv[i][5], "address");
+              addTableRow('voie', csv[i][2], csv[i][4] + ' ' + csv[i][5], 'address');
             }
           }
         }

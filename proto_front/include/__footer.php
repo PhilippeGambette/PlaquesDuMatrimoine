@@ -14,11 +14,11 @@
   </div>
  </div>
  <a href="https://univ-eiffel.fr">
-  <img src="img/logo-eiffel.png" alt=""  width="200px">
+  <img src="img/logo-eiffel.png" alt=""  width="200">
  </a>
  <hr>
  <p class="copyright">
-  <?php echo date('Y') ?> - Cité des dames, créatrices dans la cité
+  <?php echo(date('Y')) ?> - Cité des dames, créatrices dans la cité
  </p>
 
 </div>

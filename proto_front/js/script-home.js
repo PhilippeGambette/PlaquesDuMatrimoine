@@ -43,14 +43,14 @@ $(document).ready(function () {
 
   function getDpt() {
     $('#inputCity').show();
-    console.log($("#inputDpt").val());
-    valueDpt = $("#inputDpt").val().slice(0, 2);
+    console.log($('#inputDpt').val());
+    valueDpt = $('#inputDpt').val().slice(0, 2);
     data = $.getJSON(`../data/OSM-communes-codeInseeOsm.json-${valueDpt}.json`, function (data) {
       // Crate an array
       listeVilles = Object.keys(data.communes);
       console.log(data);
       communes = data.communes;
-      $('#inputCity').off("autoComplete");
+      $('#inputCity').off('autoComplete');
       $('#inputCity').autocomplete({
         source: listeVilles
       });
@@ -61,7 +61,7 @@ $(document).ready(function () {
     });
   }
 
-  $("#inputDpt").on("autocompleteselect", function () {
+  $('#inputDpt').on('autocompleteselect', function () {
     setTimeout(getDpt, 200);
   })
 
@@ -70,27 +70,32 @@ $(document).ready(function () {
     $('.submit-home').css('cursor','pointer');
   }
 
-  $("#inputCity").on("autocompleteselect", function () {
+  $('#inputCity').on('autocompleteselect', function () {
     setTimeout(getCity, 200);
   })
 
-  $("#searchCity").on("click", function () {
+
+// When the user click on the button
+  $('#searchCity').on('click', function () {
+    // The div with the result is showed
     $('.container-map').show();
     zoomOk = false;
-    var insert = "";
-    inputCity = $("#inputCity").val();
-    console.log(inputCity);
-    cityName = $("#inputCity").val();
 
-    if ((communes[$("#inputCity").val()])[0] + "".length == 4) {
+
+    var insert = "";
+    cityName = $('#inputCity').val();
+
+    if ((communes[$('#inputCity').val()])[0] + "".length == 4) {
       insert = "0";
     }
-    $("#cityname-h").html($('#inputCity').val());
-    $("#results").html("<p>Résultats pour la commune de "+$("#inputCity").val()+"</p>")
-    $("#results").html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
+
+    document.title = 'Résultats pour ' + cityName;
+    $('#cityname-h').html($('#inputCity').val());
+    $('#results').html('<p>Résultats pour la commune de '+$('#inputCity').val()+'</p>');
+    $('#results').html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
     codeINSEE = insert + communes[$("#inputCity").val()][0];
-    console.log("Code INSEE : " + codeINSEE);
-    console.log("Code OSM : " + communes[$("#inputCity").val()][1]);
+    console.log('Code INSEE : ' + codeINSEE);
+    console.log('Code OSM : ' + communes[$('#inputCity').val()][1]);
     var appendTable = `<table id="table-results">
     <tr>
       <th>Type</th>
@@ -100,11 +105,11 @@ $(document).ready(function () {
       <th>Genre</th>
     </tr>
     </table>`
-    $("#results").append(appendTable);
+    $('#results').append(appendTable);
     $('.svg-container').hide();
 
     // Show Leaflet map
-    $("#js-map").show();
+    $('#js-map').show();
     if (map == undefined) {
       map = L.map('js-map').setView([48.8534, 2.3488], 5);
       L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -114,7 +119,8 @@ $(document).ready(function () {
       }).addTo(map);
     }
 
-    $.get("../data/BAN" + (insert + communes[$("#inputCity").val()][0]).slice(0, 2) + ".csv")
+    // Make an Ajax request to BAN file of the department selected and call analyzeBanData() function in case of success
+    $.get('../data/BAN' + (insert + communes[$("#inputCity").val()][0]).slice(0, 2) + '.csv')
       .done(analyzeBanData)
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
@@ -137,10 +143,10 @@ $(document).ready(function () {
     console.log(csv);  
     var i = 0;
     var insert = "";
-    if ((communes[$("#inputCity").val()][0] + "").length == 4) {
-      insert = "0";
+    if ((communes[$('#inputCity').val()][0] + "").length == 4) {
+      insert = '0';
     }
-    var codeCommune = insert + communes[$("#inputCity").val()][0];
+    var codeCommune = insert + communes[$('#inputCity').val()][0];
     for (element in Object.keys(csv)) {
       if (i > 0) {
         if (csv[i].length > 1) {

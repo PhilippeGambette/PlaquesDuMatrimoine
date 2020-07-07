@@ -19,7 +19,7 @@
    
    $(this).on('click', function(){
      var nom = $(this).parent().next().val();
-     var topic = $(this).parent().prev().html();
+     var topic = $(this).parent().prev().html()
      $.post('change.php',
      {
        cityname: cityName,
@@ -29,6 +29,8 @@
      },
      function(data, status){
       console.log('Data: ' + data + '\nStatus: ' + status);
+      $(this).attr('href', 'change.php');
+      $(this).attr('target', '_blank');
     });
    });
 
