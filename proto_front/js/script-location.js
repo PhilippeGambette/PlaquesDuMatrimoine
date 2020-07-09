@@ -6,16 +6,17 @@ $(document).ready(function () {
   $('.proximite').hide();
   $('#phraseResult').hide();
   $('#pluriel').hide();
-  
+  $('.stats-title').hide();
+
   locationConsent();
-  
+
   // It is necessary for the user to accept the location on his device, if OK, the successFunction() is called else errorFunction
   function locationConsent() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
     }
   }
-  
+
   //Get latitude and longitude of the device, Call functions map() and getGeoCityName()
   function successFunction(position) {
     var lat = position.coords.latitude;
@@ -29,16 +30,16 @@ $(document).ready(function () {
     makeMap(lat, long);
     getGeoCityName(lat, long);
   }
-  
+
   function errorFunction() {
     console.warn('La localisation n\'est pas activée sur votre appareil');
     $('#overlay_geolocation').show();
-    $('#no_geolocation').on('click', function(){
-      window.location.href='./index.php';
+    $('#no_geolocation').on('click', function () {
+      window.location.href = './index.php';
     });
   }
 
-  
+
 
   // This function make an Ajax request to nominatim with geographic coordinates and return JSON data who contains the name of the City, postcode and the function getDptByLocation is call with this two parameters
   async function getGeoCityName(lat, long) {
@@ -106,7 +107,7 @@ $(document).ready(function () {
         </table>`
         $('#results').append(appendTable);
         $('.svg-container').hide();
-        document.title = 'Résultats pour '+ cityName;
+        document.title = 'Résultats pour ' + cityName;
       } else {
         console.log('Erreur du serveur');
       }

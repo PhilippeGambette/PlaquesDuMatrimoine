@@ -24,10 +24,11 @@
   <meta property="og:title" content="Plaques du Matrimoine" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="http://matrimoine.alanakra.fr" />
-  <meta property="og:image" content="http://matrimoine.alanakra.fr" />
+  <meta property="og:image" content="http://matrimoine.alanakra.fr/img/logo-plaques-du-matrimoine_522.jpg" />
   <meta property="og:site_name" content="Plaques du Matrimoine" />
   <meta property="og:description"
     content="Plaques du Matrimoine: Détectez les nom de lieux nommées d'après des noms de femmes près de chez vous." />
+  <meta name="description" content="Plaques du Matrimoine: Détectez les noms de lieux nommées d'après des noms de femmes près de chez vous."/>
 </head>
 
 <body>
@@ -55,7 +56,7 @@
   <div class="container-map">
     <h2 class="phrase-cityname">Résultats pour <span id="cityname-h"></span></h2>
     <div id="js-map"></div>
-    <h3>Statistiques <i class="fas fa-chart-pie"></i></h3>
+    <h3 class="stats-title">Statistiques <i class="fas fa-chart-pie"></i></h3>
     <p id="phraseResult"><span id="nbFemmes"></span> femme<span class="pluriel">s</span> représentée<span
         class="pluriel">s</span> pour un total de <span id="nbLieux"></span> lieux</p>
   </div>

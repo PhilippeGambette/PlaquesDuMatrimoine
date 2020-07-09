@@ -4,27 +4,30 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Plaques du Matrimoine | Contribution pour <?php echo $_POST['nom'] ?></title>
+   <title>Plaques du Matrimoine | Contribution pour <?php echo $_GET['nom'] ?></title>
    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
    <?php include 'include/__navbar.php' ?>
    <div class="container-contribution">
-      <h1>Contribution pour <?php echo $_POST['topic'] ?> <?php echo $_POST['nom'] ?>, <?php echo ($_POST['cityname'])?>
+      <h1>Contribution pour <?php echo $_GET['topic'] ?> <?php echo $_GET['nom'] ?>, <?php echo ($_GET['cityname'])?>
       </h1>
 
-      <form action="sendmail-change.php" method="post">
+      <form action="sendmail-change.php" method="GET">
          <p>Tous les champs marqués d'un <span class="required">*</span> sont obligatoires</p>
 
          <label for="cityname">Ville</label> <br>
-         <input type="text" name="cityname" value="<?php echo($_POST['cityname']) ?>" disabled> <br><br>
+         <input type="text" name="cityname" value="<?php echo(htmlspecialchars($_GET['cityname'])) ?>" disabled> <br><br>
 
          <label for="nom">Nom du lieu</label><br>
-         <input type="text" name="nom" value="<?php echo($_POST['nom']) ?>" disabled><br><br>
+         <input type="text" name="nom" value="<?php echo(htmlspecialchars($_GET['nom'])) ?>" disabled><br><br>
 
          <label for="topic">Type de lieu</label><br>
-         <input type="text" name="topic" value="<?php echo($_POST['topic']) ?>" disabled><br><br>
+         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['topic'])) ?>" disabled><br><br>
+
+         <label for="topic">Code INSEE</label><br>
+         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['codeINSEE'])) ?>" disabled><br><br>
 
          <label for="sender">Votre adresse e-mail <span class="required">*</span></label> <br>
          <input type="email" name="sender" id="" required> <br><br>

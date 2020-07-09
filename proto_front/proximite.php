@@ -31,7 +31,7 @@
  <div class="container-map" id="container-map">
   <h1 class="proximite">A proximité de <span id="cityname"></span></h1>
   <div id="js-map"></div>
-  <h2>Statistiques <i class="fas fa-chart-pie"></i></h2>
+  <h2 class="stats-title">Statistiques <i class="fas fa-chart-pie"></i></h2>
   <p id="phraseResult"><span id="nbFemmes"></span> femme<span class="pluriel">s</span> représentée<span class="pluriel">s</span> pour un total de <span id="nbLieux"></span> lieux</p>
  </div>
 

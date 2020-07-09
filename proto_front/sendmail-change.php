@@ -1,16 +1,17 @@
 <?php
-// The parameters obtained in POST are stored in the variables
-$cityname = htmlspecialchars($_POST['cityname'], ENT_HTML5);
-$nom = htmlspecialchars($_POST['nom'], ENT_HTML5);
-$topic = htmlspecialchars($_POST['topic'], ENT_HTML5);
-$sender = htmlspecialchars($_POST['sender'], ENT_HTML5);
-$gender = htmlspecialchars($_POST['gender'], ENT_HTML5);
-$departement = htmlspecialchars($_POST['departement'], ENT_HTML5);
-$message = htmlspecialchars($_POST['message'], ENT_HTML5);
-$result = htmlspecialchars($_POST['result']);
+// The parameters obtained in GET are stored in the variables
+$cityname = htmlspecialchars($_GET['cityname'], ENT_HTML5);
+$nom = htmlspecialchars($_GET['nom'], ENT_HTML5);
+$topic = htmlspecialchars($_GET['topic'], ENT_HTML5);
+$sender = 'contact@alanakra.fr';
+$gender = htmlspecialchars($_GET['gender'], ENT_HTML5);
+$emailSender = htmlspecialchars($_GET['sender'], ENT_HTML5);
+$departement = htmlspecialchars($_GET['departement'], ENT_HTML5);
+$message = htmlspecialchars($_GET['message'], ENT_HTML5);
+$result = htmlspecialchars($_GET['result']);
 
 //  Check if all variable are not empty and if the value of the result is equal to 17
-if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) && (strlen($departement) > 0) && (strlen($sender) > 0) && (strlen($gender)) > 0 && (strlen($message) > 0) && $result = 17){
+if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) && (strlen($departement) > 0) && (strlen($emailSender) > 0) && (strlen($gender)) > 0 && (strlen($message) > 0) && $result = 17){
   $subject = 'Plaques du Matrimoine: Proposition de modification du lieu '.$nom.', pour la ville de '.$cityname;
   $to = 'philippe.gambette@gmail.com';
 
@@ -18,10 +19,11 @@ if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) && (str
   $messageBody = '
   <html>
    <head>
-    <title> Contribution de '.$sender.' pour la ville de '.$cityname.'</title>
+    <title> Contribution de '.$emailSender.' pour la ville de '.$cityname.'</title>
    </head>
    <body>
    <ul>
+    <li>Adresse email du possible contributeur '.$emailSender.'</li>
     <li>Genre de la personne: '.$gender.'</li>
     <li>Département du lieu: '.$departement.'</li>
     <li>Nom du lieu: '.$nom.'</li>

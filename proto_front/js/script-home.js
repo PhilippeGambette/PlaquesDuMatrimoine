@@ -93,6 +93,8 @@ $(document).ready(function () {
     $('#cityname-h').html($('#inputCity').val());
     $('#results').html('<p>Résultats pour la commune de '+$('#inputCity').val()+'</p>');
     $('#results').html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
+    $('#phraseResult').hide();
+    $('.stats-title').hide();
     codeINSEE = insert + communes[$("#inputCity").val()][0];
     console.log('Code INSEE : ' + codeINSEE);
     console.log('Code OSM : ' + communes[$('#inputCity').val()][1]);
