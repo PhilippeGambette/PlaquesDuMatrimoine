@@ -18,16 +18,16 @@
          <p>Tous les champs marqués d'un <span class="required">*</span> sont obligatoires</p>
 
          <label for="cityname">Ville</label> <br>
-         <input type="text" name="cityname" value="<?php echo(htmlspecialchars($_GET['cityname'])) ?>" disabled> <br><br>
+         <input type="text" name="cityname" value="<?php echo(htmlspecialchars($_GET['cityname'])) ?>" readonly> <br><br>
 
          <label for="nom">Nom du lieu</label><br>
-         <input type="text" name="nom" value="<?php echo(htmlspecialchars($_GET['nom'])) ?>" disabled><br><br>
+         <input type="text" name="nom" value="<?php echo(htmlspecialchars($_GET['nom'])) ?>" readonly><br><br>
 
          <label for="topic">Type de lieu</label><br>
-         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['topic'])) ?>" disabled><br><br>
+         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['topic'])) ?>" readonly><br><br>
 
          <label for="topic">Code INSEE</label><br>
-         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['codeINSEE'])) ?>" disabled><br><br>
+         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['codeINSEE'])) ?>" readonly><br><br>
 
          <label for="sender">Votre adresse e-mail <span class="required">*</span></label> <br>
          <input type="email" name="sender" id="" required> <br><br>

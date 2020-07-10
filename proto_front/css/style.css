@@ -94,6 +94,28 @@
   border-radius: 3px;
 }
 
+.container-contribution form input[type=text]:-moz-read-only {
+  background-color: #e3e3e3;
+}
+
+.container-contribution form input[type=text]:read-only {
+  background-color: #e3e3e3;
+}
+
+.container-contribution form input[type=text]:-moz-read-only:hover {
+  cursor: not-allowed;
+}
+
+.container-contribution form input[type=text]:read-only:hover {
+  cursor: not-allowed;
+}
+
+.container-contribution form input[type=text],
+.container-contribution form [type=email], .container-contribution form [type=number] .choose-dpt {
+  border: solid 2px black;
+  border-radius: 3px;
+}
+
 .container-contribution form textarea {
   border: solid 2px black;
   border-radius: 3px;

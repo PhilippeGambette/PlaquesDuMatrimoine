@@ -31,6 +31,20 @@
       border-radius: 3px;
     }
 
+    input[type=text]:read-only {
+      background-color: #e3e3e3;
+
+      &:hover{
+        cursor: not-allowed;
+      }
+    }
+
+    input[type=text],
+    [type=email],[type=number] .choose-dpt {
+      border: solid 2px black;
+      border-radius: 3px;
+    }
+
     textarea {
       border: solid 2px black;
       border-radius: 3px;
