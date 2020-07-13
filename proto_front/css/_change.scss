@@ -7,7 +7,7 @@
   }
 
   p{
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
@@ -22,7 +22,7 @@
 
     label {
       font-size: 1.25rem;
-      font-family: 'Belleza';
+      font-family: $text-family;
     }
 
     input[type=text],

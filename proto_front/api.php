@@ -1,7 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
-// header('content-type:application/json');
+require './include/header.php';
 require './include/connexion.php';
 
 // Connection to database

@@ -9,7 +9,7 @@
 <body>
  <?php require 'include/__navbar.php' ?>
 
- <div class="container-apropos">
+ <div class="container-text">
   <h1>A propos</h1>
   <div class="bloc-text">
   <p>Cet outil, développé dans le cadre du projet <a href="https://citedesdames.hypotheses.org/">Cité des Dames : créatrices dans la cité</a>, financé par l'<a href="http://www.future-isite.fr/li-site-future/">I-Site Future</a> de l' <a href="http://univ-eiffel.fr/">université Gustave Eiffel</a>, vise à repérer les voies et les lieux (équipements sportifs, bibliothèques, lieux d'enseignement) d'une commune de France métropolitaine, nommés d'après des femmes.</p>

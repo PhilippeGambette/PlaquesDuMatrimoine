@@ -15,7 +15,7 @@
   <p>Vous souhaitez proposer un nom de lieu non répertorié ? N'hésitez pas, nous vous répondrons le plus rapidement
    possible !</p>
    <form action="sendmail-contribution.php" method="post">
-   <p>Tous les champs sont obligatoires</p>
+   <p>Tous les champs sont <strong>obligatoires</strong></p>
 
    <label for="cityname">Ville</label> <br>
    <input type="text" name="cityname" required> <br><br>
@@ -122,28 +122,28 @@
          </datalist>
 
    <label for="nom">Nom du lieu</label><br>
-   <input type="text" name="nom" required><br><br>
+   <input type="text" name="nom" id="nom" required aria-required="true"><br><br>
 
    <label for="topic">Type de lieu</label><br>
-   <input type="text" name="topic" required><br><br>
+   <input type="text" name="topic" id="topic" required aria-required="true"><br><br>
 
-   <label for="sender">Votre adresse e-mail</label> <br>
-   <input type="email" name="sender" id="" required> <br><br>
+   <label for="email">Votre adresse e-mail</label> <br>
+   <input type="email" name="sender" id="email" required aria-required="true"> <br><br>
 
    <div class="choose-gender">
    <p>Merci de définir le genre de la personne</p>
     <div>
-     <input id="féminin" type="radio" name="gender" id="" value="féminin" required>
+     <input id="féminin" type="radio" name="gender" id="" value="féminin" required aria-required="true">
      <label id="féminin" for="féminin">Féminin</label>
     </div>
 
     <div>
-     <input id="femme transgenre" type="radio" name="gender" id="" value="femme transgenre">
+     <input id="femme transgenre" type="radio" name="gender" id="femme transgenre" value="femme transgenre" aria-required="true">
      <label for="femme transgenre">Femme transgenre</label>
     </div>
 
     <div>
-     <input id="masculin" type="radio" name="gender" id="" value="masculin">
+     <input id="masculin" type="radio" name="gender" id="masculin" value="masculin">
      <label for="masculin">Masculin</label>
     </div>
 
@@ -154,10 +154,10 @@
    </div>
 
    <label for="message">Informations sur la personne</label><br>
-   <textarea name="message" id="" cols="30" rows="10" placeholder=""></textarea> <br>
+   <textarea name="message" id="" cols="30" rows="10" placeholder="" id="message" required aria-required="true"></textarea> <br>
 
    <label for="result">8 + 9</label><br>
-   <input type="number" name="result" id="result" required><br>
+   <input type="number" name="result" id="result" required aria-required="true"><br>
 
    <button type="submit">Envoyer</button>
   </form>

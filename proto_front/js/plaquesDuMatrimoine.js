@@ -174,10 +174,10 @@ function analyzeName(str, type) {
  var result = "";
  str2 = str.toLowerCase();
  var allPrefixes = {
-   "sports": ["Boule lyonnaise ", "Boulodrome ", "Boulodrome couvert ", "Centre nautique ", "Centre Sportif ", "City Stade ", "Complexe ", "Complexe sportif ", "Dojo ", "École De Danse ", "Espace ", "Halle ", "Halle sportive ", "Gymnase ", "Gymnase scolaire ", "Jeu de boules ", "Le centre ", "Mini Football ", "Palais des Sports ", "Piscine ", "Piscine municipale ", "Piste d'athlétisme ", "Piste d'athletisme ", "Plateau Sportif ", "Plateaux sportifs ", "Salle ", "Salle de boxe ", "Salle de sport ", "Salle de sports ", "Salle omnisports ", "Skate-Park ", "Square ", "Stade ", "Stade municipal ", "Tennis Club ", "Tennis Club municipal ", "Terrain ", "Terrain de football ", "Terrain de proximité ", "Vélodrome ", ".*Vélodrome "],
+   "sports": ["Boule lyonnaise ", "Boulodrome ", "Boulodrome couvert ", "Centre nautique ", "Centre Sportif ", "City Stade ", "Complexe ", "Complexe sportif ", "Dojo ", "École De Danse ", "Espace ", "Halle ", "Halle des sports ", "Halle sportive ", "Gymnase ", "Gymnase scolaire ", "Jeu de boules ", "Le centre ", "Mini Football ", "Palais des Sports ", "Piscine ", "Piscine municipale ", "Piste d'athlétisme ", "Piste d'athletisme ", "Plateau Sportif ", "Plateaux sportifs ", "Salle ", "Salle de boxe ", "Salle de sport ", "Salle de sports ", "Salle omnisports ", "Skate-Park ", "Square ", "Stade ", "Stade municipal ", "Tennis Club ", "Tennis Club municipal ", "Terrain ", "Terrain de football ", "Terrain de proximité ", "Vélodrome ", ".*Vélodrome "],
    "education": ["Crèche( Municipale| PMI| public| privé)* ", "Collège( | public| privé)* ", "École ([ÉE]l[eé]mentaire|maternelle|primaire|technique|technologique)*( |Centre |d'application )*(privée|publique)*[ ]*", "Espace ", "Groupe scolaire ", "Institut ", "Institution ", "Lycée( | général| général et technologique| polyvalent| professionnel| professionnel| technologique| [Tt]echnique)*( | et technologique)*( | public| privé|.*restauration)* ", "PMI "],
-   "library": ["Biblioth[èe]que( | centrale| communale| départementale| municipale)* ", "M[ée]diath[èe]que( | centrale| communale| départementale| municipale)* "],
-   "address": ["All[ée]e ", "Avenue ", "Boulevard ", "Chemin ", "Cours ", "Impasse ", "Mail " , "Passage " , "Place ", "Quai ", "R[ée]sidence ", "Rue ", "Sente ", "Sentier ", "Square ", "Villa "]
+   "library": ["Biblioth[èe]que( | centrale| communale| départementale| municipale| universitaire)* ", "M[ée]diath[èe]que( | centrale| communale| départementale| municipale)* "],
+   "address": ["All[ée]e ", "Avenue ", "Boulevard ", "Chemin ", "Cours ", "Impasse ", "Jardin ", "Mail " , "Passage " , "Place ", "Quai ", "R[ée]sidence ", "Rue ", "Sente ", "Sentier ", "Square ", "Villa "]
  };
  var prefixes;
  if (type == "address") {
@@ -207,7 +207,7 @@ function checkresultInLocal(){
     console.log(false);
     setTimeout(getNextWikidata, 1000);
   }
- }).fail(wikidataError);
+ })
 }
 
 function wikidataError(){
@@ -250,7 +250,7 @@ function makeSPARQLQuery(endpointUrl, sparqlQuery, doneCallback) {
      query: sparqlQuery
    }
  };
- return $.ajax(endpointUrl, settings).then(doneCallback);
+ return $.ajax(endpointUrl, settings).done(doneCallback).fail(wikidataError);
 }
 
 
@@ -296,7 +296,7 @@ function wikidataNameResults(data) {
      
      $.get('api.php?action=write&id_wikidata='+idWikidata+'&alias='+person+'&genderLabel='+genderLabel+'&personDescription='+description+'&sitelink='+wikipediaLink+'&nom_complet='+person+'&lemma='+person+'&nom_potentiel='+person+'&picture='+picture+'').done(function(data){
        console.log(data);
-     }).fail(wikidataError)
+     })
     }
     
 
@@ -419,7 +419,7 @@ function getNextWikidataAlias() {
    // Retrieve some information from Wikidata:
    var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma (MIN(?pic) AS ?p) WHERE {\n' +
-    '  ?person rdfs:label \"' + normalizeName(name) + '" @fr.\n' +
+    '  {?person rdfs:label "'+normalizeName(name)+'"@fr} UNION {?person skos:altLabel "'+normalizeName(name)+'"@fr} UNION {?person skos:altLabel "'+normalizeName(name)+'"@en}.\n'+
     '  ?person wdt:P31 wd:Q5.\n' +
     '  ?person wdt:P21 ?gender.\n' +
     '  OPTIONAL { ?person wdt:P18 ?pic.}\n' +

@@ -49,7 +49,7 @@ ul {
   justify-content: flex-end;
   height: 5vh;
   font-size: $text-nav-link;
-  font-family: $Belleza-family;
+  font-family: $text-family;
 
   img {
     border-radius: 50%;
@@ -74,7 +74,7 @@ ul {
 
   &::placeholder {
     font-size: 1rem;
-    font-family: $Belleza-family
+    font-family: $text-family
   }
 }
 
@@ -105,7 +105,7 @@ ul {
   width: 100%;
 }
 
-.container-apropos {
+.container-text {
   @include padding-l-r;
   @include height-container;
   overflow: auto;
@@ -122,7 +122,7 @@ ul {
   overflow: auto;
 
   a {
-    font-family: $Belleza-family;
+    font-family: $text-family;
   }
 }
 
@@ -140,7 +140,7 @@ ul {
 
 .quote-404,
 .author-404 {
-  font-family: $Belleza-family;
+  font-family: $text-family;
   font-size: 1.5rem;
   display: flex;
   text-align: center;
@@ -162,7 +162,7 @@ ul {
   overflow: auto;
 
   a {
-    font-family: $Belleza-family;
+    font-family: $text-family;
   }
 
   h1{
@@ -175,7 +175,7 @@ ul {
   top: 50%;
   left: 50%;
   font-size: 50px;
-  font-family: $Belleza-family;
+  font-family: $text-family;
   transform: translate(-50%, -50%);
   text-align: center;
 }
@@ -187,7 +187,7 @@ ul {
 }
 
 .quote-present {
-  font-family: $Belleza-family;
+  font-family: $text-family;
   font-size: 1.5rem;
   display: flex;
   text-align: center;
@@ -207,12 +207,12 @@ ul {
   max-height: 100%;
 
   p {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
   ul {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
@@ -235,7 +235,7 @@ ul {
   }
 
   p {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
@@ -264,10 +264,16 @@ ul {
   }
 }
 
-.call-scroll {
+#leaf-marker {
+  font-family: $text-family;
   display: flex;
   justify-content: space-around;
-  margin-bottom: 35px;
+
+  span{
+    &:hover{
+      cursor: pointer;
+    }
+  }
 }
 
 .container-map {
@@ -282,12 +288,12 @@ ul {
   }
 
   p {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
   ul {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
@@ -322,12 +328,12 @@ ul {
   padding-bottom: 2rem;
 
   p {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
   ul {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
@@ -347,7 +353,7 @@ ul {
   .load-data {
     h3 {
       text-align: center;
-      font-family: $Belleza-family;
+      font-family: $text-family;
       animation: fadeIn 3s ease-in-out infinite;
     }
   }
@@ -369,12 +375,12 @@ ul {
   padding-bottom: 2rem;
 
   p {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
   ul {
-    font-family: $Belleza-family;
+    font-family: $text-family;
     font-size: 1.25rem;
   }
 
@@ -395,13 +401,13 @@ ul {
   left: 50%;
   font-size: 50px;
   color: white;
-  font-family: $Belleza-family;
+  font-family: $text-family;
   transform: translate(-50%, -50%);
   text-align: center;
 }
 
 table {
-  font-family: $Belleza-family;
+  font-family: $text-family;
   border-top: solid 1px;
   border-bottom: solid 1px;
 }
@@ -427,7 +433,7 @@ tr.border_bottom td {
   display: flex;
 
   p {
-    font-family: $Belleza-family;
+    font-family: $text-family;
   }
 }
 
@@ -445,13 +451,13 @@ tr.border_bottom td {
 }
 
 .footer-right>ul>li>a {
-  font-family: $Belleza-family;
+  font-family: $text-family;
   color: $nav-elem-color;
   font-size: $font-size-text-link;
 }
 
 .copyright {
-  font-family: $Belleza-family;
+  font-family: $text-family;
 }
 
 hr {
@@ -496,6 +502,12 @@ hr {
 
   .container-right {
     display: none;
+  }
+
+  #leaf-marker {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .footer {
@@ -588,7 +600,7 @@ hr {
     height: auto;
   }
 
-  .container-apropos {
+  .container-text {
     height: auto;
   }
 

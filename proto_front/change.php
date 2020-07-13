@@ -18,24 +18,24 @@
          <p>Tous les champs marqués d'un <span class="required">*</span> sont obligatoires</p>
 
          <label for="cityname">Ville</label> <br>
-         <input type="text" name="cityname" value="<?php echo(htmlspecialchars($_GET['cityname'])) ?>" readonly> <br><br>
+         <input type="text" id="cityname" name="cityname" value="<?php echo(htmlspecialchars($_GET['cityname'])) ?>" readonly> <br><br>
 
          <label for="nom">Nom du lieu</label><br>
-         <input type="text" name="nom" value="<?php echo(htmlspecialchars($_GET['nom'])) ?>" readonly><br><br>
+         <input type="text" id="nom" name="nom" value="<?php echo(htmlspecialchars($_GET['nom'])) ?>" readonly><br><br>
 
          <label for="topic">Type de lieu</label><br>
-         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['topic'])) ?>" readonly><br><br>
+         <input type="text" id="topic" name="topic" value="<?php echo(htmlspecialchars($_GET['topic'])) ?>" readonly><br><br>
 
-         <label for="topic">Code INSEE</label><br>
-         <input type="text" name="topic" value="<?php echo(htmlspecialchars($_GET['codeINSEE'])) ?>" readonly><br><br>
+         <label for="codeINSEE">Code INSEE</label><br>
+         <input type="text" name="codeINSEE" id="codeINSEE" value="<?php echo(htmlspecialchars($_GET['codeINSEE'])) ?>" readonly aria-required="true"><br><br>
 
-         <label for="sender">Votre adresse e-mail <span class="required">*</span></label> <br>
-         <input type="email" name="sender" id="" required> <br><br>
+         <label for="email">Votre adresse e-mail <span class="required">*</span></label> <br>
+         <input type="email" name="sender" id="email" required aria-required="true"> <br><br>
 
          <div class="choose-gender">
             <p>Merci de définir le genre de la personne <span class="required">*</span></p>
             <div>
-               <input id="féminin" type="radio" name="gender" id="" value="féminin" required>
+               <input id="féminin" type="radio" name="gender" id="" value="féminin" required aria-required="true">
                <label id="féminin" for="féminin">Féminin</label>
             </div>
 
@@ -59,7 +59,7 @@
          <textarea name="message" id="" cols="30" rows="10" placeholder=""></textarea> <br>
 
          <label for="result">8 + 9</label><br>
-         <input type="number" name="result" id="result" required><br>
+         <input type="number" name="result" id="result" required aria-required="true"><br>
 
          <button type="submit">Envoyer</button>
       </form>

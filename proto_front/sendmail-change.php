@@ -3,6 +3,7 @@
 $cityname = htmlspecialchars($_GET['cityname'], ENT_HTML5);
 $nom = htmlspecialchars($_GET['nom'], ENT_HTML5);
 $topic = htmlspecialchars($_GET['topic'], ENT_HTML5);
+$codeINSEE = htmlspecialchars($_GET['codeINSEE'], ENT_HTML5);
 $sender = 'contact@alanakra.fr';
 $gender = htmlspecialchars($_GET['gender'], ENT_HTML5);
 $emailSender = htmlspecialchars($_GET['sender'], ENT_HTML5);
@@ -11,7 +12,7 @@ $message = htmlspecialchars($_GET['message'], ENT_HTML5);
 $result = htmlspecialchars($_GET['result']);
 
 //  Check if all variable are not empty and if the value of the result is equal to 17
-if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) && (strlen($emailSender) > 0) && (strlen($gender)) > 0 && (strlen($message) > 0) && $result = 17){
+if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) &&(strlen($codeINSEE) > 0) && (strlen($emailSender) > 0) && (strlen($gender)) > 0 && (strlen($message) > 0) && $result = 17){
   $subject = 'Plaques du Matrimoine: Proposition de modification du lieu '.$nom.', pour la ville de '.$cityname;
   $to = 'philippe.gambette@gmail.com';
 

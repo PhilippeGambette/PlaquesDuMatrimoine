@@ -85,7 +85,7 @@
 
 .container-contribution form label {
   font-size: 1.25rem;
-  font-family: 'Belleza';
+  font-family: "Belleza";
 }
 
 .container-contribution form input[type=text],
@@ -300,14 +300,14 @@ ul {
   width: 100%;
 }
 
-.container-apropos {
+.container-text {
   padding-left: 30px;
   padding-right: 30px;
   height: calc(100vh - 40px);
   overflow: auto;
 }
 
-.container-apropos h1 {
+.container-text h1 {
   font-size: 3.125rem;
   font-family: "Inter";
 }
@@ -486,13 +486,17 @@ ul {
   height: auto;
 }
 
-.call-scroll {
+#leaf-marker {
+  font-family: "Belleza";
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  margin-bottom: 35px;
+}
+
+#leaf-marker span:hover {
+  cursor: pointer;
 }
 
 .container-map {
@@ -745,6 +749,18 @@ hr {
   .container-right {
     display: none;
   }
+  #leaf-marker {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
   .footer {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -829,7 +845,7 @@ hr {
   .container-map {
     height: auto;
   }
-  .container-apropos {
+  .container-text {
     height: auto;
   }
   #js-map {
