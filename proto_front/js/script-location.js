@@ -95,7 +95,7 @@ $(document).ready(function () {
         console.log(codeOSM);
 
         getBanData(codeINSEE);
-        $('#results').html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
+        $('#results').html('<div id="js-load-data" class="load-data"><h3>Collecte des données en cours...</h3></div>');
         var appendTable = `<table class="table-results">
         <tr>
           <th>Type</th>

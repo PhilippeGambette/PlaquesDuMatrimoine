@@ -486,16 +486,17 @@ ul {
   height: auto;
 }
 
-#leaf-marker {
+#toggle-leaf-marker {
   font-family: "Belleza";
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  margin-bottom: 1.25rem;
 }
 
-#leaf-marker span:hover {
+#toggle-leaf-marker span:hover {
   cursor: pointer;
 }
 
@@ -749,7 +750,7 @@ hr {
   .container-right {
     display: none;
   }
-  #leaf-marker {
+  #toggle-leaf-marker {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;

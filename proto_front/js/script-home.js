@@ -92,7 +92,7 @@ $(document).ready(function () {
     document.title = 'Résultats pour ' + cityName;
     $('#cityname-h').html($('#inputCity').val());
     $('#results').html('<p>Résultats pour la commune de '+$('#inputCity').val()+'</p>');
-    $('#results').html('<div class="load-data"><h3>Collecte des données en cours...</h3></div>');
+    $('#results').html('<div id="js-load-data" class="load-data"><h3>Collecte des données en cours...</h3></div>');
     $('#phraseResult').hide();
     $('.stats-title').hide();
     codeINSEE = insert + communes[$("#inputCity").val()][0];
@@ -100,16 +100,16 @@ $(document).ready(function () {
     console.log('Code OSM : ' + communes[$('#inputCity').val()][1]);
     var appendTable = `<table id="table-results">
     <tr>
-      <th>Type</th>
-      <th>Nom du lieu</th>
-      <th>Nom de personne potentiel</th>
-      <th>Nom trouvé sur Wikidata</th>
-      <th>Genre</th>
+    <th>Type</th>
+    <th>Nom du lieu</th>
+    <th>Nom de personne potentiel</th>
+    <th>Nom trouvé sur Wikidata</th>
+    <th>Genre</th>
     </tr>
-    </table>`
+    </table>`;
     $('#results').append(appendTable);
     $('.svg-container').hide();
-
+    
     // Show Leaflet map
     $('#js-map').show();
     if (map == undefined) {
@@ -120,6 +120,8 @@ $(document).ready(function () {
         maxZoom: 20
       }).addTo(map);
     }
+    
+    window.scrollTo(0,$('#js-phrase-cityname')[0].offsetTop);
 
     // Make an Ajax request to BAN file of the department selected and call analyzeBanData() function in case of success
     $.get('../data/BAN' + (insert + communes[$("#inputCity").val()][0]).slice(0, 2) + '.csv')

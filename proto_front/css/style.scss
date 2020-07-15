@@ -264,10 +264,11 @@ ul {
   }
 }
 
-#leaf-marker {
+#toggle-leaf-marker {
   font-family: $text-family;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 1.25rem;
 
   span{
     &:hover{
@@ -504,7 +505,7 @@ hr {
     display: none;
   }
 
-  #leaf-marker {
+  #toggle-leaf-marker {
     flex-direction: column;
     justify-content: center;
     align-items: center;

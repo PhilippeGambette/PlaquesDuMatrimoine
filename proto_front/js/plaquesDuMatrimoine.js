@@ -16,22 +16,24 @@ var cityList = [];
 var codeINSEE;
 
 const FEMICON = new L.Icon({
-  iconUrl: 'img/leaf-red.png',
-  shadowUrl: 'img/leaf-shadow.png',
-  iconSize: [25, 41],
+  iconUrl: 'img/LogoFemme_nt.png',
+  iconSize: [41, 29],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
 
 const HOMICON = new L.Icon({
-  iconUrl: 'img/leaf-green.png',
-  shadowUrl: 'img/leaf-shadow.png',
-  iconSize: [25, 41],
+  iconUrl: 'img/LogoHomme_nt.png',
+  iconSize: [41, 29],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
+
+$(document).on('click','#toggle-men',function(){
+  $('.leaflet-marker-icon').toggle();
+})
 
 // Show the user position on the map
 function makeMap(lat, long) {
@@ -80,7 +82,7 @@ function addTableRow(topic, name, coord, topicCode) {
      }
 
     
-     var foundName = `<tr class="border_bottom count-street foundName` + lineNb + `">
+     var foundName = `<tr class="border_bottom js_count-street foundName` + lineNb + `">
      <td>` + topic + `</td>
      <td class="placeName" data-coord=`+coordinates.split(" ")+ `> <a class="change" title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank" > <i class="fas fa-user-edit contribute"></i> </a>` + name +  ` </td>
      <td>` + analyzedName +  
@@ -89,7 +91,7 @@ function addTableRow(topic, name, coord, topicCode) {
     $("table").append(foundName);
   }else{
 
-     var notFound = `<tr class="border_bottom count-street">
+     var notFound = `<tr class="border_bottom js_count-street">
      <td>` + topic + `</td>
      <td data-coord=`+coordinates.split(" ")+`> <a class="change" title="Suggérer une modification" href="change.php?cityname=`+cityName+`&nom=`+name+`&topic=`+topic+`&codeINSEE=`+codeINSEE+`" target="_blank"> <i class="fas fa-user-edit contribute"></i> </a>` + name + `
      </td>
@@ -434,16 +436,15 @@ function getNextWikidataAlias() {
 }
 
 function plotlyGraph() {
-
-  $('.load-data').hide();
+  $('#js-load-data').hide();
   $('.stats-title').show();
-  $('.pluriel').hide();
+  $('#js-pluriel').hide();
   $('#phraseResult').show();
   $('.svg-container').show();
   // Count the number of lines with a "female" or "male" class
   var nombreHommes = $('.masculin').length;
   var nombreFemmes = $('.féminin').length;
-  var nbLieux = $('.count-street').length;
+  var nbLieux = $('.js_count-street').length;
   var nombreNd = (nbLieux - (nombreHommes+nombreFemmes));
   console.log(nbLieux);
 
@@ -457,22 +458,22 @@ function plotlyGraph() {
   $('#phraseResult').show();
   
   if(nombreFemmes > 1){
-    $('.pluriel').show();
-    $('#nbFemmes').html(nombreFemmes);
+    $('#js-pluriel').show();
+    $('#js-nbFemmes').html(nombreFemmes);
   }else if(nombreFemmes == 1){
-    $('#nbFemmes').html(nombreFemmes);
+    $('#js-nbFemmes').html(nombreFemmes);
   }else{
-    $('#nbFemmes').html("Aucune")
+    $('#js-nbFemmes').html("Aucune")
   }
 
-  $('#nbLieux').html((nbLieux).toString());
+  $('#js-nbLieux').html((nbLieux).toString());
 
   var data = [{
     values: [txHom, txFem, txNd],
     labels: ['Homme', 'Femme','Aucun nom de personne identifié'],
     type: 'pie',
     marker:{
-      colors: ['#b7e669','#e65572','yellow']
+      colors: ['#f1c232ff','#ea5b3aff','#2231DB']
     }
   }];
 
@@ -482,9 +483,9 @@ function plotlyGraph() {
 
   var layout = {
     title: {
-      text: `Répartition hommes/femmes pour les noms de lieux de <br>` + cityName,
+      text: `<b>Répartition femmes/hommes <br>pour les noms de lieux de <br>` + cityName+`</b>`,
       font: {
-        family: 'Arial, San Francisco',
+        family: 'Belleza, Arial, San Francisco',
         size: 15
       },
     }
@@ -497,5 +498,5 @@ function plotlyGraph() {
     plotlyServerURL: 'https://matrimoine.alanakra.fr'
   }
 
-  Plotly.newPlot('graph', data, layout, config, {displayModeBar: false, displaylogo: false});
+  Plotly.newPlot('js-graph', data, layout, config, {displayModeBar: false, displaylogo: false});
 }

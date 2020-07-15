@@ -54,19 +54,18 @@
   </div>
 
   <div class="container-map">
-    <h2 class="phrase-cityname">Résultats pour <span id="cityname-h"></span></h2>
+    <h2 id="js-phrase-cityname" class="phrase-cityname">Résultats pour <span id="cityname-h"></span></h2>
     <div id="js-map"></div>
     <h3 class="stats-title">Statistiques <i class="fas fa-chart-pie"></i></h3>
-    <p id="phraseResult"><span id="nbFemmes"></span> femme<span class="pluriel">s</span> représentée<span
-        class="pluriel">s</span> pour un total de <span id="nbLieux"></span> lieux</p>
+    <p id="phraseResult"><span id="js-nbFemmes"></span> femme<span id="js-pluriel">s</span> représentée<span id="js-pluriel">s</span> pour un total de <span id="js-nbLieux"></span> lieux</p>
   </div>
 
-  <div id="graph"></div>
+  <div id="js-graph"></div>
 
-  <div id="leaf-marker">
-   <span id="toggle-men">Femme / Femme transgenre</span>
-   <span id="toggle-women">Homme / Homme transgenre</span>
-  </div>
+  <div id="toggle-leaf-marker">
+   <span id="toggle-women">Femme / Femme transgenre</span>
+   <span id="toggle-men">Homme / Homme transgenre</span>
+ </div>
 
   <div class="results" id="results">
   </div>

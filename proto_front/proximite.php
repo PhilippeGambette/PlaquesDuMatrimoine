@@ -32,14 +32,14 @@
   <h1 class="proximite">A proximité de <span id="cityname"></span></h1>
   <div id="js-map"></div>
   <h2 class="stats-title">Statistiques <i class="fas fa-chart-pie"></i></h2>
-  <p id="phraseResult"><span id="nbFemmes"></span> femme<span class="pluriel">s</span> représentée<span class="pluriel">s</span> pour un total de <span id="nbLieux"></span> lieux</p>
+  <p id="phraseResult"><span id="js-nbFemmes"></span> femme<span id="js-pluriel">s</span> représentée<span id="js-pluriel">s</span> pour un total de <span id="js-nbLieux"></span> lieux</p>
  </div>
 
- <div id="graph"></div>
+ <div id="js-graph"></div>
 
- <div id="leaf-marker">
-   <span id="toggle-men">Femme / Femme transgenre</span>
-   <span id="toggle-women">Homme / Homme transgenre</span>
+ <div id="toggle-leaf-marker">
+   <span id="toggle-women">Femme / Femme transgenre</span>
+   <span id="toggle-men">Homme / Homme transgenre</span>
  </div>
  
  <div class="results" id="results">
