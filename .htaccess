@@ -1,0 +1,7 @@
+# Redirection 404
+ErrorDocument 404 /404.php
+
+# Redirection vers HTTPS
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://matrimoine.alanakra.fr/$1 [R,L]
