@@ -8,7 +8,6 @@
    <ul>
     <li><a href="apropos.php">À propos</a></li>
     <li><a href="https://citedesdames.hypotheses.org/">Cité des dames</a></li>
-    <li><a href="#">Mentions légales</a></li>
     <li><a href="contribuer.php">Contribuer</a></li>
    </ul>
   </div>
