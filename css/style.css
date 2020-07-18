@@ -797,6 +797,9 @@ hr {
   .container-main {
     height: auto;
   }
+  .container-text {
+    height: auto;
+  }
 }
 
 @media (max-width: 375px) {
