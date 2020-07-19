@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'Playfair';
+  font-display: swap;
+  src: url(../font/PlayfairDisplay-Regular.woff) format("woff"), url(../font/PlayfairDisplay-Regular.woff2);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Belleza';
+  font-display: swap;
+  src: url(../font/Belleza-Regular.woff) format("woff"), url(../font/Belleza-Regular.woff2);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../font/Inter_Web/Inter-Bold.woff) format("woff"), url(../font/Inter_Web/Inter-Bold.woff2) format("woff2");
+}
+
+* {
+  text-align: center;
+}
+
+.container-NoIE {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+h1 {
+  font-family: "Inter";
+}
+
+p {
+  font-family: "Belleza";
+}
+/*# sourceMappingURL=browser.css.map */
