@@ -6,6 +6,9 @@ var codeOSM;
 var communes;
 var element;
 var foundNames = [];
+var foundNamesRemaining = [];
+var foundNamesRemainingIds = [];
+var source = "local";
 var map;
 var previousQuery = "";
 var nameNb;
@@ -32,9 +35,15 @@ const HOMICON = new L.Icon({
 });
 
 $(document).on('click','#toggle-men',function(){
-  $('.icHom').toggle();
-  $('#eye').toggleClass('fas fa-eye-slash');
-  $('#toggle-men').toggleClass('change-opacity');
+  if($(this).hasClass('change-opacity')){
+     $('.icHom').show();
+     $('#eye').removeClass('fas fa-eye-slash');
+     $('#toggle-men').removeClass('change-opacity');
+  } else {
+     $('.icHom').hide();
+     $('#eye').addClass('fas fa-eye-slash');
+     $('#toggle-men').addClass('change-opacity');  
+  }
 });
 
 // Show the user position on the map
@@ -133,6 +142,7 @@ function analyzeGeoData(data) {
  } else {
    nameNb = 0;
    previousQuery = "name";
+   source = "local";
    checkresultInLocal();
  }
 }
@@ -155,8 +165,8 @@ $.get("https://geodatamine.fr/data/" + themes[themeNumber] + "/" + codeOSM)
 
 function analyzeCoord(str) {
  var result = "";
- var patternStart = ["POLYGON ((", "POINT ("];
- var patternStop = [",", ")"];
+ var patternStart = ["MULTIPOLYGON (((","POLYGON ((", "POINT ("];
+ var patternStop = [",",",", ")"];
  var i = 0;
  var patternFound = false;
  patternStart.forEach(function (p) {
@@ -203,16 +213,33 @@ function analyzeName(str, type) {
 // Querying the local database to found potential name
 function checkresultInLocal(){
  var nom = foundNames[nameNb];
+ if(source=="local"){
  $.getJSON('api.php?action=read&nom_potentiel='+nom+'').done(function(data){
   if(data.length >= 1){
     console.log(true);
     wikidataNameResults(data);
   }else{
     // Person is not in the database
-    console.log(false);
-    setTimeout(getNextWikidata, 1000);
+    foundNamesRemaining.push(nom);
+    foundNamesRemainingIds[foundNamesRemaining.length-1] = nameNb;
+    nameNb++;
+    previousQuery = "name";
+    //  setTimeout(getNextWikidata, 1000);
+    if (nameNb < foundNames.length) {
+       checkresultInLocal();
+    } else {
+       console.log(foundNamesRemaining);
+       nameNb = 0;
+       source = "wikidata"
+       checkresultInLocal();
+    }
+    //console.log(false);
+    //setTimeout(getNextWikidata, 1000);
   }
  });
+ } else {
+    setTimeout(getNextWikidata, 1000);
+ }
 }
 
 function wikidataError(){
@@ -223,8 +250,8 @@ function wikidataError(){
 }
 
 function getNextWikidata() {
- if (nameNb < foundNames.length) {
-   var nom = foundNames[nameNb];
+ if (nameNb < foundNamesRemaining.length) {
+   var nom = foundNamesRemaining[nameNb];
    
    // Querying the Wikidata database with a SPARQL query and call makeSPARQLQuery function() who has wikadataNameResults as callback function
    var endpointUrl = 'https://query.wikidata.org/sparql',
@@ -260,7 +287,14 @@ function makeSPARQLQuery(endpointUrl, sparqlQuery, doneCallback) {
 
 
 function wikidataNameResults(data) {
- var person = foundNames[nameNb];
+ var person ;
+ if(source == "local"){
+    //console.log("Local source !!!");
+    person = foundNames[nameNb];
+ } else {
+    //console.log("Source from Wikidata!!!");
+    person = foundNamesRemaining[nameNb]
+ }
  if(data.length != undefined|| data.results.bindings.length > 0){
    if(data.length != undefined && data[0].nom_potentiel != undefined){
      //  Results already saved in database
@@ -270,13 +304,19 @@ function wikidataNameResults(data) {
      var picture = data[0].picture;
      console.log(description);
      console.log(genderLabel);
-     console.log(wikipediaLink);
-     console.log(picture);
+     //console.log(wikipediaLink);
+     //console.log(picture);
 
     }else if (data.results.bindings.length > 0) {
       // Results from Wikidata
-     var person = foundNames[nameNb];
-     console.log(person);
+     var person ;
+     if(source == "local"){
+        person = foundNames[nameNb];
+     } else {
+        person = foundNamesRemaining[nameNb]
+     }
+     //console.log(person);
+     var originalPerson = person;
      if (data.results.bindings[0].personLabel != undefined) {
        person = data.results.bindings[0].personLabel.value;
      }
@@ -299,16 +339,22 @@ function wikidataNameResults(data) {
      var idWikidata = wikidataLink.split("/")[4];
      
      //  The results from Wikidata are saved in the database
-     $.get('api.php?action=write&id_wikidata='+idWikidata+'&alias='+person+'&genderLabel='+genderLabel+'&personDescription='+description+'&sitelink='+wikipediaLink+'&nom_complet='+person+'&lemma='+person+'&nom_potentiel='+person+'&picture='+picture+'').done(function(data){
+     var adresse = 'api.php?action=write&id_wikidata='+idWikidata+'&alias='+person+'&genderLabel='+genderLabel+'&personDescription='+description+'&sitelink='+wikipediaLink+'&nom_complet='+person+'&lemma='+person+'&nom_potentiel='+originalPerson+'&picture='+picture+'';
+     //console.log(adresse);
+     $.get(adresse).done(function(data){
        console.log(data);
      }).fail(
-       console.error('Echec de la sauvegarde dans la base de données')
+       console.error('Échec de la sauvegarde dans la base de données.')
      );
     }
     
 
-    // For each results, add new columns with wikipedia link, description and gender label
-     $('.foundName' + nameNb).each(function () {
+    // For each result, add new columns with wikipedia link, description and gender label
+    var selector = '.foundName' + nameNb;
+    if(source == "wikidata"){
+       selector = '.foundName' + foundNamesRemainingIds[nameNb];
+     }
+     $(selector).each(function () {
        $(this).append('<td><a target="_blank" class="'+genderLabel+'" href="' + wikipediaLink + '">' + person + description + '</a></td><td>' + genderLabel + '</td>');  
        var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
        if (genderLabel == "féminin" || genderLabel == "femme transgenre") {
@@ -348,7 +394,11 @@ function wikidataNameResults(data) {
        console.log(person);
        var gender = guessGender(person);
        if(gender == "masculin" || gender == "féminin"){
-         $( '.foundName'+nameNb ).each(function(){
+        var selector = '.foundName' + nameNb;
+        if(source == "wikidata"){
+           selector = '.foundName' + foundNamesRemainingIds[nameNb];
+         }
+         $( selector ).each(function(){
            $(this).append('<td>'+person+'</td><td class='+gender+'>'+gender+'</td><td></td>');
            var coordinates = $(this).find("td").eq(1).attr('data-coord').replace(","," ");
            if(gender == "féminin" || gender == "femme transgenre"){
@@ -414,6 +464,7 @@ function wikidataNameResults(data) {
 
  function normalizeName(name){
   console.log(name);
+  if(name != undefined){
   var i = 0;
   while(i<specialNames.length){
     var tryRegexp = name.replace(new RegExp("^"+specialNames[i].substring(3), "ig"), "");
@@ -425,11 +476,14 @@ function wikidataNameResults(data) {
   name = name.replace(/-/gi," ").replace(/ la /gi," La ").replace(/ le /gi," Le ").replace(/ \(.*\)/gi,"");
   console.log("Nom normalisé à chercher : "+name);
   return name;
+  } else {
+  return undefined;
+  }
 }
 
 function getNextWikidataAlias() {
- if (nameNb < foundNames.length) {
-   var nom = foundNames[nameNb];
+ if (nameNb < foundNamesRemaining.length) {
+   var nom = foundNamesRemaining[nameNb];
    var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = 'SELECT ?person ?personLabel ?genderLabel ?personDescription ?sitelink ?lemma (MIN(?pic) AS ?p) WHERE {\n' +
     '  {?person rdfs:label "'+normalizeName(nom)+'"@fr} UNION {?person skos:altLabel "'+normalizeName(nom)+'"@fr} UNION {?person skos:altLabel "'+normalizeName(nom)+'"@en}.\n'+

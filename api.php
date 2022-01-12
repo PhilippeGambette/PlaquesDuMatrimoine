@@ -19,7 +19,7 @@ if($_GET["action"] == "write"){
   // Insertion of data from Wikidata
   
   //  Check if potential name is in "personne" table
-  $sqlCheckPersonne = "SELECT COUNT(id) AS nombre_personne FROM `personne` WHERE id_wikidata = :id_wikidata GROUP BY id_wikidata " ;
+  $sqlCheckPersonne = "SELECT COUNT(id) AS nombre_personne FROM `pdm_personne` WHERE id_wikidata = :id_wikidata GROUP BY id_wikidata " ;
   $requestCheckPersonne = $db -> prepare($sqlCheckPersonne);
   $attributesCheckPersonne = array(
     ':id_wikidata' => $_GET['id_wikidata']);
@@ -42,7 +42,7 @@ if($_GET["action"] == "write"){
       // If false, the data are stocked in database
       
       // First in "personne" table
-      $sqlInsertWritePersonne = "INSERT INTO `personne` (`id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`,`picture`) VALUES (:id_wikidata, :alias, :nom_complet, :genderLabel, :personDescription, :sitelink, :lemma, :picture)";
+      $sqlInsertWritePersonne = "INSERT INTO `pdm_personne` (`id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`,`picture`) VALUES (:id_wikidata, :alias, :nom_complet, :genderLabel, :personDescription, :sitelink, :lemma, :picture)";
       $requestInsertPersonne = $db -> prepare($sqlInsertWritePersonne);
       $attributesPersonne = array(
         ':id_wikidata' => $_GET['id_wikidata'], 
@@ -58,7 +58,7 @@ if($_GET["action"] == "write"){
       }
       
       //  Retrieve id from "personne"
-      $sqlCheckPersonne = "SELECT id FROM `personne` WHERE id_wikidata = :id_wikidata" ;
+      $sqlCheckPersonne = "SELECT id FROM `pdm_personne` WHERE id_wikidata = :id_wikidata" ;
       $requestCheckPersonne = $db -> prepare($sqlCheckPersonne);
       $attributesCheckPersonne = array(
         ':id_wikidata' => $_GET['id_wikidata']);
@@ -77,7 +77,7 @@ if($_GET["action"] == "write"){
         
         
         //  Check if potential name is in "alias" table
-        $sqlCheckAlias = "SELECT COUNT(id) AS nombre_alias FROM `alias` WHERE nom_potentiel = :nom_potentiel GROUP BY nom_potentiel" ;
+        $sqlCheckAlias = "SELECT COUNT(id) AS nombre_alias FROM `pdm_alias` WHERE nom_potentiel = :nom_potentiel GROUP BY nom_potentiel" ;
         $requestCheckAlias = $db -> prepare($sqlCheckAlias);
         $attributesCheckAlias = array(
           ':nom_potentiel' => $_GET['nom_potentiel']);
@@ -93,7 +93,7 @@ if($_GET["action"] == "write"){
             $newAlias = false;
           }else{
             // In "alias" table
-            $sqlInsertWriteAlias = "INSERT INTO `alias` (`id`,`nom_potentiel`) VALUES (NULL, :nom_potentiel)";
+            $sqlInsertWriteAlias = "INSERT INTO `pdm_alias` (`id`,`nom_potentiel`) VALUES (NULL, :nom_potentiel)";
             $requestInsertAlias = $db -> prepare($sqlInsertWriteAlias);
             $attributeAlias = array(
               ':nom_potentiel' => $_GET['nom_potentiel']);     
@@ -103,7 +103,7 @@ if($_GET["action"] == "write"){
             
             
     //  Retrieve id from "alias"
-    $sqlCheckAlias = "SELECT id FROM `alias` WHERE nom_potentiel = :nom_potentiel" ;
+    $sqlCheckAlias = "SELECT id FROM `pdm_alias` WHERE nom_potentiel = :nom_potentiel" ;
     $requestCheckAlias = $db -> prepare($sqlCheckAlias);
     $attributesCheckAlias = array(
       ':nom_potentiel' => $_GET['nom_potentiel']);
@@ -124,7 +124,7 @@ if($_GET["action"] == "write"){
       
       
       //  Check if potential name is in "correspondance" table
-      $sqlCheckCorresp = "SELECT COUNT(id) AS nombre_correspondance FROM `correspondance` WHERE id_alias = :id_alias AND id_personne = :id_personne GROUP BY id_alias, id_personne " ;
+      $sqlCheckCorresp = "SELECT COUNT(id) AS nombre_correspondance FROM `pdm_correspondance` WHERE id_alias = :id_alias AND id_personne = :id_personne GROUP BY id_alias, id_personne " ;
    $requestCheckCorresp = $db -> prepare($sqlCheckCorresp);
    $attributesCheckCorresp = array(
      ':id_personne' => $idPersonne,
@@ -143,7 +143,7 @@ if($_GET["action"] == "write"){
 
     }else{
    //  Add in "correspondance" table
-   $sqlInsertCorresp = "INSERT INTO `correspondance` (`id_personne`, `id_alias`) VALUES (:id_personne, :id_alias)";
+   $sqlInsertCorresp = "INSERT INTO `pdm_correspondance` (`id_personne`, `id_alias`) VALUES (:id_personne, :id_alias)";
    $requestInsertCorresp = $db -> prepare($sqlInsertCorresp);
    $attributesCorresp = array(
      ':id_personne' => $idPersonne,
@@ -163,7 +163,7 @@ if($_GET["action"] == "write"){
     $nomPotentiel = $_GET['nom_potentiel'];
     
     //  Check if the name is in the database
-    $sqlCheckNameInAlias = "SELECT * FROM alias, correspondance, personne WHERE nom_potentiel = :nom_potentiel AND correspondance.id_alias = alias.id AND correspondance.id_personne = personne.id";
+    $sqlCheckNameInAlias = "SELECT * FROM pdm_alias, pdm_correspondance, pdm_personne WHERE nom_potentiel = :nom_potentiel AND pdm_correspondance.id_alias = pdm_alias.id AND pdm_correspondance.id_personne = pdm_personne.id";
     $requestCheckNameInAlias = $db->prepare($sqlCheckNameInAlias);
     $attributesCheckAlias = array(
       ':nom_potentiel' => $_GET['nom_potentiel']);

@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `alias`
 --
 
-CREATE TABLE `alias` (
+CREATE TABLE `pdm_alias` (
   `id` int(11) NOT NULL,
   `nom_potentiel` varchar(200) COLLATE utf8_roman_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_roman_ci;
@@ -32,7 +32,7 @@ CREATE TABLE `alias` (
 -- Déchargement des données de la table `alias`
 --
 
-INSERT INTO `alias` (`id`, `nom_potentiel`) VALUES
+INSERT INTO `pdm_alias` (`id`, `nom_potentiel`) VALUES
 (1, 'Louise Michel'),
 (2, 'Charles Darwin'),
 (3, 'Chico Mendes'),
@@ -2208,7 +2208,7 @@ INSERT INTO `alias` (`id`, `nom_potentiel`) VALUES
 (2173, 'Raymond Pitet'),
 (2174, 'Catulle Mendès'),
 (2175, 'René Blum');
-INSERT INTO `alias` (`id`, `nom_potentiel`) VALUES
+INSERT INTO `pdm_alias` (`id`, `nom_potentiel`) VALUES
 (2176, 'Léon Cogniet'),
 (2177, 'Alphonse de Neuville'),
 (2178, 'André Suarès'),
@@ -2654,7 +2654,7 @@ INSERT INTO `alias` (`id`, `nom_potentiel`) VALUES
 -- Structure de la table `correspondance`
 --
 
-CREATE TABLE `correspondance` (
+CREATE TABLE `pdm_correspondance` (
   `id` int(11) NOT NULL,
   `id_personne` int(11) NOT NULL,
   `id_alias` int(11) NOT NULL
@@ -2664,7 +2664,7 @@ CREATE TABLE `correspondance` (
 -- Déchargement des données de la table `correspondance`
 --
 
-INSERT INTO `correspondance` (`id`, `id_personne`, `id_alias`) VALUES
+INSERT INTO `pdm_correspondance` (`id`, `id_personne`, `id_alias`) VALUES
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 3),
@@ -5299,7 +5299,7 @@ INSERT INTO `correspondance` (`id`, `id_personne`, `id_alias`) VALUES
 -- Structure de la table `personne`
 --
 
-CREATE TABLE `personne` (
+CREATE TABLE `pdm_personne` (
   `id` int(11) NOT NULL,
   `id_wikidata` varchar(50) COLLATE utf8_roman_ci NOT NULL,
   `alias` varchar(200) COLLATE utf8_roman_ci NOT NULL,
@@ -5315,7 +5315,7 @@ CREATE TABLE `personne` (
 -- Déchargement des données de la table `personne`
 --
 
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (1, 'Q216092', 'Louise Michel', 'Louise Michel', 'féminin', ' (institutrice et anarchiste française ayant participé à la Commune de Paris)', 'https://fr.wikipedia.org/wiki/Louise_Michel', 'Louise Michel', 'http://commons.wikimedia.org/wiki/Special:FilePath/Louise Michel, grayscale.jpg'),
 (2, 'Q1035', 'Charles Darwin', 'Charles Darwin', 'masculin', ' (naturaliste anglais, pionnier de la théorie moderne de l\'évolution)', 'https://fr.wikipedia.org/wiki/Charles_Darwin', 'Charles Darwin', 'http://commons.wikimedia.org/wiki/Special:FilePath/Charles Darwin 1880.jpg'),
 (3, 'Q550176', 'Chico Mendes', 'Chico Mendes', 'masculin', ' (politicien brésilien)', 'https://fr.wikipedia.org/wiki/Chico_Mendes', 'Chico Mendes', 'http://commons.wikimedia.org/wiki/Special:FilePath/Chico Mendes in 1988.jpg'),
@@ -5512,7 +5512,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (194, 'Q2836458', 'Alibert', 'Alibert', 'masculin', ' (chanteur acteur de revues, chansonnier, scénariste et compositeur)', 'https://fr.wikipedia.org/wiki/Alibert_(chanteur)', 'Alibert', 'http://commons.wikimedia.org/wiki/Special:FilePath/Affiche d\'Alibert.jpg'),
 (195, 'Q276480', 'Ambroise Paré', 'Ambroise Paré', 'masculin', ' (chirurgien et anatomiste français)', 'https://fr.wikipedia.org/wiki/Ambroise_Paré', 'Ambroise Paré', 'http://commons.wikimedia.org/wiki/Special:FilePath/Portrait of Ambroise Paré.jpg'),
 (196, 'Q2865129', 'Arthur Groussier', 'Arthur Groussier', 'masculin', ' (ingénieur et homme politique français)', 'https://fr.wikipedia.org/wiki/Arthur_Groussier', 'Arthur Groussier', 'http://commons.wikimedia.org/wiki/Special:FilePath/Arthur Groussier.jpg');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (197, 'Q719494', 'Philippe de Girard', 'Philippe de Girard', 'masculin', ' (French engineer and inventor)', 'https://fr.wikipedia.org/wiki/Philippe_de_Girard', 'Philippe de Girard', 'http://commons.wikimedia.org/wiki/Special:FilePath/Philippe de Girard.jpg'),
 (198, 'Q29568265', 'Charles Robin', 'Charles Robin', 'masculin', ' (homme d’affaires et juge jersiais)', 'https://fr.wikipedia.org/wiki/Charles_Robin_(juge)', 'Charles Robin', 'http://commons.wikimedia.org/wiki/Special:FilePath/Charles Robin.jpg'),
 (199, 'Q2833947', 'Alexandre Parodi', 'Alexandre Parodi', 'masculin', ' (haut fonctionnaire, résistant et homme politique français)', 'https://fr.wikipedia.org/wiki/Alexandre_Parodi', 'Alexandre Parodi', 'http://commons.wikimedia.org/wiki/Special:FilePath/Alexandre Parod gp26.8.1944.jpg'),
@@ -5725,7 +5725,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (406, 'Q19666292', 'Montaigne', 'Montaigne', 'féminin', ' (chanteuse australienne)', 'https://fr.wikipedia.org/wiki/Montaigne_(chanteuse)', 'Montaigne', 'http://commons.wikimedia.org/wiki/Special:FilePath/Montaigne 2019.jpg'),
 (407, 'Q1615', 'Neil Armstrong', 'Neil Armstrong', 'masculin', ' (astronaute américain)', 'https://fr.wikipedia.org/wiki/Neil_Armstrong', 'Neil Armstrong', 'http://commons.wikimedia.org/wiki/Special:FilePath/Neil Armstrong pose.jpg'),
 (408, 'Q1666', 'Jacques Brel', 'Jacques Brel', 'masculin', ' (auteur-compositeur-interprète-acteur et réalisateur belge)', 'https://fr.wikipedia.org/wiki/Jacques_Brel', 'Jacques Brel', 'http://commons.wikimedia.org/wiki/Special:FilePath/Jacques Brel (1962).jpg');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (409, 'Q4700', 'Claude Debussy', 'Claude Debussy', 'masculin', ' (compositeur français)', 'https://fr.wikipedia.org/wiki/Claude_Debussy', 'Claude Debussy', 'http://commons.wikimedia.org/wiki/Special:FilePath/Claude Debussy ca 1908, foto av Félix Nadar.jpg'),
 (410, 'Q236630', 'Marcel Pagnol', 'Marcel Pagnol', 'masculin', ' (écrivain, dramaturge, cinéaste et producteur français né en 1895)', 'https://fr.wikipedia.org/wiki/Marcel_Pagnol', 'Marcel Pagnol', 'http://commons.wikimedia.org/wiki/Special:FilePath/Pagnol Harcourt 1948.jpg'),
 (411, 'Q235377', 'Marie', 'Marie', 'féminin', ' (mère de Jacques)', 'https://fr.wikipedia.org/wiki/Marie_(mère_de_Jacques)', 'Marie', 'http://commons.wikimedia.org/wiki/Special:FilePath/Rogier van der Weyden - Deposition (detail) - WGA25578.jpg'),
@@ -5940,7 +5940,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (620, 'Q1096647', 'Claude Delvincourt', 'Claude Delvincourt', 'masculin', ' (compositeur français)', 'https://fr.wikipedia.org/wiki/Claude_Delvincourt', 'Claude Delvincourt', 'http://commons.wikimedia.org/wiki/Special:FilePath/Claude Delvincourt 1935.jpg'),
 (621, 'Q537864', 'Jean Lecanuet', 'Jean Lecanuet', 'masculin', ' (politicien français)', 'https://fr.wikipedia.org/wiki/Jean_Lecanuet', 'Jean Lecanuet', 'http://commons.wikimedia.org/wiki/Special:FilePath/Jean Lecanuet.jpg'),
 (622, 'Q3262948', 'Louis Poterat', 'Louis Poterat', 'masculin', ' (musicien français)', 'https://fr.wikipedia.org/wiki/Louis_Poterat', 'Louis Poterat', '');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (623, 'Q630973', 'Albert Lebourg', 'Albert Lebourg', 'masculin', ' (peintre français)', 'https://fr.wikipedia.org/wiki/Albert_Lebourg', 'Albert Lebourg', 'http://commons.wikimedia.org/wiki/Special:FilePath/Self portrait Lebourg.jpg'),
 (624, 'Q315003', 'Hector Malot', 'Hector Malot', 'masculin', ' (écrivain français)', 'https://fr.wikipedia.org/wiki/Hector_Malot', 'Hector Malot', 'http://commons.wikimedia.org/wiki/Special:FilePath/Malot, Hector, Nadar, Gallica.jpg'),
 (625, 'Q501', 'Charles Baudelaire', 'Charles Baudelaire', 'masculin', ' (poète français)', 'https://fr.wikipedia.org/wiki/Charles_Baudelaire', 'Charles Baudelaire', 'http://commons.wikimedia.org/wiki/Special:FilePath/Baudelaire crop.jpg'),
@@ -6154,7 +6154,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (833, 'Q250321', 'Maurice Scève', 'Maurice Scève', 'masculin', ' (poète français)', 'https://fr.wikipedia.org/wiki/Maurice_Scève', 'Maurice Scève', 'http://commons.wikimedia.org/wiki/Special:FilePath/Maurice Scève.jpg'),
 (834, 'Q16261573', 'René Fusier', 'René Fusier', 'masculin', ' (résistant français)', 'https://fr.wikipedia.org/wiki/René_Fusier', 'René Fusier', ''),
 (835, 'Q203451', 'Juninho', 'Juninho', 'masculin', ' (footballeur brésilien (né en 1975))', 'https://fr.wikipedia.org/wiki/Juninho', 'Juninho', 'http://commons.wikimedia.org/wiki/Special:FilePath/Juninho wikipedia.jpg');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (836, 'Q60441845', 'Pierre Bavozet', 'Pierre Bavozet', 'masculin', ' (joueur français de rugby à XV)', 'https://fr.wikipedia.org/wiki/Pierre_Bavozet', 'Pierre Bavozet', 'http://commons.wikimedia.org/wiki/Special:FilePath/Pierre Bavozet, capitaine du FC Lyon champion de France de rugby 1910.jpg'),
 (837, 'Q14500703', 'Eugène Pons', 'Eugène Pons', 'masculin', ' (imprimeur et résistant français)', 'https://fr.wikipedia.org/wiki/Eugène_Pons', 'Eugène Pons', ''),
 (838, 'Q13488', 'Grégory Coupet', 'Grégory Coupet', 'masculin', ' (footballeur français (1972-))', 'https://fr.wikipedia.org/wiki/Grégory_Coupet', 'Grégory Coupet', 'http://commons.wikimedia.org/wiki/Special:FilePath/Grégory Coupet.jpg'),
@@ -6374,7 +6374,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (1052, 'Q152764', 'Max Linder', 'Max Linder', 'masculin', ' (réalisateur et acteur français, vedette comique du cinéma muet)', 'https://fr.wikipedia.org/wiki/Max_Linder', 'Max Linder', 'http://commons.wikimedia.org/wiki/Special:FilePath/MaxLinder SignedPhoto1912.jpg'),
 (1053, 'Q3132985', 'Henry Orrion', 'Henry Orrion', 'masculin', ' (politicien français)', 'https://fr.wikipedia.org/wiki/Henry_Orrion', 'Henry Orrion', ''),
 (1054, 'Q3171665', 'Jean Demozay', 'Jean Demozay', 'masculin', ' (French aviator)', 'https://fr.wikipedia.org/wiki/Jean_Demozay', 'Jean Demozay', '');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (1055, 'Q2602308', 'Yves du Manoir', 'Yves du Manoir', 'masculin', ' (joueur français de rugby à XV)', 'https://fr.wikipedia.org/wiki/Yves_du_Manoir', 'Yves du Manoir', ''),
 (1056, 'Q3310151', 'Michel Lecointre', 'Michel Lecointre', 'masculin', ' (joueur français de rugby à XV)', 'https://fr.wikipedia.org/wiki/Michel_Lecointre', 'Michel Lecointre', ''),
 (1057, 'Q3084575', 'François Evellin', 'François Evellin', 'masculin', ' (philosophe français)', 'https://fr.wikipedia.org/wiki/François_Evellin', 'François Evellin', ''),
@@ -6591,7 +6591,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (1268, 'Q545859', 'Auguste Albert', 'Auguste Albert', 'masculin', ' (skipper français)', 'https://fr.wikipedia.org/wiki/Auguste_Albert', 'Auguste Albert', ''),
 (1269, 'Q49693247', 'David Elbaz', 'David Elbaz', 'masculin', ' (astrophysicien français)', 'https://fr.wikipedia.org/wiki/David_Elbaz', 'David Elbaz', 'http://commons.wikimedia.org/wiki/Special:FilePath/DavidElbaz2013.png'),
 (1270, 'Q3384688', 'Pierre Deley', 'Pierre Deley', 'masculin', ' (French aviator)', 'https://fr.wikipedia.org/wiki/Pierre_Deley', 'Pierre Deley', '');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (1271, 'Q153178', 'Georges Charpak', 'Georges Charpak', 'masculin', ' (physicien français)', 'https://fr.wikipedia.org/wiki/Georges_Charpak', 'Georges Charpak', 'http://commons.wikimedia.org/wiki/Special:FilePath/CHARPAK Georges-24x50-2005 cropped.JPG'),
 (1272, 'Q640709', 'Théodore Richard', 'Théodore Richard', 'masculin', ' (peintre paysagiste français)', 'https://fr.wikipedia.org/wiki/Théodore_Richard', 'Théodore Richard', ''),
 (1273, 'Q3159978', 'Jacques Sauvegrain', 'Jacques Sauvegrain', 'masculin', ' (résistant français)', 'https://fr.wikipedia.org/wiki/Jacques_Sauvegrain', 'Jacques Sauvegrain', 'http://commons.wikimedia.org/wiki/Special:FilePath/1943 Jacques Sauvegrain.JPG'),
@@ -6814,7 +6814,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (1490, 'Q1677984', 'Jacques Gamelin', 'Jacques Gamelin', 'masculin', ' (peintre français du XVIIIe)', 'https://fr.wikipedia.org/wiki/Jacques_Gamelin', 'Jacques Gamelin', 'http://commons.wikimedia.org/wiki/Special:FilePath/Beaux-Arts de Carcassonne - Buste de Jacques Gamelin - Alexandre Falguiere.jpg'),
 (1491, 'Q3263288', 'Louis Vignes', 'Louis Vignes', 'masculin', ' (photographe français)', 'https://fr.wikipedia.org/wiki/Louis_Vignes', 'Louis Vignes', 'http://commons.wikimedia.org/wiki/Special:FilePath/Louis Vignes (Eugène Pirou, 1833) - cropped.jpg'),
 (1492, 'Q3345767', 'Noël Ballay', 'Noël Ballay', 'masculin', ' (explorateur et administrateur colonial français)', 'https://fr.wikipedia.org/wiki/Noël_Ballay', 'Noël Ballay', 'http://commons.wikimedia.org/wiki/Special:FilePath/Noël Ballay par Nadar.jpg');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (1493, 'Q3370901', 'Paul Codos', 'Paul Codos', 'masculin', ' (aviateur français)', 'https://fr.wikipedia.org/wiki/Paul_Codos', 'Paul Codos', 'http://commons.wikimedia.org/wiki/Special:FilePath/Paul Codos 1932.jpg'),
 (1494, 'Q246724', 'Paul Lambert', 'Paul Lambert', 'masculin', ' (footballeur et entraîneur écossais)', 'https://fr.wikipedia.org/wiki/Paul_Lambert_(football,_1969)', 'Paul Lambert', 'http://commons.wikimedia.org/wiki/Special:FilePath/PaulLambert.jpg'),
 (1495, 'Q1401', 'Pétrarque', 'Pétrarque', 'masculin', ' (poète humaniste italien)', 'https://fr.wikipedia.org/wiki/Pétrarque', 'Pétrarque', 'http://commons.wikimedia.org/wiki/Special:FilePath/Francesco Petrarch by Justo de Gante.jpg'),
@@ -7039,7 +7039,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (1714, 'Q47149712', 'Maurice Petit', 'Maurice Petit', 'masculin', ' (joueur de football belge)', 'https://fr.wikipedia.org/wiki/Maurice_Petit', 'Maurice Petit', ''),
 (1715, 'Q19526', 'Maya Angelou', 'Maya Angelou', 'féminin', ' (poétesse, actrice et militante américaine)', 'https://fr.wikipedia.org/wiki/Maya_Angelou', 'Maya Angelou', 'http://commons.wikimedia.org/wiki/Special:FilePath/Maya Angelou visits YCP Feb 2013.jpg'),
 (1716, 'Q45765', 'Jack London', 'Jack London', 'masculin', ' (écrivain américain)', 'https://fr.wikipedia.org/wiki/Jack_London', 'Jack London', 'http://commons.wikimedia.org/wiki/Special:FilePath/JackLondon02.jpeg');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (1717, 'Q3301213', 'Maurice Noguès', 'Maurice Noguès', 'masculin', ' (French aviator)', 'https://fr.wikipedia.org/wiki/Maurice_Noguès', 'Maurice Noguès', ''),
 (1718, 'Q1802', 'Daniel Balavoine', 'Daniel Balavoine', 'masculin', ' (auteur-compositeur-interprète français)', 'https://fr.wikipedia.org/wiki/Daniel_Balavoine', 'Daniel Balavoine', 'http://commons.wikimedia.org/wiki/Special:FilePath/Daniel Balavoine.jpg'),
 (1719, 'Q47674', 'Amerigo Vespucci', 'Amerigo Vespucci', 'masculin', ' (navigateur florentin)', 'https://fr.wikipedia.org/wiki/Amerigo_Vespucci', 'Amerigo Vespucci', 'http://commons.wikimedia.org/wiki/Special:FilePath/Amerigo Vespucci - Project Gutenberg etext 19997.jpg'),
@@ -7261,7 +7261,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (1935, 'Q193674', 'Henri Troyat', 'Henri Troyat', 'masculin', ' (écrivain français)', 'https://fr.wikipedia.org/wiki/Henri_Troyat', 'Henri Troyat', 'http://commons.wikimedia.org/wiki/Special:FilePath/Henri Troyat.jpg'),
 (1936, 'Q606768', 'Clovis Vincent', 'Clovis Vincent', 'masculin', ' (French neuroscientist)', 'https://fr.wikipedia.org/wiki/Clovis_Vincent', 'Clovis Vincent', 'http://commons.wikimedia.org/wiki/Special:FilePath/Clovis Vincent.jpg'),
 (1937, 'Q960751', 'Adolphe Cochery', 'Adolphe Cochery', 'masculin', ' (homme politique français)', 'https://fr.wikipedia.org/wiki/Adolphe_Cochery', 'Adolphe Cochery', 'http://commons.wikimedia.org/wiki/Special:FilePath/Adolphe cochery.jpg');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (1938, 'Q3300714', 'Maurice Dubois', 'Maurice Dubois', 'masculin', ' (peintre français)', 'https://fr.wikipedia.org/wiki/Pierre-Maurice_Dubois', 'Maurice Dubois', ''),
 (1939, 'Q153670', 'Primo Levi', 'Primo Levi', 'masculin', ' (écrivain et chimiste italien)', 'https://fr.wikipedia.org/wiki/Primo_Levi', 'Primo Levi', 'http://commons.wikimedia.org/wiki/Special:FilePath/Primo Levi.jpg'),
 (1940, 'Q733188', 'Gustave Lanson', 'Gustave Lanson', 'masculin', ' (critique littéraire, universitaire)', 'https://fr.wikipedia.org/wiki/Gustave_Lanson', 'Gustave Lanson', 'http://commons.wikimedia.org/wiki/Special:FilePath/Gustave Lanson.jpg'),
@@ -7480,7 +7480,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (2153, 'Q946910', 'Auguste Baron', 'Auguste Baron', 'masculin', ' (ingénieur français)', 'https://fr.wikipedia.org/wiki/Auguste_Baron_(ingénieur)', 'Auguste Baron', ''),
 (2154, 'Q28654089', 'Marius Barroux', 'Marius Barroux', 'masculin', ' (archiviste français)', 'https://fr.wikipedia.org/wiki/Marius_Barroux', 'Marius Barroux', ''),
 (2155, 'Q44489001', 'Colette Heilbronner', 'Colette Heilbronner', 'féminin', ' (résistante française)', 'https://fr.wikipedia.org/wiki/Colette_Heilbronner', 'Colette Heilbronner', '');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (2156, 'Q152043', 'Mstislav Rostropovitch', 'Mstislav Rostropovitch', 'masculin', ' (violoncelliste et chef d\'orchestre russe)', 'https://fr.wikipedia.org/wiki/Mstislav_Rostropovitch', 'Mstislav Rostropovitch', 'http://commons.wikimedia.org/wiki/Special:FilePath/RIAN archive 438589 Mstislav Rostropovich.jpg'),
 (2157, 'Q3087491', 'Stuart Merrill', 'Stuart Merrill', 'masculin', ' (poète américain francophone)', 'https://fr.wikipedia.org/wiki/Stuart_Merrill', 'Stuart Merrill', 'http://commons.wikimedia.org/wiki/Special:FilePath/Stuart Merrill - portrait (young).jpg'),
 (2158, 'Q2863276', 'Arnault Tzanck', 'Arnault Tzanck', 'masculin', ' (médecin français et un des pionniers de la transfusion sanguine)', 'https://fr.wikipedia.org/wiki/Arnault_Tzanck', 'Arnault Tzanck', 'http://commons.wikimedia.org/wiki/Special:FilePath/Tzanck, Arnault CIPB1775.jpg'),
@@ -7695,7 +7695,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (2367, 'Q7259', 'Ada Lovelace', 'Ada Lovelace', 'féminin', ' (mathématicienne britannique)', 'https://fr.wikipedia.org/wiki/Ada_Lovelace', 'Ada Lovelace', 'http://commons.wikimedia.org/wiki/Special:FilePath/Ada Byron daguerreotype by Antoine Claudet 1843 or 1850 - cropped.png'),
 (2368, 'Q3081769', 'Francis de Miomandre', 'Francis de Miomandre', 'masculin', ' (écrivain français)', 'https://fr.wikipedia.org/wiki/Francis_de_Miomandre', 'Francis de Miomandre', 'http://commons.wikimedia.org/wiki/Special:FilePath/Francis de Miomandre.jpg'),
 (2369, 'Q658382', 'Robert Antelme', 'Robert Antelme', 'masculin', ' (écrivain français)', 'https://fr.wikipedia.org/wiki/Robert_Antelme', 'Robert Antelme', '');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (2370, 'Q322030', 'Eugène Atget', 'Eugène Atget', 'masculin', ' (photographe français)', 'https://fr.wikipedia.org/wiki/Eugène_Atget', 'Eugène Atget', 'http://commons.wikimedia.org/wiki/Special:FilePath/BNF - Portrait d\'Eugène Atget - 1890 - 001.jpg'),
 (2371, 'Q110126', 'Hrant Dink', 'Hrant Dink', 'masculin', ' (journaliste et écrivain turc d\'origine arménienne)', 'https://fr.wikipedia.org/wiki/Hrant_Dink', 'Hrant Dink', 'http://commons.wikimedia.org/wiki/Special:FilePath/Hrant Dink Barış Anıtı.JPG'),
 (2372, 'Q378129', 'Félicien Rops', 'Félicien Rops', 'masculin', ' (artiste belge)', 'https://fr.wikipedia.org/wiki/Félicien_Rops', 'Félicien Rops', 'http://commons.wikimedia.org/wiki/Special:FilePath/Portrait of Felicien Rops LACMA M.84.243.343.jpg'),
@@ -7910,7 +7910,7 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 (2581, 'Q3419229', 'Raoul Mille', 'Raoul Mille', 'masculin', ' (French journalist and writer)', 'https://fr.wikipedia.org/wiki/Raoul_Mille', 'Raoul Mille', ''),
 (2582, 'Q34060', 'Yitzhak Rabin', 'Yitzhak Rabin', 'masculin', ' (politicien israélien)', 'https://fr.wikipedia.org/wiki/Yitzhak_Rabin', 'Yitzhak Rabin', 'http://commons.wikimedia.org/wiki/Special:FilePath/Flickr - Israel Defense Forces - Life of Lt. Gen. Yitzhak Rabin, 7th IDF Chief of Staff in photos (11).jpg'),
 (2583, 'Q636357', 'Jean de Brunhoff', 'Jean de Brunhoff', 'masculin', ' (auteur-illustrateur français créateur de Babar)', 'https://fr.wikipedia.org/wiki/Jean_de_Brunhoff', 'Jean de Brunhoff', '');
-INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
+INSERT INTO `pdm_personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabel`, `personDescription`, `sitelink`, `lemma`, `picture`) VALUES
 (2584, 'Q2405409', 'Joseph Capus', 'Joseph Capus', 'masculin', ' (homme politique français)', 'https://fr.wikipedia.org/wiki/Joseph_Capus', 'Joseph Capus', 'http://commons.wikimedia.org/wiki/Special:FilePath/Joseph Capus 1919.jpg'),
 (2585, 'Q922667', 'James de Rothschild', 'James de Rothschild', 'masculin', ' (banquier français, fondateur de la branche de Paris de la famille Rothschild)', 'https://fr.wikipedia.org/wiki/James_de_Rothschild', 'James de Rothschild', 'http://commons.wikimedia.org/wiki/Special:FilePath/James Mayer de Rothschild by Southworth & Hawes.png'),
 (2586, 'Q298827', 'Gaston Leroux', 'Gaston Leroux', 'masculin', ' (romancier français)', 'https://fr.wikipedia.org/wiki/Gaston_Leroux', 'Gaston Leroux', 'http://commons.wikimedia.org/wiki/Special:FilePath/G. LEROUX.jpg'),
@@ -7963,19 +7963,19 @@ INSERT INTO `personne` (`id`, `id_wikidata`, `alias`, `nom_complet`, `genderLabe
 --
 -- Index pour la table `alias`
 --
-ALTER TABLE `alias`
+ALTER TABLE `pdm_alias`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `correspondance`
 --
-ALTER TABLE `correspondance`
+ALTER TABLE `pdm_correspondance`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `personne`
 --
-ALTER TABLE `personne`
+ALTER TABLE `pdm_personne`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -7985,19 +7985,19 @@ ALTER TABLE `personne`
 --
 -- AUTO_INCREMENT pour la table `alias`
 --
-ALTER TABLE `alias`
+ALTER TABLE `pdm_alias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2614;
 
 --
 -- AUTO_INCREMENT pour la table `correspondance`
 --
-ALTER TABLE `correspondance`
+ALTER TABLE `pdm_correspondance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2628;
 
 --
 -- AUTO_INCREMENT pour la table `personne`
 --
-ALTER TABLE `personne`
+ALTER TABLE `pdm_personne`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2628;
 COMMIT;
 

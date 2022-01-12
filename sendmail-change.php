@@ -13,7 +13,7 @@ $result = htmlspecialchars($_GET['result']);
 
 //  Check if all variable are not empty and if the value of the result is equal to 17
 if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) &&(strlen($codeINSEE) > 0) && (strlen($emailSender) > 0) && (strlen($gender)) > 0 && (strlen($message) > 0) && $result = 17){
-  $subject = 'Plaques du Matrimoine: Proposition de modification du lieu '.$nom.', pour la ville de '.$cityname;
+  $subject = 'Plaques du Matrimoine : Proposition de modification du lieu '.$nom.', pour la ville de '.$cityname;
   $to = 'philippe.gambette@gmail.com';
 
  //  The message is send in HTML format
@@ -48,15 +48,15 @@ if((strlen($cityname) > 0) && (strlen($nom) > 0) && (strlen($topic) > 0) &&(strl
  $send = mail($to,$subject,$messageBody, implode("\r\n", $headers));
 
       if($send){
-        $confirm = 'Votre contribution à bien été envoyé';
+        $confirm = 'Votre contribution a bien été envoyée.';
        }else{
          // echo "L'envoi à échoué";
-         $confirm = 'Echec de l\'envoi';
+         $confirm = 'Échec de l\'envoi.';
       }
       
 }else{
  //  If all input have been filled out
-  $confirm = 'Merci de remplir tous les champs';
+  $confirm = 'Merci de remplir tous les champs.';
  }
  
  // Redirect to another page with the message
