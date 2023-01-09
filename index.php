@@ -19,7 +19,7 @@
   <script async src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script async src="PapaParse-5.0.2/papaparse.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.0.2/papaparse.min.js"></script>
   <script async src="https://kit.fontawesome.com/997660e778.js" crossorigin="anonymous"></script>
   <noscript>Pour utiliser pleinement cet outil, JavaScript est requis</noscript>
   <meta property="og:title" content="Plaques du Matrimoine" />
