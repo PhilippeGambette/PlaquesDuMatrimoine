@@ -150,10 +150,9 @@
     </div>
 
     <div>
-     <input id="homme transgenre" type="radio" name="gender" id="" value="masculin">
+     <input id="homme transgenre" type="radio" name="gender" id="" value="homme transgenre">
      <label for="homme transgenre">Homme transgenre</label>
     </div>
-   </div>
 
    <label for="message">Informations sur la personne</label><br>
    <textarea name="message" id="" cols="30" rows="10" placeholder="" id="message" required aria-required="true"></textarea> <br>
