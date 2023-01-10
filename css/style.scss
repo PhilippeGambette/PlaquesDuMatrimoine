@@ -260,7 +260,7 @@ ul {
   margin: auto;
 
   img {
-    width: 100%;
+    // width: 100%;
     height: auto;
   }
 }
@@ -468,6 +468,11 @@ tr.border_bottom td {
 
 .copyright {
   font-family: $text-family;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
 }
 
 hr {

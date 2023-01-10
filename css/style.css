@@ -483,7 +483,6 @@ ul {
 }
 
 .container-right img {
-  width: 100%;
   height: auto;
 }
 
@@ -709,6 +708,11 @@ tr.border_bottom td {
 
 .copyright {
   font-family: "Belleza";
+}
+
+.copyright a {
+  color: white;
+  text-decoration: underline;
 }
 
 hr {

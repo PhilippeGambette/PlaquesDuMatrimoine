@@ -16,6 +16,7 @@
   <img src="img/logo-eiffel.png" alt=""  width="200">
  </a>
  <hr>
+ <p class="copyright">Image d'illustration issue d'<a href="https://undraw.co">Undraw</a></p>
  <p class="copyright">
   <?php echo(date('Y')) ?> - Cité des dames, créatrices dans la cité
  </p>
