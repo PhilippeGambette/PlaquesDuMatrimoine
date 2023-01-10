@@ -225,6 +225,7 @@ ul {
   height: 5vh;
   font-size: 1.25rem;
   font-family: "Belleza";
+  gap: 1rem;
 }
 
 .nav-menu img {
