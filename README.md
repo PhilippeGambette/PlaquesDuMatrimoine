@@ -11,3 +11,4 @@ Il est conçu pour exploiter des données mises à disposition sous licence libr
 - des données de nominatim pour la géolocalisation des internautes sur la page « à proximité »
 
 Démo : https://perso-etudiant.u-pem.fr/~gambette/PlaquesDuMatrimoine/
+Lien de secours : https://matrimoine.alanakra.fr
