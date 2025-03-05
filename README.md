@@ -10,5 +10,6 @@ Il est conçu pour exploiter des données mises à disposition sous licence libr
 - des données de Wikidata interrogées automatiquement sur les noms de personnes trouvés, pour identifier leur genre.
 - des données de nominatim pour la géolocalisation des internautes sur la page « à proximité »
 
-Démo : https://perso-etudiant.u-pem.fr/~gambette/PlaquesDuMatrimoine/
+Démo : https://igm.univ-mlv.fr/~gambette/CiteDesDames/PlaquesDuMatrimoine
+
 Lien de secours : https://matrimoine.alanakra.fr
